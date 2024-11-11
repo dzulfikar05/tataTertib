@@ -35,6 +35,33 @@
                 </ul>
             </li>
 
+            <li class="sidebar-item 
+                <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>
+            ">
+                <a href="#pelanggaran_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="alert-octagon"></i> <span class="align-middle">Pelanggaran</span>
+                </a>
+                <ul id="pelanggaran_sidebar" class="sidebar-dropdown list-unstyled 
+                    collapse<?= $_SESSION['menu_active'] == 'kategori' ? 'd' : ''  ?> 
+                    " data-bs-parent="#sidebar">
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>"><a class='sidebar-link' href='Kategori.php'>Kategori</a></li>
+                  
+                </ul>
+            </li>
+            <li class="sidebar-item 
+                <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>
+            ">
+                <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Laporan</span>
+                </a>
+                <ul id="laporan_sidebar" class="sidebar-dropdown list-unstyled 
+                    collapse<?= $_SESSION['menu_active'] == 'laporanAduan' ? 'd' : ''  ?> 
+                    " data-bs-parent="#sidebar">
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporanAduan' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporanAduan.php'>Laporan Aduan</a></li>
+                  
+                </ul>
+            </li>
+
 
             <li class="sidebar-item 
                 <?= $_SESSION['menu_active'] == 'jurusan' ? 'active' : ''  ?>
