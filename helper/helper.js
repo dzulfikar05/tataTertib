@@ -5,12 +5,14 @@ $(()=> {
 resetForm = (listId = []) => {
     $.each(listId, (i, id) => {
         $(`#${id}`).val('').trigger('change');
+        $('.textarea-' + listForm[i]).html();         
     });
 }
 
 editForm = (listId = [],  data) => {
     for (i = 0; i < listId.length; i++) {
-        $('#' + listForm[i]).val(data[listForm[i]]).trigger('change');            
+        $('#' + listForm[i]).val(data[listForm[i]]).trigger('change');   
+        $('.textarea-' + listForm[i]).html(data[listForm[i]]);         
     }
 }
 

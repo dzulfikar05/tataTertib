@@ -49,7 +49,7 @@
                 </ul>
             </li>
             <li class="sidebar-item 
-                <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>
+                <?= $_SESSION['menu_active'] == 'laporanAduan' ? 'active' : ''  ?>
             ">
                 <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Laporan</span>
