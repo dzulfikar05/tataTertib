@@ -15,12 +15,20 @@
  Date: 09/11/2024 13:45:16
 */
 
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Notification')
+BEGIN
+    EXEC('CREATE SCHEMA Notification');
+END
+GO
+
 
 -- ----------------------------
 -- Table structure for notification
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[Notification].[notification]') AND type IN ('U'))
-	DROP TABLE [Notification].[notification]
+BEGIN
+  DROP TABLE [Notification].[notification]
+END
 GO
 
 CREATE TABLE [Notification].[notification] (
@@ -50,8 +58,6 @@ GO
 -- ----------------------------
 -- Auto increment value for notification
 -- ----------------------------
-DBCC CHECKIDENT ('[Notification].[notification]', RESEED, 1)
-GO
 
 
 -- ----------------------------

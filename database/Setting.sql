@@ -15,12 +15,19 @@
  Date: 09/11/2024 13:46:05
 */
 
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Setting')
+BEGIN
+    EXEC('CREATE SCHEMA Setting');
+END
+GO
 
 -- ----------------------------
 -- Table structure for setting_app
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[Setting].[setting_app]') AND type IN ('U'))
-	DROP TABLE [Setting].[setting_app]
+BEGIN
+  DROP TABLE [Setting].[setting_app]
+END
 GO
 
 CREATE TABLE [Setting].[setting_app] (
@@ -47,8 +54,6 @@ GO
 -- ----------------------------
 -- Auto increment value for setting_app
 -- ----------------------------
-DBCC CHECKIDENT ('[Setting].[setting_app]', RESEED, 1)
-GO
 
 
 -- ----------------------------

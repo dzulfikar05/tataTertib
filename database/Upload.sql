@@ -14,13 +14,20 @@
 
  Date: 09/11/2024 13:45:55
 */
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Upload')
+BEGIN
+    EXEC('CREATE SCHEMA Upload');
+END
+GO
 
 
 -- ----------------------------
 -- Table structure for file_upload
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[Upload].[file_upload]') AND type IN ('U'))
+BEGIN
 	DROP TABLE [Upload].[file_upload]
+END
 GO
 
 CREATE TABLE [Upload].[file_upload] (
@@ -95,8 +102,6 @@ GO
 -- ----------------------------
 -- Auto increment value for file_upload
 -- ----------------------------
-DBCC CHECKIDENT ('[Upload].[file_upload]', RESEED, 37)
-GO
 
 
 -- ----------------------------
