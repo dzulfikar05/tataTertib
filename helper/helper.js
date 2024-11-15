@@ -39,3 +39,7 @@ onAlert = (title, message, icon) => {
         confirmButtonColor: "#3b7ddd"
     });
 }
+
+formaterDate = (date) => {
+    return moment(date).format('DD MMMM YYYY');
+}

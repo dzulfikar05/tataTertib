@@ -37,14 +37,18 @@
 
             <li class="sidebar-item 
                 <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>
+                <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>
             ">
                 <a href="#pelanggaran_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="alert-octagon"></i> <span class="align-middle">Pelanggaran</span>
                 </a>
                 <ul id="pelanggaran_sidebar" class="sidebar-dropdown list-unstyled 
-                    collapse<?= $_SESSION['menu_active'] == 'kategori' ? 'd' : ''  ?> 
+                    collapse<?= $_SESSION['menu_active'] == 'kategori' || $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'd' : ''  ?> 
                     " data-bs-parent="#sidebar">
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>"><a class='sidebar-link' href='Kategori.php'>Kategori</a></li>
+
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>"><a class='sidebar-link' href='kategori.php'>Kategori</a></li>
+                   
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='aduan-pelanggaran.php'>Aduan Pelanggaran</a></li>
                   
                 </ul>
             </li>

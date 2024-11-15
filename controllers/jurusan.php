@@ -12,7 +12,6 @@ class JurusanController
     private $conn;
     private $table;
 
-
     public function __construct($conn)
     {
         $this->conn = $conn;
