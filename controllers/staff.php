@@ -226,8 +226,10 @@ class StaffCotroller
 
         if ($stmt && $delPP && $delUser) {
             return 1;
-        } else {
-            return 0;
+} else {
+            die(print_r(sqlsrv_errors(), true));
+            return 0; 
+
         }
     }
 

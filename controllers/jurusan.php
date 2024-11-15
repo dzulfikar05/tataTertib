@@ -12,6 +12,7 @@ class JurusanController
     private $conn;
     private $table;
 
+
     public function __construct($conn)
     {
         $this->conn = $conn;
@@ -20,7 +21,6 @@ class JurusanController
 
     public function index()
     {
-
         $columns = ['nama'];
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
@@ -56,13 +56,10 @@ class JurusanController
 
     public function getAll()
     {
-
-
         $sql = "SELECT * FROM $this->table";
         $stmt = sqlsrv_query($this->conn, $sql);
 
         $data = fetchArray($stmt);
-
         return json_encode($data['data'] ?? []);
     }
 
@@ -70,10 +67,11 @@ class JurusanController
     {
 
         $id = $_POST['id'];
+
         $sql = "SELECT * FROM $this->table WHERE id = ?";
         $params = array($id);
-        $stmt = sqlsrv_query($this->conn, $sql, $params);
 
+        $stmt = sqlsrv_query($this->conn, $sql, $params);
         $data = fetchArray($stmt);
 
         return json_encode($data['data'][0] ?? []);
@@ -89,19 +87,26 @@ class JurusanController
             array_push($params, $$form);
         }
 
-        $sql = "INSERT INTO $this->table (nama) VALUES (?)";
+        $sql = "EXEC sp_InsertJurusan 
+                @nama = ?";
+
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
 
 
-    public function update() {
+    public function update()
+    {
         $params = [];
+        
+        (int)$id = isset($_POST['id']) ? (int) $_POST['id'] : null;
+        array_push($params, $id);
 
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
@@ -109,32 +114,34 @@ class JurusanController
             array_push($params, $$form);
         }
 
-        $id = $_POST['id'];
-        array_push($params, $id);
+        $sql = "EXEC sp_UpdateJurusan 
+                    @id = ?, 
+                    @nama = ?";
 
-        $sql = "UPDATE $this->table SET nama=? WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $id = $_POST['id'];
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
-    
 }
 
 $jurusanController = new JurusanController($conn);

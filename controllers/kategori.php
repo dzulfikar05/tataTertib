@@ -126,8 +126,10 @@ class KategoriController
     
         if ($stmt) {
             return 1;
-        } else {
-            return 0;
+} else {
+            die(print_r(sqlsrv_errors(), true));
+            return 0; 
+
         }
     }
 
@@ -139,8 +141,10 @@ class KategoriController
     
         if ($stmt) {
             return 1;
-        } else {
-            return 0;
+} else {
+            die(print_r(sqlsrv_errors(), true));
+            return 0; 
+
         }
     }
     

@@ -24,7 +24,7 @@ class ProdiController
     public function index()
     {
 
-        $columns = ['nama','jurusan_id', 'jurusan_nama'];
+        $columns = ['nama', 'jurusan_id', 'jurusan_nama'];
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
@@ -60,6 +60,8 @@ class ProdiController
     public function getAll()
     {
 
+        // $sql = "EXEC sp_GetAll 
+        // @table = $this->table";
 
         $sql = "SELECT * FROM $this->table";
         $stmt = sqlsrv_query($this->conn, $sql);
@@ -73,8 +75,17 @@ class ProdiController
     {
 
         $id = $_POST['id'];
+
+        // $sql = "EXEC sp_GetBy 
+        //             @table = ?, 
+        //             @column = ?, 
+        //             @id = ?
+        //         ";
+        // $params = array($this->table, 'id', $id);
+        
         $sql = "SELECT * FROM $this->table WHERE id = ?";
         $params = array($id);
+
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         $data = fetchArray($stmt);
@@ -82,22 +93,33 @@ class ProdiController
         return json_encode($data['data'][0] ?? []);
     }
 
-    public function getByJurusan() {
+    public function getByJurusan()
+    {
         global $conn;
-        
+
         $id = $_POST['id'];
+
+        // $sql = "EXEC sp_GetBy 
+        //             @table = ?, 
+        //             @column = ?, 
+        //             @id = ?
+        //         ";
+        // $params = array($this->tableView, 'jurusan_id', $id);
+
         $sql = "SELECT * FROM $this->tableView WHERE jurusan_id = ?";
         $params = array($id);
+
         $stmt = sqlsrv_query($conn, $sql, $params);
 
         $data = fetchArray($stmt);
-    
+
         return json_encode($data['data'] ?? []);
     }
 
     public function store()
     {
         $params = [];
+        $list = array_slice($this->listForm, 1);
 
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
@@ -105,19 +127,25 @@ class ProdiController
             array_push($params, $$form);
         }
 
+        $sql = "EXEC sp_InsertData 
+                    @table = $this->table, 
+                    @columns = $list, 
+                    @values = $params
+                ";
 
-        $sql = "INSERT INTO $this->table (nama, jurusan_id) VALUES (?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
 
 
-    public function update() {
+    public function update()
+    {
         $params = [];
 
         foreach ($this->listForm as $form) {
@@ -131,27 +159,29 @@ class ProdiController
 
         $sql = "UPDATE $this->table SET nama=?,  jurusan_id=? WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $id = $_POST['id'];
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
         } else {
+            die(print_r(sqlsrv_errors(), true));
             return 0;
         }
     }
-    
 }
 
 $prodiController = new ProdiController($conn);

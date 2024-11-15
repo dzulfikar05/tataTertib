@@ -260,7 +260,7 @@
             type: 'POST',
             success: (data) => {
                 data = JSON.parse(data);
-
+                
                 var html = '<option value="" class="drop-pilih" selected>-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
