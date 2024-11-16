@@ -40,7 +40,7 @@ class KategoriController
         $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'tanggal';
 
-        $query = "SELECT * FROM $this->tableView WHERE 1=1 AND status = 1";
+        $query = "SELECT * FROM $this->tableView WHERE 1=1 AND status = 2";
 
         if (!empty($searchValue)) {
             $query .= " AND (tanggal LIKE '%$searchValue%') 
@@ -178,7 +178,6 @@ class KategoriController
 
     public function verifikasiAduan()
     {
-        session_start();
         $id = $_POST['id'];
         $kategoriId = $_POST['kategori_id'];
         $mhsId = $_POST['mahasiswa_id'];
@@ -188,13 +187,9 @@ class KategoriController
         $sql3 = "SELECT pelaku_id, pelapor_id FROM $this->table WHERE id=$id";
         $data = fetchArray(sqlsrv_query($this->conn, $sql3));
 
-        $date = date('Y-m-d H:i:s');
-        $loginId = $_SESSION['user']['id'];
+        $sql = "UPDATE $this->table SET kategori_id=$kategoriId, status=$status WHERE id = $id";
+        $stmt = sqlsrv_query($this->conn, $sql);
 
-        $sql = "UPDATE $this->table SET kategori_id=?, status=?, verify_by=?, verify_at=? WHERE id = ?";
-        $params = array($kategoriId, $status, $loginId, $date, $id);
-
-        $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
             $sql2 = "UPDATE Users.mahasiswa SET poin=poin+$bobot WHERE id=$mhsId";

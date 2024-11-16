@@ -60,9 +60,6 @@ class ProdiController
     public function getAll()
     {
 
-        // $sql = "EXEC sp_GetAll 
-        // @table = $this->table";
-
         $sql = "SELECT * FROM $this->table";
         $stmt = sqlsrv_query($this->conn, $sql);
 
@@ -75,13 +72,6 @@ class ProdiController
     {
 
         $id = $_POST['id'];
-
-        // $sql = "EXEC sp_GetBy 
-        //             @table = ?, 
-        //             @column = ?, 
-        //             @id = ?
-        //         ";
-        // $params = array($this->table, 'id', $id);
         
         $sql = "SELECT * FROM $this->table WHERE id = ?";
         $params = array($id);
@@ -98,13 +88,6 @@ class ProdiController
         global $conn;
 
         $id = $_POST['id'];
-
-        // $sql = "EXEC sp_GetBy 
-        //             @table = ?, 
-        //             @column = ?, 
-        //             @id = ?
-        //         ";
-        // $params = array($this->tableView, 'jurusan_id', $id);
 
         $sql = "SELECT * FROM $this->tableView WHERE jurusan_id = ?";
         $params = array($id);
