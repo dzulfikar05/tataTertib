@@ -186,6 +186,12 @@ class DosenCotroller
 
         $this->uploadImage($_POST['user_id'], $_FILES["user_photo"], 'uploads/users/dosen/', $_POST['user_id']);
 
+        $file = getImageUpload($_POST['user_id'], 'Users.users');
+        $filepath = "../" . $file['data'][0]['path'];
+        if (file_exists($filepath)) {
+            unlink($filepath);
+        }
+
         $params = [];
 
         foreach ($this->listForm as $form) {
