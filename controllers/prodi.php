@@ -102,7 +102,6 @@ class ProdiController
     public function store()
     {
         $params = [];
-        $list = array_slice($this->listForm, 1);
 
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
@@ -110,12 +109,7 @@ class ProdiController
             array_push($params, $$form);
         }
 
-        $sql = "EXEC sp_InsertData 
-                    @table = $this->table, 
-                    @columns = $list, 
-                    @values = $params
-                ";
-
+        $sql = "INSERT INTO $this->table (nama, jurusan_id) VALUES (?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
