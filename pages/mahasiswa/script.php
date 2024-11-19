@@ -373,7 +373,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - ' + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '"> ' + data[i]['nama'] + '</option>';
                 }
 
                 $('#jurusan_id').html(html);
@@ -397,7 +397,7 @@
                 var html = '<option value="" class="drop-pilih">-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - '  + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '"> '  + data[i]['nama'] + '</option>';
                 }
 
                 $('#prodi_id').html(html);
@@ -422,7 +422,7 @@
 
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - '  + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '"> '  + data[i]['nama'] + '</option>';
                 }
 
                 $('#kelas_id').html(html);

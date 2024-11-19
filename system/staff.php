@@ -214,7 +214,9 @@ class StaffCotroller
         $user = json_decode($this->getById());
         $id = $_POST['id'];
         $file = getImageUpload($user->data->user_id, 'Users.users');
-        $filepath = "../" . $file['data'][0]['path'];
+        if($file['num_rows'] > 0) {
+            $filepath = "../" . $file['data'][0]['path'];
+        }
 
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
@@ -223,7 +225,7 @@ class StaffCotroller
         $delPP = sqlsrv_query($this->conn, "DELETE FROM $this->tableUpload WHERE model_id = ? AND model_name = ?", array($user->data->user_id, 'Users.users'));
         $delUser = sqlsrv_query($this->conn, "DELETE FROM $this->tableUser WHERE id = ?", array($user->data->user_id));
 
-        if (file_exists($filepath)) {
+       if ($file['num_rows'] > 0 && file_exists($filepath)) {
             unlink($filepath);
         }
 
@@ -243,8 +245,11 @@ class StaffCotroller
             
             $file = getImageUpload($_POST['user_id'], 'Users.users');
             $filepath = "../" . $file['data'][0]['path'];
-            if (file_exists($filepath)) {
-                unlink($filepath);
+            if($file['num_rows'] > 0) {
+                $filepath = "../" . $file['data'][0]['path'];
+               if ($file['num_rows'] > 0 && file_exists($filepath)) {
+                    unlink($filepath);
+                }
             }
 
             $fileType = strtolower(pathinfo($inputPhoto["name"], PATHINFO_EXTENSION));
