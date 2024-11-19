@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class DosenCotroller
+class StaffCotroller
 {
     private $conn;
     private $table;
@@ -11,9 +11,9 @@ class DosenCotroller
     private $tableUpload;
     private $listForm = [
         'id',
-        'nidn',
+        'nip',
         'nama',
-        'jurusan_id',
+        'prodi_id',
         'jk',
         'no_hp',
     ];
@@ -27,16 +27,16 @@ class DosenCotroller
     public function __construct($conn)
     {
         $this->conn = $conn;
-        $this->table = 'Users.dosen';
+        $this->table = 'Users.staff';
         $this->tableUser = 'Users.users';
-        $this->tableView = 'Users.v_dosen';
+        $this->tableView = 'Users.v_staff';
         $this->tableUpload = 'Upload.file_upload';
     }
 
     public function index()
     {
 
-        $columns = ['nidn', 'nama', 'jurusan_id', 'jk', 'no_hp'];
+        $columns = ['nip', 'nama', 'prodi_id', 'jk', 'no_hp'];
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
@@ -46,7 +46,7 @@ class DosenCotroller
         $query = "SELECT * FROM $this->tableView WHERE 1=1";
 
         if (!empty($searchValue)) {
-            $query .= " AND (nidn LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR status LIKE '%$searchValue%' OR jk LIKE '%$searchValue%' OR no_hp LIKE '%$searchValue%')";
+            $query .= " AND (nip LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR prodi_nama LIKE '%$searchValue%' OR status LIKE '%$searchValue%' OR jk LIKE '%$searchValue%' OR no_hp LIKE '%$searchValue%')";
         }
 
         $query .= " ORDER BY $orderColumn $orderDirection";
@@ -89,7 +89,6 @@ class DosenCotroller
             'data' => $data['data'][0] ?? [],
             'photo' => $photo['data'][0] ?? []
         ];
-
         return json_encode($return);
     }
 
@@ -106,10 +105,10 @@ class DosenCotroller
 
         $params[1] = password_hash($params[1], PASSWORD_BCRYPT);
 
-        $sql = "INSERT INTO $this->tableUser (username, password, role) OUTPUT INSERTED.* VALUES (?, ?, 3)";
+        $sql = "INSERT INTO $this->tableUser (username, password, role) OUTPUT INSERTED.* VALUES (?, ?, 2)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
-        if (!$stmt) {
+        if ($stmt === false) {
             die(print_r(sqlsrv_errors(), true));
         }
 
@@ -122,7 +121,7 @@ class DosenCotroller
     {
         $user = $this->storeUser();
 
-        $upload = isset($_FILES["user_photo"]) ? $this->uploadImage($user['id'], $_FILES["user_photo"], 'uploads/users/dosen/') : null;
+        $upload = isset($_FILES["user_photo"]) ? $this->uploadImage($user['id'], $_FILES["user_photo"], 'uploads/users/staff/') : null;
 
         $params = [];
 
@@ -134,7 +133,7 @@ class DosenCotroller
 
         array_push($params, $user['id']);
 
-        $sql = "INSERT INTO $this->table (nidn, nama, jurusan_id, jk, no_hp, user_id)
+        $sql = "INSERT INTO $this->table (nip, nama, prodi_id, jk, no_hp, user_id)
         VALUES (?, ?, ?, ?, ?, ?)";
 
         if ($user) {
@@ -182,16 +181,12 @@ class DosenCotroller
 
     public function update()
     {
+
         $user = $this->updateUser($_POST['user_id']);
 
-        $this->uploadImage($_POST['user_id'], $_FILES["user_photo"], 'uploads/users/dosen/', $_POST['user_id']);
+        $this->uploadImage($_POST['user_id'], $_FILES["user_photo"], 'uploads/users/staff/', $_POST['user_id']);
 
-        $file = getImageUpload($_POST['user_id'], 'Users.users');
-        $filepath = "../" . $file['data'][0]['path'];
-        if (file_exists($filepath)) {
-            unlink($filepath);
-        }
-
+        
         $params = [];
 
         foreach ($this->listForm as $form) {
@@ -202,7 +197,7 @@ class DosenCotroller
         $id = $_POST['id'];
         array_push($params, $id);
 
-        $sql = "UPDATE $this->table SET nidn=?, nama=?, jurusan_id=?, jk=?, no_hp=? WHERE id = ?";
+        $sql = "UPDATE $this->table SET nip=?, nama=?, prodi_id=?, jk=?, no_hp=? WHERE id = ?";
 
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
@@ -245,6 +240,13 @@ class DosenCotroller
 
 
         if (isset($inputPhoto) && $inputPhoto['error'] == 0) {
+            
+            $file = getImageUpload($_POST['user_id'], 'Users.users');
+            $filepath = "../" . $file['data'][0]['path'];
+            if (file_exists($filepath)) {
+                unlink($filepath);
+            }
+
             $fileType = strtolower(pathinfo($inputPhoto["name"], PATHINFO_EXTENSION));
             $new_file_name = time() . "." . $fileType;
 
@@ -296,7 +298,6 @@ class DosenCotroller
                     if ($stmt) {
                         return 1;
                     } else {
-                        die(print_r(sqlsrv_errors(), true));
                         return 0;
                     }
                 } else {
@@ -314,12 +315,12 @@ class DosenCotroller
 
 
 
-$dosenCotroller = new DosenCotroller($conn);
+$staffCotroller = new StaffCotroller($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'index') echo $dosenCotroller->index();
-    if ($_POST['action'] == 'store') echo $dosenCotroller->store();
-    if ($_POST['action'] == 'getById') echo $dosenCotroller->getById();
-    if ($_POST['action'] == 'update') echo $dosenCotroller->update();
-    if ($_POST['action'] == 'destroy') echo $dosenCotroller->destroy();
+    if ($_POST['action'] == 'index') echo $staffCotroller->index();
+    if ($_POST['action'] == 'store') echo $staffCotroller->store();
+    if ($_POST['action'] == 'getById') echo $staffCotroller->getById();
+    if ($_POST['action'] == 'update') echo $staffCotroller->update();
+    if ($_POST['action'] == 'destroy') echo $staffCotroller->destroy();
 }

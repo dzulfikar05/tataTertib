@@ -24,7 +24,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+                url: '/tataTertib/system/sanksi-pelanggaran.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -156,7 +156,7 @@
     onUpload = (id) => {
         onReset();
         $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+            url: '/tataTertib/system/sanksi-pelanggaran.php',
             data: {
                 action: 'getById',
                 id: id
@@ -222,7 +222,7 @@
         let formData = new FormData(form);
         formData.append('action', "uploadSanksi");
         $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+            url: '/tataTertib/system/sanksi-pelanggaran.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -259,7 +259,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+            url: '/tataTertib/system/sanksi-pelanggaran.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -281,7 +281,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },
@@ -305,7 +305,7 @@
 
     getKategori = () => {
         $.ajax({
-            url: '/tataTertib/controllers/kategori.php',
+            url: '/tataTertib/system/kategori.php',
             data: {
                 action: 'getAll'
             },
@@ -330,7 +330,7 @@
     getMahasiswa = () => {
         let jurusanId = $('#jurusan_id').val();
         $.ajax({
-            url: '/tataTertib/controllers/mahasiswa.php',
+            url: '/tataTertib/system/mahasiswa.php',
             data: {
                 id: jurusanId,
                 action: 'getByJurusan'
@@ -368,7 +368,7 @@
                 formData.append('action', 'verifikasiAduan');
                 formData.append('status', status);
                 $.ajax({
-                    url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+                    url: '/tataTertib/system/sanksi-pelanggaran.php',
                     data: formData,
                     type: 'POST',
                     processData: false,

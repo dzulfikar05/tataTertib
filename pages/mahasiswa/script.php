@@ -49,7 +49,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/mahasiswa.php',
+                url: '/tataTertib/system/mahasiswa.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -206,7 +206,7 @@
 
     onEdit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/mahasiswa.php',
+            url: '/tataTertib/system/mahasiswa.php',
             data: {
                 action: 'getById',
                 id: id
@@ -263,7 +263,7 @@
         var formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/mahasiswa.php',
+            url: '/tataTertib/system/mahasiswa.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -314,7 +314,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/mahasiswa.php',
+            url: '/tataTertib/system/mahasiswa.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -362,7 +362,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },
@@ -385,7 +385,7 @@
     }
     getProdi = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/prodi.php',
+            url: '/tataTertib/system/prodi.php',
             data: {
                 action: 'getByJurusan',
                 id: id
@@ -409,7 +409,7 @@
     }
     getKelas = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/kelas.php',
+            url: '/tataTertib/system/kelas.php',
             data: {
                 action: 'getByProdi',
                 id: id

@@ -5,7 +5,7 @@
 			var formData = new FormData(form);
 			formData.append('action', 'verify_login');
 			$.ajax({
-				url: '/tataTertib/controllers/auth.php',
+				url: '/tataTertib/system/auth.php',
 				data: formData,
 				type: 'POST',
 				processData: false,
@@ -32,7 +32,7 @@
 
 	logout = () => {
 		$.ajax({
-			url: '/tataTertib/controllers/auth.php',
+			url: '/tataTertib/system/auth.php',
 			data: {
 				action: 'logout'
 			},

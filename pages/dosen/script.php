@@ -41,7 +41,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/dosen.php',
+                url: '/tataTertib/system/dosen.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -163,7 +163,7 @@
 
     onEdit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/dosen.php',
+            url: '/tataTertib/system/dosen.php',
             data: {
                 action: 'getById',
                 id: id
@@ -220,7 +220,7 @@
         var formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/dosen.php',
+            url: '/tataTertib/system/dosen.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -257,7 +257,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/dosen.php',
+            url: '/tataTertib/system/dosen.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -296,7 +296,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },

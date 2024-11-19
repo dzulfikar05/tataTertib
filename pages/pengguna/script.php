@@ -23,7 +23,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/pengguna.php',
+                url: '/tataTertib/system/pengguna.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -112,7 +112,7 @@
 
     edit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/pengguna.php',
+            url: '/tataTertib/system/pengguna.php',
             data: {
                 action: 'getById',
                 id: id
@@ -169,7 +169,7 @@
         var formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/pengguna.php',
+            url: '/tataTertib/system/pengguna.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -230,7 +230,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/pengguna.php',
+            url: '/tataTertib/system/pengguna.php',
             data: {
                 action: 'destroy',
                 id: id

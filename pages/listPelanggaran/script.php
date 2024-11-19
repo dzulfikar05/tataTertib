@@ -39,7 +39,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/list-pelanggaran.php',
+                url: '/tataTertib/system/list-pelanggaran.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -229,7 +229,7 @@
         $('#file_path').attr('href', '').html("");
 
         $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+            url: '/tataTertib/system/sanksi-pelanggaran.php',
             data: {
                 action: 'getById',
                 id: id
@@ -279,7 +279,7 @@
     onSanksi = (id, mhsId) => {
         onReset();
         $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+            url: '/tataTertib/system/sanksi-pelanggaran.php',
             data: {
                 action: 'getByPelanggaran',
                 id: id
@@ -331,7 +331,7 @@
                 formData.append('status', status);
                 formData.append('action', 'approvalSanksi');
                 $.ajax({
-                    url: '/tataTertib/controllers/list-pelanggaran.php',
+                    url: '/tataTertib/system/list-pelanggaran.php',
                     data: formData,
                     type: 'POST',
                     processData: false,
@@ -376,7 +376,7 @@
         let formData = new FormData(form);
         formData.append('action', 'storeSanksi');
         $.ajax({
-            url: '/tataTertib/controllers/list-pelanggaran.php',
+            url: '/tataTertib/system/list-pelanggaran.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -413,7 +413,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/list-pelanggaran.php',
+            url: '/tataTertib/system/list-pelanggaran.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -435,7 +435,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },
@@ -459,7 +459,7 @@
 
     getKategori = () => {
         $.ajax({
-            url: '/tataTertib/controllers/kategori.php',
+            url: '/tataTertib/system/kategori.php',
             data: {
                 action: 'getAll'
             },
@@ -484,7 +484,7 @@
     getMahasiswa = () => {
         let jurusanId = $('#jurusan_id').val();
         $.ajax({
-            url: '/tataTertib/controllers/mahasiswa.php',
+            url: '/tataTertib/system/mahasiswa.php',
             data: {
                 id: jurusanId,
                 action: 'getByJurusan'

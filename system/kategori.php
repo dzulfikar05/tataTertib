@@ -64,8 +64,6 @@ class KategoriController
 
     public function getAll()
     {
-
-
         $sql = "SELECT * FROM $this->table";
         $stmt = sqlsrv_query($this->conn, $sql);
 
@@ -96,7 +94,7 @@ class KategoriController
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
             array_push($params, $$form);
         }
-        
+
         $sql = "INSERT INTO $this->table (nama, keterangan, bobot) VALUES (?, ?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
@@ -109,7 +107,8 @@ class KategoriController
     }
 
 
-    public function update() {
+    public function update()
+    {
         $params = [];
 
         foreach ($this->listForm as $form) {
@@ -123,31 +122,29 @@ class KategoriController
 
         $sql = "UPDATE $this->table SET nama=?, keterangan=?, bobot=? WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $id = $_POST['id'];
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
-    
 }
 
 $kategoriController = new KategoriController($conn);

@@ -23,7 +23,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/kategori.php',
+                url: '/tataTertib/system/kategori.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -106,7 +106,7 @@
 
     onEdit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/kategori.php',
+            url: '/tataTertib/system/kategori.php',
             data: {
                 action: 'getById',
                 id: id
@@ -151,7 +151,7 @@
         let formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/kategori.php',
+            url: '/tataTertib/system/kategori.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -188,7 +188,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/kategori.php',
+            url: '/tataTertib/system/kategori.php',
             data: {
                 action: 'destroy',
                 id: id

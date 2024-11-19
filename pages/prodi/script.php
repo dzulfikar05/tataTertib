@@ -27,7 +27,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/prodi.php',
+                url: '/tataTertib/system/prodi.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -100,7 +100,7 @@
 
     onEdit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/prodi.php',
+            url: '/tataTertib/system/prodi.php',
             data: {
                 action: 'getById',
                 id: id
@@ -145,7 +145,7 @@
         let formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/prodi.php',
+            url: '/tataTertib/system/prodi.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -182,7 +182,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/prodi.php',
+            url: '/tataTertib/system/prodi.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -204,7 +204,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },

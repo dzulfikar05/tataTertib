@@ -45,7 +45,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/staff.php',
+                url: '/tataTertib/system/staff.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -125,7 +125,7 @@
                     render: function(data, type, row) {
                         var html = ``;
                         if (data == 'L') {
-                            html = `<span class="badge bg-success">Laki-Laki</span>`;           
+                            html = `<span class="badge bg-primary">Laki-Laki</span>`;           
                         }else{
                             html = `<span class="badge bg-info">Perempuan</span>`;
                         }
@@ -179,7 +179,7 @@
 
     onEdit = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/staff.php',
+            url: '/tataTertib/system/staff.php',
             data: {
                 action: 'getById',
                 id: id
@@ -236,7 +236,7 @@
         var formData = new FormData(form);
         formData.append('action', action);
         $.ajax({
-            url: '/tataTertib/controllers/staff.php',
+            url: '/tataTertib/system/staff.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -261,33 +261,18 @@
     
     
     onDestroy = (id) => {
-        Swal.fire({
-            title: "Apakah anda yakin?",
-            text: "Data akan terhapus dari database.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#0abb87",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Hapus",
-            cancelButtonText: "Batal"
-        }).then((result) => {
+        onConfirm("Data akan terhapus dari database.", (result) => {
             if (result.isConfirmed) {
                 destroyData(id);
             } else {
-                $('#modal_form').modal('hide');
-                Swal.fire({
-                    title: "Gagal !",
-                    text: "Data gagal terhapus.",
-                    icon: "error",
-                    confirmButtonColor: "#3b7ddd",
-                });
+                onAlert("Gagal !", "Data Aman, tidak terhapus :)", "error");
             }
         });
     }
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/staff.php',
+            url: '/tataTertib/system/staff.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -296,19 +281,9 @@
             success: (data) => {
                 if (data == 1) {
                     index();
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: "Data Terhapus :)",
-                        icon: "success",
-                        confirmButtonColor: "#3B7DDD",
-                    });
+                    onAlert("Sukses !", "Data Terhapus :)", "success");
                 } else {
-                    Swal.fire({
-                        title: "Gagal!",
-                        text: "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.",
-                        icon: "warning",
-                        confirmButtonColor: "#3B7DDD",
-                    });
+                    onAlert("Gagal !", "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -335,7 +310,7 @@
 
     getJurusan = () => {
         $.ajax({
-            url: '/tataTertib/controllers/jurusan.php',
+            url: '/tataTertib/system/jurusan.php',
             data: {
                 action: 'getAll'
             },
@@ -346,7 +321,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - ' + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '">' + data[i]['nama'] + '</option>';
                 }
 
                 $('#jurusan_id').html(html);
@@ -358,7 +333,7 @@
     }
     getProdi = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/prodi.php',
+            url: '/tataTertib/system/prodi.php',
             data: {
                 action: 'getByJurusan',
                 id: id
@@ -370,7 +345,7 @@
                 var html = '<option value="" class="drop-pilih">-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - '  + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '">'  + data[i]['nama'] + '</option>';
                 }
 
                 $('#prodi_id').html(html);
