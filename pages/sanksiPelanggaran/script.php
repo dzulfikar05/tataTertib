@@ -11,23 +11,8 @@
 
     $(() => {
         index();
-        
+
     });
-
-    changeJurusan = () => {
-        getMahasiswa();   
-    }
-
-    changeKategori = () => {
-        let id = $('#kategori_id').val();   
-        for (i = 0; i < listKategori.length; i++) {
-            if (listKategori[i]['id'] == id) {
-                $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
-                $('#bobot').val(listKategori[i]['bobot']);
-                $('#bobotKategori').val(listKategori[i]['bobot']);
-            }
-        }
-    }
 
     index = () => {
         if ($.fn.DataTable.isDataTable('#table')) {
@@ -39,7 +24,7 @@
             serverSide: true,
             ordering: true,
             ajax: {
-                url: '/tataTertib/controllers/list-pelanggaran.php',
+                url: '/tataTertib/controllers/sanksi-pelanggaran.php',
                 type: 'POST',
                 data: function(d) {
                     d.action = 'index';
@@ -47,7 +32,7 @@
             },
             columnDefs: [{
                     targets: 0,
-                    data: 'nama',
+                    data: 'pelanggaran_tanggal',
                     searchable: false,
                     orderable: false,
                     className: 'text-center',
@@ -57,12 +42,12 @@
                 },
                 {
                     targets: 1,
-                    data: 'tanggal',
+                    data: 'pelanggaran_tanggal',
                     searchable: true,
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row, meta) {
-
+                        
                         const dateObject = new Date(data.date);
                         const formatter = new Intl.DateTimeFormat('id-ID', {
                             day: '2-digit',
@@ -77,7 +62,7 @@
                 },
                 {
                     targets: 2,
-                    data: 'terlapor_mahasiswa_nim',
+                    data: 'pelanggaran_mahasiswa_nim',
                     searchable: true,
                     orderable: true,
                     className: 'text-center',
@@ -85,8 +70,8 @@
                         html = `
                             <div class="d-flex align-items-center">
                                 <div class="d-flex justify-content-start flex-column">
-                                    <span class="text-dark fw-bolder fs-6 text-start">${row.terlapor_mahasiswa_nim}</span>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.terlapor_mahasiswa_nama} (mahasiswa)</span>
+                                    <span class="text-dark fw-bolder fs-6 text-start">${row.pelanggaran_mahasiswa_nim}</span>
+                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelanggaran_mahasiswa_nama} (mahasiswa)</span>
                                 </div>
                             </div>
                         `;
@@ -94,28 +79,10 @@
                         return html;
                     }
                 },
+              
                 {
                     targets: 3,
-                    data: 'pelapor_dosen_nidn',
-                    searchable: true,
-                    orderable: true,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        html = `
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex justify-content-start flex-column">
-                                    <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_dosen_nama} (dosen)</span>
-                                </div>
-                            </div>
-                        `;
-
-                        return html;
-                    }
-                },
-                {
-                    targets: 4,
-                    data: 'keterangan',
+                    data: 'pelanggaran_keterangan',
                     searchable: true,
                     orderable: true,
                     className: 'text-start',
@@ -123,9 +90,10 @@
                         return data;
                     }
                 },
+               
                 {
-                    targets: 5,
-                    data: 'kategori_nama',
+                    targets: 4,
+                    data: 'pelanggaran_kategori_nama',
                     searchable: true,
                     orderable: true,
                     className: 'text-start',
@@ -137,85 +105,44 @@
                         return html;
                     }
                 },
+               
                 {
-                    targets: 6,
-                    data: 'verify_by',
-                    searchable: true,
-                    orderable: true,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        const dateObj = new Date(row.verify_at.date);
-                        const formatter1 = new Intl.DateTimeFormat('id-ID', {
-                            day: '2-digit',
-                            month: 'short',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                           
-                            hour12: false 
-                        });
-
-                        var formattedDate = formatter1.format(dateObj);
-                        
-                        var html =`
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex justify-content-start flex-column">
-                                    <span class="text-dark fw-bolder fs-6 text-start">${row.verifikator_staff_nama} <span class="text-muted fw-medium text-muted ">(staff)</span></span>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${formattedDate}</span>
-                                </div>
-                            </div>                                
-                        `;
-                        return html;
-                    }
-                },
-                {
-                    targets: 7,
+                    targets: 5,
                     data: 'status',
                     searchable: true,
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
+                        var dataSpan = [];
+                        if (data == 1) { dataSpan['color'] = 'text-bg-secondary'; dataSpan['message'] = 'Sanksi Belum Diupload'; }
+                        if (data == 2) { dataSpan['color'] = 'text-bg-primary'; dataSpan['message'] = 'Menunggu Verifikasi'; }
+                        if (data == 3) { dataSpan['color'] = 'text-bg-warning'; dataSpan['message'] = 'Revisi'; }
+                        if (data == 4) { dataSpan['color'] = 'text-bg-success'; dataSpan['message'] = 'Selesai'; }
                         let html = `
-                            <span class="badge text-bg-primary">${data==2?'Proses Sanksi':'Belum Diverifikasi' } </span>
+                            <span class="badge ${dataSpan['color']}">${dataSpan['message']}</span>
                         `;
                         return html;
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 6,
                     data: 'id',
                     searchable: true,
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        var btnColor = row.tugas == null ? 'btn-secondary' : 'btn-success';
-                        let html = `
-                            <button class="btn ${btnColor} btn-sm" type="button" onclick="onSanksi(${data}, ${row.pelaku_id})">
-                                <i class="fa fa-edit"></i>
-                                Buat Sanksi    
-                            </button>
-                        `;
-                        return html;
-                    }
-                },
-                {
-                    targets: 9,
-                    data: 'sanksi_status',
-                    searchable: true,
-                    orderable: true,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        var btnColor = 1;
-                        if(data == 1){ btnColor = 'btn-secondary'; }
-                        if(data == 2){ btnColor = 'btn-primary'; }
-                        if(data == 3){ btnColor = 'btn-warning'; }
-                        if(data == 4){ btnColor = 'btn-success disabled'; }
-                        if(data == null){ btnColor = 'disabled'; }
+                        var dataBtn = [];
+                        if(row.file_upload.length == 0){ dataBtn['color'] = 'btn-secondary'; dataBtn['message'] = 'Buat Tugas'; }
+
+                        if(row.file_upload.length > 0 || row.status == 2){ dataBtn['color'] = 'btn-primary'; dataBtn['message'] = 'Lihat Tugas'; }
+
+                        if(row.file_upload.length > 0 || row.status == 3){ dataBtn['color'] = 'btn-warning'; dataBtn['message'] = 'Lihat Tugas'; }
+                        if(row.file_upload.length > 0 || row.status == 4){ dataBtn['color'] = 'btn-success'; dataBtn['message'] = 'Revisi Tugas'; }
 
                         let html = `
-                            <button class="btn ${btnColor} btn-sm" type="button" onclick="onVerifikasiSanksi(${row.sanksi_id})">
-                                <i class="fa fa-check"></i>
-                                Verifikasi Sanksi    
+                            <button class="btn ${dataBtn['color']} btn-sm" type="button" onclick="onUpload(${data})">
+                                <i class="fa fa-edit"></i>
+                                ${dataBtn['message']}    
                             </button>
                         `;
                         return html;
@@ -225,9 +152,9 @@
         });
     };
 
-    onVerifikasiSanksi = (id) => {
-        $('#file_path').attr('href', '').html("");
-
+    
+    onUpload = (id) => {
+        onReset();
         $.ajax({
             url: '/tataTertib/controllers/sanksi-pelanggaran.php',
             data: {
@@ -237,13 +164,12 @@
             type: 'POST',
             success: (data) => {
                 var data = JSON.parse(data);
-                
-                $('#id_sanksi').val(data.id);
-                $('#id_mhs').val(data.pelanggaran_pelaku_id);
-                $('#id_pelanggaran').val(data.pelanggaran_id);
+
+                $('#id').val(data.id);
                 $('#status').val(data.status);
                 $('#tugas').val(data.tugas);
                 $('#keterangan').val(data.keterangan);
+                $('#komentar_revisi').val(data.komentar_revisi);
                 $('#deadline_date').val(data.deadline_date);
                 $('#deadline_time').val(data.deadline_time);
                 $('#verifikator_id').val(data.pelanggaran_verify_by);
@@ -254,110 +180,30 @@
                     // Hitung waktu relatif dengan moment.js
                     $('#terlambat').text('Overdue ' + moment(deadlineDateTime).fromNow(data.updated_at));
                 }
+
                 
                 if (data.file_upload.id) {
                     $('#file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
                     $('#file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
+                    $('#uploaded_text').removeClass('d-none');
                 }else{
                     $('#terlambat').text("");
+                    $('#uploaded_text').addClass('d-none');
                 }
 
-                if(data.status == 4){
-                    $('.footer-form').addClass('d-none');
-                }else{
-                    $('.footer-form').removeClass('d-none');
-                }
+                if(data.status == 4){$('.footer-form').addClass('d-none');}else{$('.footer-form').removeClass('d-none');}
+                if(data.status == 3){$('.komentar_revisi').removeClass('d-none');}else{$('.komentar_revisi').addClass('d-none');}
+
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
             }
         })
-        $('#modal_verifikasi').modal('show');
-    }
-
-
-    onSanksi = (id, mhsId) => {
-        onReset();
-        $.ajax({
-            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
-            data: {
-                action: 'getByPelanggaran',
-                id: id
-            },
-            type: 'POST',
-            success: (data) => {
-                var data = JSON.parse(data);
-
-                if (data[0] && data[0].id) {
-                    $('#id').val(data[0].id);
-                    $('#keterangan').val(data[0].keterangan); 
-                    $('#tugas').val(data[0].tugas); 
-                    $('#deadline_date').val(data[0].deadline_date); 
-                    $('#deadline_time').val(data[0].deadline_time); 
-                }
-                $('#pelanggaran_id').val(data.pelanggaran.id);
-                $('#mhs_id').val(data.pelanggaran.pelaku_id);
-                $('#pelanggaran_keterangan').html(data.pelanggaran.keterangan);
-                $('#pelanggaran_kategori_nama').val(data.pelanggaran.kategori_nama);
-                $('#kategori_bobot').val(data.pelanggaran.kategori_bobot);
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
-            }
-        })
-        
         $('#modal_form').modal('show');
-    }    
+    }  
 
-  
     onReset = () => {
-        $('#id').val(''); 
-        $('#keterangan').val(''); 
-        $('#tugas').val(''); 
-        $('#pelanggaran_id').val('');
-        $('#mhs_id').val('');
-        $('#pelanggaran_keterangan').html('');
-        $('#pelanggaran_kategori_nama').val('');
-        $('#kategori_bobot').val('');
-        $('#deadline_date').val('');
-        $('#deadline_time').val('');
-    }
 
-    onVerification = (status) => {
-        onConfirm(status == 3 ? "Data akan disimpan sebagai revisi dan notifikasi akan dikirimkan kepada yang bersangkutan." : "Data tugas sanksi akan disetujui dan disimpan di database.", (result) => {
-            if (result.isConfirmed) {
-                const form = $('#form_approval-sanksi').get(0);
-                let formData = new FormData(form);
-                formData.append('status', status);
-                formData.append('action', 'approvalSanksi');
-                $.ajax({
-                    url: '/tataTertib/controllers/list-pelanggaran.php',
-                    data: formData,
-                    type: 'POST',
-                    processData: false,
-                    contentType: false,
-                    success: (data) => {
-                        if (data == 1) {
-                            $('#modal_verifikasi').modal('hide');
-                            
-                            $('#keterangan_revisi').html('');
-                            index();
-
-                            onAlert("Sukses !", "Data Tersimpan :)", "success");
-
-                        } else {
-                            onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
-                        }
-                    },
-                    error: (jqXHR, textStatus, errorThrown) => {
-                        console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
-                    }
-                });
-            } else {
-                $('#modal_verifikasi').modal('hide');
-                onAlert("Gagal !", "Data gagal tersimpan.", "error");
-            }
-        });
     }
 
     onSave = () => {
@@ -372,11 +218,11 @@
     }
 
     saveData = () => {
-        const form = $('#form_list-pelanggaran').get(0);
+        const form = $('#form_upload-sanksi').get(0);
         let formData = new FormData(form);
-        formData.append('action', 'storeSanksi');
+        formData.append('action', "uploadSanksi");
         $.ajax({
-            url: '/tataTertib/controllers/list-pelanggaran.php',
+            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
             data: formData,
             type: 'POST',
             processData: false,
@@ -413,7 +259,7 @@
 
     destroyData = (id) => {
         $.ajax({
-            url: '/tataTertib/controllers/list-pelanggaran.php',
+            url: '/tataTertib/controllers/sanksi-pelanggaran.php',
             data: {
                 action: 'destroy',
                 id: id
@@ -507,7 +353,45 @@
         })
     }
 
- 
+    onVerifikasi = (id, mhsId) => {
+        $('#id_verifikasi').val(id);
+        $('#mahasiswa_id').val(mhsId);
+        $('#modal_verifikasi').modal('show');
+    }
+
+    onSaveVerifikasi = (status) => {
+        
+        onConfirm(status == 2 ? "Data Aduan akan tersimpan dengan status disetujui pada database." : "Data Aduan akan tersimpan dengan status ditolak pada database.", (result) => {
+            if (result.isConfirmed) {
+                const form = $('#form_verifikasi').get(0);
+                let formData = new FormData(form);
+                formData.append('action', 'verifikasiAduan');
+                formData.append('status', status);
+                $.ajax({
+                    url: '/tataTertib/controllers/sanksi-pelanggaran.php',
+                    data: formData,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: (data) => {
+                        if (data == 1) {
+                            $('#modal_verifikasi').modal('hide');
+                            index();
+                            onAlert("Sukses !", status == 2 ? "Data Telah disetujui dan tersimpan :)" : "Data Telah ditolak dan tersimpan :)", "success");
+                        } else {
+                            onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                        }
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
+                    }
+                });
+            } else {
+                $('#modal_verifikasi').modal('hide');
+                onAlert("Gagal !", "Data gagal tersimpan.", "error");
+            }
+        });
+    }
 
     
 </script>

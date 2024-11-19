@@ -2,7 +2,7 @@
     <div class="mx-4 w-100 row">
         <div class="col-md-3 d-flex justify-content-start">
             <i class="fa fa-tasks text-primary me-4 fs-3" style="position: absolute; top:90px"></i>
-            <span style="font-size: 14px; font-weight:600; margin-top: 2px" class="ms-5">Data List Pelanggaran</span>
+            <span style="font-size: 14px; font-weight:600; margin-top: 2px" class="ms-5">Data Sanksi Pelanggaran</span>
         </div>
         <!-- <div class="col-md-9 d-flex justify-content-end">
             <button class="btn btn-primary btn-sm text-white" onclick="onAdd()"><i class="fa fa-calculator"></i> &nbsp;Tambah Data</button>
@@ -19,13 +19,10 @@
                     <th width="40px">No</th>
                     <th>Tanggal Aduan</th>
                     <th>Terlapor</th>
-                    <th>Pelapor</th>
                     <th width="400px">Keterangan</th>
-                    <th>Kategori</th>
-                    <th>Verifikasi Oleh</th>
+                    <th>Jenis Pelanggaran</th>
                     <th>Status</th>
-                    <th width="52px" style="text-align: center;">Sanksi</th>
-                    <th width="52px" style="text-align: center;">Verifikasi<br>Tugas</th>
+                    <th width="60px" style="text-align: center;">Sanksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +31,8 @@
         </table>
     </div>
 </div>
+
+
 
 
 <?php include 'form.php'; ?>

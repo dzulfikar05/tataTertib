@@ -15,12 +15,14 @@ class KategoriController
     private $conn;
     private $table;
     private $tableView;
+    private $tableSanksi;
 
     public function __construct($conn)
     {
         $this->conn = $conn;
         $this->table = 'Pelanggaran.pelanggaran';
         $this->tableView = 'Pelanggaran.v_pelanggaran';
+        $this->tableSanksi = 'Pelanggaran.sanksi';
     }
 
     public function index()
@@ -61,6 +63,24 @@ class KategoriController
         }
 
         $data = fetchArray($stmt);
+
+        $data['data'] = array_map(function ($item) {
+            $id = $item['id'];
+
+            $sql2 = "SELECT * FROM Upload.file_Upload WHERE model_id = ? AND model_name = ?";
+            $params2 = array($id, 'Pelanggaran.sanksi');
+            $stmt2 = sqlsrv_query($this->conn, $sql2, $params2);
+
+            if (!$stmt2) die(print_r(sqlsrv_errors(), true));
+
+            $data2 = fetchArray($stmt2);
+
+
+            $item['file_upload'] = $data2['data'][0] ?? [];
+
+            return $item;
+        }, $data['data']);
+
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
@@ -176,40 +196,49 @@ class KategoriController
         }
     }
 
-    public function verifikasiAduan()
+    public function storeSanksi()
     {
-        $id = $_POST['id'];
-        $kategoriId = $_POST['kategori_id'];
-        $mhsId = $_POST['mahasiswa_id'];
-        $bobot = $_POST['bobot'];
-        $status = $_POST['status'];
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+        $pelakuId = $_POST['mhs_id'];
 
-        $sql3 = "SELECT pelaku_id, pelapor_id FROM $this->table WHERE id=$id";
-        $data = fetchArray(sqlsrv_query($this->conn, $sql3));
+        if($id == ""){
+            $params = [$_POST['pelanggaran_id'], $_POST['tugas'], $_POST['keterangan'], 1, $_POST['deadline_date'], $_POST['deadline_time']];    
+            $sql = "INSERT INTO Pelanggaran.sanksi (pelanggaran_id, tugas, keterangan, status) VALUES (?, ?, ?, ?, ? , ?)";
+            $stmt = sqlsrv_query($this->conn, $sql, $params);
+            if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
+            
+            $this->sendNotification($pelakuId, 'Admin telah memberi tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi.php');
 
-        $sql = "UPDATE $this->table SET kategori_id=$kategoriId, status=$status WHERE id = $id";
-        $stmt = sqlsrv_query($this->conn, $sql);
+            return 1;
+        } else{
+            $params = [$_POST['tugas'], $_POST['keterangan'], $_POST['deadline_date'], $_POST['deadline_time'], $id];    
+            $sql = "UPDATE Pelanggaran.sanksi SET tugas = ?, keterangan = ?, deadline_date = ?, deadline_time = ? WHERE id = ?";
+            $stmt = sqlsrv_query($this->conn, $sql, $params);
+            if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
 
+            $this->sendNotification($pelakuId, 'Admin telah mengubah tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi.php');
 
-        if ($stmt) {
-            $sql2 = "UPDATE Users.mahasiswa SET poin=poin+$bobot WHERE id=$mhsId";
-            $stmt2 = sqlsrv_query($this->conn, $sql2);
-
-            if ($stmt2) {
-                $pelakuId = $data['data'][0]['pelaku_id'];
-                $pelaporId = $data['data'][0]['pelapor_id'];
-
-                $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh admin' : 'Aduan pelanggaran anda laporkan ditolak oleh admin', 'pelanggaran.php');
-                if($status == 2) {
-                $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin' , 'sanksi.php');
-                } 
-                return 1;
-            }else{
-                die(print_r(sqlsrv_errors(), true));
-                return 0;
-            }
-        } else {
+            return 1;
         }
+    }
+
+    public function approvalSanksi()
+    {
+        $sql = "UPDATE $this->tableSanksi SET komentar_revisi= ?, status = ? WHERE id = ?";
+        $params = array($_POST['komentar_revisi'], $_POST['status'], $_POST['id_sanksi']);
+        $stmt = sqlsrv_query($this->conn, $sql, $params);
+
+        if (!$stmt) { die(print_r(sqlsrv_errors(), true)); }
+
+        if($_POST['status'] == 4){
+            $sql = "UPDATE $this->table SET status = ? WHERE id = ?";
+            $params = array(3, $_POST['id_pelanggaran']);
+            $stmt = sqlsrv_query($this->conn, $sql, $params);
+        }
+
+        $this->sendNotification($_POST['id_mhs'],  $_POST['status'] == 4 ? 'Admin telah menyetujui tugas pelanggaran' : 'Tugas anda perlu dilakukan revisi', 'list-pelanggaran');
+
+        return 1; 
     }
 
     public function sendNotification($recipientId, $message, $directLink)
@@ -230,5 +259,6 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getById') echo $kategoriController->getById();
     if ($_POST['action'] == 'update') echo $kategoriController->update();
     if ($_POST['action'] == 'destroy') echo $kategoriController->destroy();
-    if ($_POST['action'] == 'verifikasiAduan') echo $kategoriController->verifikasiAduan();
+    if ($_POST['action'] == 'storeSanksi') echo $kategoriController->storeSanksi();
+    if ($_POST['action'] == 'approvalSanksi') echo $kategoriController->approvalSanksi();
 }
