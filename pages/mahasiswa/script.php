@@ -277,7 +277,7 @@
 
                     onAlert("Sukses !", "Data Tersimpan :)", "success");
                 } else {
-                    onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -332,7 +332,7 @@
                 } else {
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Data Gagal Terhapus :(",
+                        text: "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.",
                         icon: "warning",
                         confirmButtonColor: "#3B7DDD",
                     });

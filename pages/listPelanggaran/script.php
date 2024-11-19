@@ -346,7 +346,7 @@
                             onAlert("Sukses !", "Data Tersimpan :)", "success");
 
                         } else {
-                            onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                            onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                         }
                     },
                     error: (jqXHR, textStatus, errorThrown) => {
@@ -391,7 +391,7 @@
                     onAlert("Sukses !", "Data Tersimpan :)", "success");
 
                 } else {
-                    onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -424,7 +424,7 @@
                     index();
                     onAlert("Sukses !", "Data Terhapus :)", "success");
                 } else {
-                    onAlert("Gagal !", "Data Gagal Terhapus :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {

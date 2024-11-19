@@ -190,7 +190,7 @@
                 } else {
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Data Gagal Tersimpan :(",
+                        text: "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.",
                         icon: "warning",
                         confirmButtonColor: "#3B7DDD",
                     });
@@ -248,7 +248,7 @@
                 } else {
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Data Gagal Terhapus :(",
+                        text: "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.",
                         icon: "warning",
                         confirmButtonColor: "#3B7DDD",
                     });

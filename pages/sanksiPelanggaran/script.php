@@ -237,7 +237,7 @@
                     onAlert("Sukses !", "Data Tersimpan :)", "success");
 
                 } else {
-                    onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -270,7 +270,7 @@
                     index();
                     onAlert("Sukses !", "Data Terhapus :)", "success");
                 } else {
-                    onAlert("Gagal !", "Data Gagal Terhapus :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -379,7 +379,7 @@
                             index();
                             onAlert("Sukses !", status == 2 ? "Data Telah disetujui dan tersimpan :)" : "Data Telah ditolak dan tersimpan :)", "success");
                         } else {
-                            onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                            onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                         }
                     },
                     error: (jqXHR, textStatus, errorThrown) => {

@@ -41,6 +41,11 @@ class KategoriController
         ];
     }
 
+    /**
+     * Get data for datatables
+     * 
+     * @return string|array
+     */
     public function index()
     {
 

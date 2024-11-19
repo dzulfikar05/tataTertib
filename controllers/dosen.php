@@ -33,25 +33,26 @@ class DosenCotroller
         $this->tableUpload = 'Upload.file_upload';
     }
 
-    public function index() {
-        
+    public function index()
+    {
+
         $columns = ['nidn', 'nama', 'jurusan_id', 'jk', 'no_hp'];
-        
+
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
         $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nim';
-    
+
         $query = "SELECT * FROM $this->tableView WHERE 1=1";
-    
+
         if (!empty($searchValue)) {
             $query .= " AND (nidn LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR status LIKE '%$searchValue%' OR jk LIKE '%$searchValue%' OR no_hp LIKE '%$searchValue%')";
         }
-    
+
         $query .= " ORDER BY $orderColumn $orderDirection";
-    
+
         $stmt = sqlsrv_query($this->conn, $query);
-        
+
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
@@ -70,12 +71,13 @@ class DosenCotroller
             "recordsFiltered" => $data['num_rows'],
             "data" => $data['data'] ?? []
         ];
-    
+
         return json_encode($response);
     }
 
-    public function getById(){
-    
+    public function getById()
+    {
+
         $id = $_POST['id'];
         $sql = "SELECT * FROM $this->tableView WHERE id = ?";
         $params = array($id);
@@ -87,11 +89,13 @@ class DosenCotroller
             'data' => $data['data'][0] ?? [],
             'photo' => $photo['data'][0] ?? []
         ];
+
         return json_encode($return);
     }
 
 
-    public function storeUser() {
+    public function storeUser()
+    {
         $params = [];
 
         foreach ($this->listFormUser as $form) {
@@ -105,34 +109,35 @@ class DosenCotroller
         $sql = "INSERT INTO $this->tableUser (username, password, role) OUTPUT INSERTED.* VALUES (?, ?, 3)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
-        if ($stmt === false) {
+        if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
-        
+
         $insertedData = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-        
+
         return $insertedData;
     }
 
-    public function store() {
+    public function store()
+    {
         $user = $this->storeUser();
-    
+
         $upload = isset($_FILES["user_photo"]) ? $this->uploadImage($user['id'], $_FILES["user_photo"], 'uploads/users/dosen/') : null;
 
         $params = [];
-        
+
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
             array_push($params, $$form);
         }
-        
+
         array_push($params, $user['id']);
 
         $sql = "INSERT INTO $this->table (nidn, nama, jurusan_id, jk, no_hp, user_id)
         VALUES (?, ?, ?, ?, ?, ?)";
 
-        if($user){
+        if ($user) {
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if ($stmt) {
                 return 1;
@@ -140,13 +145,13 @@ class DosenCotroller
                 die(print_r(sqlsrv_errors(), true));
                 return 0;
             }
-        }else{
+        } else {
             return 0;
         }
-    
     }
-    
-    public function updateUser($id) {
+
+    public function updateUser($id)
+    {
         $params = [];
 
         foreach ($this->listFormUser as $form) {
@@ -154,7 +159,7 @@ class DosenCotroller
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
             array_push($params, $$form);
         }
-        
+
         if (isset($_POST['password']) && !empty($_POST['password'])) {
             $params[1] = password_hash($_POST['password'], PASSWORD_BCRYPT);
             $sql = "UPDATE $this->tableUser SET username = ?, password = ? WHERE id = $id";
@@ -162,27 +167,27 @@ class DosenCotroller
             unset($params[1]);
             $sql = "UPDATE $this->tableUser SET username = ? WHERE id = $id";
         }
-        
+
 
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt === false) {
             die(print_r(sqlsrv_errors(), true));
         }
-        
+
         $updatedData = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-        
+
         return $updatedData;
     }
-    
-    public function update() {
-    
+
+    public function update()
+    {
         $user = $this->updateUser($_POST['user_id']);
 
         $this->uploadImage($_POST['user_id'], $_FILES["user_photo"], 'uploads/users/dosen/', $_POST['user_id']);
 
         $params = [];
-        
+
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
@@ -192,9 +197,9 @@ class DosenCotroller
         array_push($params, $id);
 
         $sql = "UPDATE $this->table SET nidn=?, nama=?, jurusan_id=?, jk=?, no_hp=? WHERE id = ?";
-    
+
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
         } else {
@@ -202,64 +207,74 @@ class DosenCotroller
             return 0;
         }
     }
-    
-    public function destroy() {
+
+    public function destroy()
+    {
         $user = json_decode($this->getById());
         $id = $_POST['id'];
+        $file = getImageUpload($user->data->user_id, 'Users.users');
+        $filepath = "../" . $file['data'][0]['path'];
+
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-        
+
         $delPP = sqlsrv_query($this->conn, "DELETE FROM $this->tableUpload WHERE model_id = ? AND model_name = ?", array($user->data->user_id, 'Users.users'));
         $delUser = sqlsrv_query($this->conn, "DELETE FROM $this->tableUser WHERE id = ?", array($user->data->user_id));
 
+        if (file_exists($filepath)) {
+            unlink($filepath);
+        }
+
         if ($stmt && $delPP && $delUser) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
 
-    public function uploadImage($userid, $inputPhoto, $path, $modelId = null) {
-        
+    public function uploadImage($userid, $inputPhoto, $path, $modelId = null)
+    {
 
-        if(isset($inputPhoto) && $inputPhoto['error'] == 0) {
+
+        if (isset($inputPhoto) && $inputPhoto['error'] == 0) {
             $fileType = strtolower(pathinfo($inputPhoto["name"], PATHINFO_EXTENSION));
             $new_file_name = time() . "." . $fileType;
 
-            $target_dir = "../".$path; // Folder tempat menyimpan gambar
-            
+            $target_dir = "../" . $path; // Folder tempat menyimpan gambar
+
             $target_file = $target_dir . $new_file_name;
-    
+
             // Memeriksa apakah file yang diupload benar-benar gambar
             $check = getimagesize($inputPhoto["tmp_name"]);
-            if($check !== false) {
+            if ($check !== false) {
                 if (file_exists($target_file)) {
                     echo "Sorry, file already exists.";
                     return 0;
                 }
-    
+
                 // Memeriksa ukuran file (contoh maksimal 5MB)
                 if ($_FILES["user_photo"]["size"] > 5000000) {
                     echo "Sorry, your file is too large.";
                     return 0;
                 }
-    
+
                 // Memeriksa format file (hanya mengizinkan jpg, png, jpeg, dan gif)
-                if($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg"
-                && $fileType != "gif" ) {
+                if (
+                    $fileType != "jpg" && $fileType != "png" && $fileType != "jpeg"
+                    && $fileType != "gif"
+                ) {
                     echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                     return 0;
                 }
-    
+
                 // Memindahkan file ke folder yang ditentukan dengan nama baru
                 if (move_uploaded_file($_FILES["user_photo"]["tmp_name"], $target_file)) {
-                    $image_path = isset($inputPhoto) && $inputPhoto['error'] == 0 ? $path.$new_file_name : null;
-                    
+                    $image_path = isset($inputPhoto) && $inputPhoto['error'] == 0 ? $path . $new_file_name : null;
+
                     sqlsrv_query($this->conn, "DELETE FROM $this->tableUpload WHERE model_id = ? AND model_name = ?", array($modelId, 'Users.users'));
-                    
+
                     $params = [
                         $userid,
                         'Users.users',
@@ -275,6 +290,7 @@ class DosenCotroller
                     if ($stmt) {
                         return 1;
                     } else {
+                        die(print_r(sqlsrv_errors(), true));
                         return 0;
                     }
                 } else {

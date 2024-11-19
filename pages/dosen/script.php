@@ -112,7 +112,7 @@
                     render: function(data, type, row) {
                         var html = ``;
                         if (data == 'L') {
-                            html = `<span class="badge bg-success">Laki-Laki</span>`;           
+                            html = `<span class="badge bg-primary">Laki-Laki</span>`;           
                         }else{
                             html = `<span class="badge bg-info">Perempuan</span>`;
                         }
@@ -234,7 +234,7 @@
 
                     onAlert("Sukses !", "Data Tersimpan :)", "success");
                 } else {
-                    onAlert("Gagal !", "Data Gagal Tersimpan :(", "warning");
+                    onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -245,26 +245,12 @@
     
     
     onDestroy = (id) => {
-        Swal.fire({
-            title: "Apakah anda yakin?",
-            text: "Data akan terhapus dari database.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#0abb87",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Hapus",
-            cancelButtonText: "Batal"
-        }).then((result) => {
+        onConfirm("Data akan terhapus dari database.", (result) => {
             if (result.isConfirmed) {
                 destroyData(id);
             } else {
                 $('#modal_form').modal('hide');
-                Swal.fire({
-                    title: "Gagal !",
-                    text: "Data gagal terhapus.",
-                    icon: "error",
-                    confirmButtonColor: "#3b7ddd",
-                });
+                onAlert("Gagal !", "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.", "warning");
             }
         });
     }
@@ -280,19 +266,10 @@
             success: (data) => {
                 if (data == 1) {
                     index();
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: "Data Terhapus :)",
-                        icon: "success",
-                        confirmButtonColor: "#3B7DDD",
-                    });
+                    
+                    onAlert("Sukses !", "Data Tersimpan :)", "success");
                 } else {
-                    Swal.fire({
-                        title: "Gagal!",
-                        text: "Data Gagal Terhapus :(",
-                        icon: "warning",
-                        confirmButtonColor: "#3B7DDD",
-                    });
+                    onAlert("Gagal !", "Data Gagal Terhapus :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
@@ -330,7 +307,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['kode'] + ' - ' + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '">' + data[i]['nama'] + '</option>';
                 }
 
                 $('#jurusan_id').html(html);
