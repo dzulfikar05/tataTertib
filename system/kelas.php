@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class ProdiController
+class Prodi
 {
     private $listForm = [
         'id',
@@ -24,7 +24,7 @@ class ProdiController
     public function index()
     {
 
-        $columns = ['nama','prodi_id', 'prodi_nama', 'jurusan_id', 'jurusan_nama'];
+        $columns = ['nama', 'prodi_id', 'prodi_nama', 'jurusan_id', 'jurusan_nama'];
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
@@ -98,15 +98,15 @@ class ProdiController
 
         if ($stmt) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
 
 
-    public function update() {
+    public function update()
+    {
         $params = [];
 
         foreach ($this->listForm as $form) {
@@ -120,53 +120,52 @@ class ProdiController
 
         $sql = "UPDATE $this->table SET nama=?,  prodi_id=? WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         $id = $_POST['id'];
         $sql = "DELETE FROM $this->table WHERE id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-    
+
         if ($stmt) {
             return 1;
-} else {
+        } else {
             die(print_r(sqlsrv_errors(), true));
-            return 0; 
-
+            return 0;
         }
     }
-    
-    public function getByProdi() {
+
+    public function getByProdi()
+    {
         $id = $_POST['id'];
         $sql = "SELECT * FROM $this->tableView WHERE prodi_id = ?";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         $data = [];
-    
+
         $data = fetchArray($stmt);
-    
+
         return json_encode($data['data'] ?? []);
     }
-    
 }
 
-$prodiController = new ProdiController($conn);
+$prodi = new Prodi($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'index') echo $prodiController->index();
-    if ($_POST['action'] == 'getById') echo $prodiController->getById();
-    if ($_POST['action'] == 'getByProdi') echo $prodiController->getByProdi();
-    if ($_POST['action'] == 'getAll') echo $prodiController->getAll();
-    if ($_POST['action'] == 'store') echo $prodiController->store();
-    if ($_POST['action'] == 'update') echo $prodiController->update();
-    if ($_POST['action'] == 'destroy') echo $prodiController->destroy();
+    if ($_POST['action'] == 'index') echo $prodi->index();
+    if ($_POST['action'] == 'getById') echo $prodi->getById();
+    if ($_POST['action'] == 'getByProdi') echo $prodi->getByProdi();
+    if ($_POST['action'] == 'getAll') echo $prodi->getAll();
+    if ($_POST['action'] == 'store') echo $prodi->store();
+    if ($_POST['action'] == 'update') echo $prodi->update();
+    if ($_POST['action'] == 'destroy') echo $prodi->destroy();
 }

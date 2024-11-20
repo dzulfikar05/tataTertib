@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class KategoriController
+class AduanPelanggaran
 {
     private $listForm = [
         // 'id',
@@ -279,15 +279,15 @@ class KategoriController
     }
 }
 
-$kategoriController = new KategoriController($conn);
+$aduanPelanggaran = new AduanPelanggaran($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $kategoriController->getAll();
-    if ($_POST['action'] == 'index') echo $kategoriController->index();
-    if ($_POST['action'] == 'store') echo $kategoriController->store();
-    if ($_POST['action'] == 'getById') echo $kategoriController->getById();
-    if ($_POST['action'] == 'update') echo $kategoriController->update();
-    if ($_POST['action'] == 'destroy') echo $kategoriController->destroy();
-    if ($_POST['action'] == 'verifikasiAduan') echo $kategoriController->verifikasiAduan();
-    if ($_POST['action'] == 'getStatMahasiswa') echo $kategoriController->getStatMahasiswa();
+    if ($_POST['action'] == 'getAll') echo $aduanPelanggaran->getAll();
+    if ($_POST['action'] == 'index') echo $aduanPelanggaran->index();
+    if ($_POST['action'] == 'store') echo $aduanPelanggaran->store();
+    if ($_POST['action'] == 'getById') echo $aduanPelanggaran->getById();
+    if ($_POST['action'] == 'update') echo $aduanPelanggaran->update();
+    if ($_POST['action'] == 'destroy') echo $aduanPelanggaran->destroy();
+    if ($_POST['action'] == 'verifikasiAduan') echo $aduanPelanggaran->verifikasiAduan();
+    if ($_POST['action'] == 'getStatMahasiswa') echo $aduanPelanggaran->getStatMahasiswa();
 }

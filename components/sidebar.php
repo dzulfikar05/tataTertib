@@ -59,15 +59,15 @@
                 </ul>
             </li>
             <li class="sidebar-item 
-                <?= $_SESSION['menu_active'] == 'laporanAduan' ? 'active' : ''  ?>
+                <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>
             ">
                 <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Laporan</span>
                 </a>
                 <ul id="laporan_sidebar" class="sidebar-dropdown list-unstyled 
-                    collapse<?= $_SESSION['menu_active'] == 'laporanAduan' ? 'd' : ''  ?> 
+                    collapse<?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'd' : ''  ?> 
                     " data-bs-parent="#sidebar">
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporanAduan' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporanAduan.php'>Laporan Aduan</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporan-aduan-pelanggaran.php'>Laporan Aduan Pelanggaran</a></li>
                   
                 </ul>
             </li>

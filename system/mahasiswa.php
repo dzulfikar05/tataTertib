@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class MahasiswaCotroller
+class Mahasiswa
 {
     private $conn;
     private $table;
@@ -336,13 +336,13 @@ class MahasiswaCotroller
 
 
 
-$mahasiswaCotroller = new MahasiswaCotroller($conn);
+$mahasiswa = new Mahasiswa($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'index') echo $mahasiswaCotroller->index();
-    if ($_POST['action'] == 'store') echo $mahasiswaCotroller->store();
-    if ($_POST['action'] == 'getById') echo $mahasiswaCotroller->getById();
-    if ($_POST['action'] == 'getByJurusan') echo $mahasiswaCotroller->getByJurusan();
-    if ($_POST['action'] == 'update') echo $mahasiswaCotroller->update();
-    if ($_POST['action'] == 'destroy') echo $mahasiswaCotroller->destroy();
+    if ($_POST['action'] == 'index') echo $mahasiswa->index();
+    if ($_POST['action'] == 'store') echo $mahasiswa->store();
+    if ($_POST['action'] == 'getById') echo $mahasiswa->getById();
+    if ($_POST['action'] == 'getByJurusan') echo $mahasiswa->getByJurusan();
+    if ($_POST['action'] == 'update') echo $mahasiswa->update();
+    if ($_POST['action'] == 'destroy') echo $mahasiswa->destroy();
 }

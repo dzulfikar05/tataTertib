@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class KategoriController
+class ListPelanggaran
 {
     private $listForm = [
         // 'id',
@@ -253,15 +253,15 @@ class KategoriController
     }
 }
 
-$kategoriController = new KategoriController($conn);
+$listPelanggaran = new ListPelanggaran($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $kategoriController->getAll();
-    if ($_POST['action'] == 'index') echo $kategoriController->index();
-    if ($_POST['action'] == 'store') echo $kategoriController->store();
-    if ($_POST['action'] == 'getById') echo $kategoriController->getById();
-    if ($_POST['action'] == 'update') echo $kategoriController->update();
-    if ($_POST['action'] == 'destroy') echo $kategoriController->destroy();
-    if ($_POST['action'] == 'storeSanksi') echo $kategoriController->storeSanksi();
-    if ($_POST['action'] == 'approvalSanksi') echo $kategoriController->approvalSanksi();
+    if ($_POST['action'] == 'getAll') echo $listPelanggaran->getAll();
+    if ($_POST['action'] == 'index') echo $listPelanggaran->index();
+    if ($_POST['action'] == 'store') echo $listPelanggaran->store();
+    if ($_POST['action'] == 'getById') echo $listPelanggaran->getById();
+    if ($_POST['action'] == 'update') echo $listPelanggaran->update();
+    if ($_POST['action'] == 'destroy') echo $listPelanggaran->destroy();
+    if ($_POST['action'] == 'storeSanksi') echo $listPelanggaran->storeSanksi();
+    if ($_POST['action'] == 'approvalSanksi') echo $listPelanggaran->approvalSanksi();
 }

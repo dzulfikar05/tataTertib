@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class DosenCotroller
+class Dosen
 {
     private $conn;
     private $table;
@@ -315,12 +315,12 @@ class DosenCotroller
 
 
 
-$dosenCotroller = new DosenCotroller($conn);
+$dosen = new Dosen($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'index') echo $dosenCotroller->index();
-    if ($_POST['action'] == 'store') echo $dosenCotroller->store();
-    if ($_POST['action'] == 'getById') echo $dosenCotroller->getById();
-    if ($_POST['action'] == 'update') echo $dosenCotroller->update();
-    if ($_POST['action'] == 'destroy') echo $dosenCotroller->destroy();
+    if ($_POST['action'] == 'index') echo $dosen->index();
+    if ($_POST['action'] == 'store') echo $dosen->store();
+    if ($_POST['action'] == 'getById') echo $dosen->getById();
+    if ($_POST['action'] == 'update') echo $dosen->update();
+    if ($_POST['action'] == 'destroy') echo $dosen->destroy();
 }

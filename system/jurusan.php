@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class JurusanController
+class Jurusan
 {
     private $listForm = [
         'id',
@@ -143,13 +143,13 @@ class JurusanController
     }
 }
 
-$jurusanController = new JurusanController($conn);
+$jurusan = new Jurusan($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $jurusanController->getAll();
-    if ($_POST['action'] == 'index') echo $jurusanController->index();
-    if ($_POST['action'] == 'store') echo $jurusanController->store();
-    if ($_POST['action'] == 'getById') echo $jurusanController->getById();
-    if ($_POST['action'] == 'update') echo $jurusanController->update();
-    if ($_POST['action'] == 'destroy') echo $jurusanController->destroy();
+    if ($_POST['action'] == 'getAll') echo $jurusan->getAll();
+    if ($_POST['action'] == 'index') echo $jurusan->index();
+    if ($_POST['action'] == 'store') echo $jurusan->store();
+    if ($_POST['action'] == 'getById') echo $jurusan->getById();
+    if ($_POST['action'] == 'update') echo $jurusan->update();
+    if ($_POST['action'] == 'destroy') echo $jurusan->destroy();
 }

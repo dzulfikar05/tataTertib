@@ -43,3 +43,4 @@ onAlert = (title, message, icon) => {
 formaterDate = (date) => {
     return moment(date).format('DD MMMM YYYY');
 }
+

@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class ProdiController
+class Prodi
 {
     private $listForm = [
         'id',
@@ -161,14 +161,14 @@ class ProdiController
     }
 }
 
-$prodiController = new ProdiController($conn);
+$prodi = new Prodi($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $prodiController->getAll();
-    if ($_POST['action'] == 'index') echo $prodiController->index();
-    if ($_POST['action'] == 'store') echo $prodiController->store();
-    if ($_POST['action'] == 'getByJurusan') echo $prodiController->getByJurusan();
-    if ($_POST['action'] == 'getById') echo $prodiController->getById();
-    if ($_POST['action'] == 'update') echo $prodiController->update();
-    if ($_POST['action'] == 'destroy') echo $prodiController->destroy();
+    if ($_POST['action'] == 'getAll') echo $prodi->getAll();
+    if ($_POST['action'] == 'index') echo $prodi->index();
+    if ($_POST['action'] == 'store') echo $prodi->store();
+    if ($_POST['action'] == 'getByJurusan') echo $prodi->getByJurusan();
+    if ($_POST['action'] == 'getById') echo $prodi->getById();
+    if ($_POST['action'] == 'update') echo $prodi->update();
+    if ($_POST['action'] == 'destroy') echo $prodi->destroy();
 }

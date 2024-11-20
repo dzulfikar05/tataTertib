@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class KategoriController
+class Kategori
 {
     private $listForm = [
         'id',
@@ -148,13 +148,13 @@ class KategoriController
 
 }
 
-$kategoriController = new KategoriController($conn);
+$kategori = new Kategori($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $kategoriController->getAll();
-    if ($_POST['action'] == 'index') echo $kategoriController->index();
-    if ($_POST['action'] == 'store') echo $kategoriController->store();
-    if ($_POST['action'] == 'getById') echo $kategoriController->getById();
-    if ($_POST['action'] == 'update') echo $kategoriController->update();
-    if ($_POST['action'] == 'destroy') echo $kategoriController->destroy();
+    if ($_POST['action'] == 'getAll') echo $kategori->getAll();
+    if ($_POST['action'] == 'index') echo $kategori->index();
+    if ($_POST['action'] == 'store') echo $kategori->store();
+    if ($_POST['action'] == 'getById') echo $kategori->getById();
+    if ($_POST['action'] == 'update') echo $kategori->update();
+    if ($_POST['action'] == 'destroy') echo $kategori->destroy();
 }

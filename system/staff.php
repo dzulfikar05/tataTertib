@@ -2,7 +2,7 @@
 include '../connection.php';
 include '../helper/helper.php';
 
-class StaffCotroller
+class Staff
 {
     private $conn;
     private $table;
@@ -320,12 +320,12 @@ class StaffCotroller
 
 
 
-$staffCotroller = new StaffCotroller($conn);
+$staff = new Staff($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'index') echo $staffCotroller->index();
-    if ($_POST['action'] == 'store') echo $staffCotroller->store();
-    if ($_POST['action'] == 'getById') echo $staffCotroller->getById();
-    if ($_POST['action'] == 'update') echo $staffCotroller->update();
-    if ($_POST['action'] == 'destroy') echo $staffCotroller->destroy();
+    if ($_POST['action'] == 'index') echo $staff->index();
+    if ($_POST['action'] == 'store') echo $staff->store();
+    if ($_POST['action'] == 'getById') echo $staff->getById();
+    if ($_POST['action'] == 'update') echo $staff->update();
+    if ($_POST['action'] == 'destroy') echo $staff->destroy();
 }
