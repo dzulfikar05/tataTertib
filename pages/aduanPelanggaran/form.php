@@ -62,6 +62,9 @@
                             <textarea type="text" class="form-control textarea-keterangan" rows="5" id="keterangan" disabled placeholder="keterangan pelanggaran yang di lakukan"></textarea>
                         </div>
                     </div>
+                    <div class="col-12 my-3">
+                        <div class="history_mhs text-muted"></div>
+                    </div>
                     <div class="col-12">
                         <label class="required-label mb-1">Kategori</label>
                         <div class="form-group mb-2">

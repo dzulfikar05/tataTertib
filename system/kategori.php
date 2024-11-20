@@ -145,6 +145,7 @@ class KategoriController
             return 0;
         }
     }
+
 }
 
 $kategoriController = new KategoriController($conn);

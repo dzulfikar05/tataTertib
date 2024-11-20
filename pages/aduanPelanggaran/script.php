@@ -8,6 +8,9 @@
     let listKategori;
 
     let action = '';
+    let historyMhs = [];
+
+    let bobotUpper = false;
 
     $(() => {
         index();
@@ -15,6 +18,7 @@
         $('.jurusan_id-select2').select2({
             dropdownParent: $('#modal_form')
         });
+
         $('.pelaku_id-select2').select2({
             dropdownParent: $('#modal_form')
         });
@@ -32,14 +36,27 @@
     }
 
     changeKategori = () => {
-        let id = $('#kategori_id').val();   
-        for (i = 0; i < listKategori.length; i++) {
-            if (listKategori[i]['id'] == id) {
-                $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
-                $('#bobot').val(listKategori[i]['bobot']);
-                $('#bobotKategori').val(listKategori[i]['bobot']);
+        $('#kategori_id').on('select2:select', function (e) {
+            let id = $('#kategori_id').val();   
+        
+            let selectedOption = e.params.data.element; 
+            let bobot = $(selectedOption).data('bobot');
+
+            
+            for (i = 0; i < listKategori.length; i++) {
+                if (listKategori[i]['id'] == id) {
+                    $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
+                    $('#bobot').val(listKategori[i]['bobot']);
+                    $('#bobotKategori').val(listKategori[i]['bobot']);
+                }
+
+                if(historyMhs[bobot] > 3){
+                    bobotUpper = true;
+                }else{
+                    bobotUpper = false;
+                }
             }
-        }
+        });
     }
 
     index = () => {
@@ -145,7 +162,7 @@
                     render: function(data, type, row) {
 
                         let html = `
-                            <button class="btn btn-warning btn-sm fs-5" type="button" onclick="onVerifikasi(${row.id},${row.terlapor_mahasiswa_id})" title="Menuggu Verifikasi">
+                            <button class="btn btn-warning btn-sm fs-5" type="button" onclick="onVerifikasi(${row.id},${row.terlapor_mahasiswa_id}, ${row.pelaku_id})" title="Menuggu Verifikasi">
                                 <i class="fa fa-clock" ></i>
                             </button>
                         `;
@@ -333,7 +350,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['id'] + '">' + data[i]['nama'] + '</option>';
+                    html += '<option value="' + data[i]['id'] + '" data-bobot="' + data[i]['bobot'] + '">' + data[i]['nama'] + '</option>';
                 }
 
                 $('#kategori_id').html(html);
@@ -370,20 +387,47 @@
         })
     }
 
-    onVerifikasi = (id, mhsId) => {
+    onVerifikasi = (id, mhsId, mhsUserId) => {
         $('#id_verifikasi').val(id);
         $('#mahasiswa_id').val(mhsId);
-        $('#modal_verifikasi').modal('show');
+        historyMhs = [];
+
+        $.ajax({
+            url: '/tataTertib/system/aduan-pelanggaran.php',
+            data: {
+                action: 'getStatMahasiswa',
+                mhsId : mhsUserId
+            },
+            type: 'POST',
+            success: (data) => {
+                data = JSON.parse(data);
+
+                var html = `<p>Riwayat Pelanggaran :</p>`;
+                $.each(data, (index, value) => {
+                    html += `<span> Pelanggaran dengan bobot ${index} poin : ${value} kali</span><br>`;
+                })
+
+                $('.history_mhs').html(html);
+                $('#modal_verifikasi').modal('show');
+
+                historyMhs = data;
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
+            }
+        })
     }
 
     onSaveVerifikasi = (status) => {
-        
-        onConfirm(status == 2 ? "Data Aduan akan tersimpan dengan status disetujui pada database." : "Data Aduan akan tersimpan dengan status ditolak pada database.", (result) => {
+        let messageAlert = bobotUpper ? "Data Aduan akan tersimpan dengan status disetujui pada database. Pelanggaran dilakukan melebihi 3x, sehingga bobot akan dinaikkan 1 poin." : "Data Aduan akan tersimpan dengan status disetujui pada database."; 
+
+        onConfirm(status == 2 ? messageAlert : "Data Aduan akan tersimpan dengan status ditolak pada database.", (result) => {
             if (result.isConfirmed) {
                 const form = $('#form_verifikasi').get(0);
                 let formData = new FormData(form);
                 formData.append('action', 'verifikasiAduan');
                 formData.append('status', status);
+                formData.append('bobotUpper', bobotUpper);
                 $.ajax({
                     url: '/tataTertib/system/aduan-pelanggaran.php',
                     data: formData,

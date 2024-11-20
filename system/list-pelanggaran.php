@@ -203,7 +203,7 @@ class KategoriController
 
         if($id == ""){
             $params = [$_POST['pelanggaran_id'], $_POST['tugas'], $_POST['keterangan'], 1, $_POST['deadline_date'], $_POST['deadline_time']];    
-            $sql = "INSERT INTO Pelanggaran.sanksi (pelanggaran_id, tugas, keterangan, status) VALUES (?, ?, ?, ?, ? , ?)";
+            $sql = "INSERT INTO Pelanggaran.sanksi (pelanggaran_id, tugas, keterangan, status, deadline_date, deadline_time) VALUES (?, ?, ?, ?, ? , ?)";
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
             

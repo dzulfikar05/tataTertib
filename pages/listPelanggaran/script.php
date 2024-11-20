@@ -132,7 +132,7 @@
                     render: function(data, type, row) {
                         let html = `
                             <span >${data} </span><br>
-                            <span class="text-secondary fw-bold d-block fs-7 text-start">Bobot Poin : ${row.kategori_bobot}</span>
+                            <span class="text-secondary fw-bold d-block fs-7 text-start">Bobot Poin : ${row.kategori_bobot + row.bobotUpper} </span>
                         `;
                         return html;
                     }
@@ -299,7 +299,7 @@
                 $('#mhs_id').val(data.pelanggaran.pelaku_id);
                 $('#pelanggaran_keterangan').html(data.pelanggaran.keterangan);
                 $('#pelanggaran_kategori_nama').val(data.pelanggaran.kategori_nama);
-                $('#kategori_bobot').val(data.pelanggaran.kategori_bobot);
+                $('#kategori_bobot').val(data.pelanggaran.kategori_bobot + data.pelanggaran.bobotUpper);
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);

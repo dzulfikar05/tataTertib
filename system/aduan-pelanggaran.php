@@ -178,6 +178,8 @@ class KategoriController
 
     public function verifikasiAduan()
     {
+        $bobotUpper = $_POST['bobotUpper'] ? 1 : 0;
+
         session_start();
         $id = $_POST['id'];
         $kategoriId = $_POST['kategori_id'];
@@ -191,8 +193,11 @@ class KategoriController
         $date = date('Y-m-d H:i:s');
         $loginId = $_SESSION['user']['id'];
 
-        $sql = "UPDATE $this->table SET kategori_id=?, status=?, verify_by=?, verify_at=? WHERE id = ?";
-        $params = array($kategoriId, $status, $loginId, $date, $id);
+       
+        
+
+        $sql = "UPDATE $this->table SET kategori_id=?, status=?, verify_by=?, verify_at=?, bobotUpper=? WHERE id = ?";
+        $params = array($kategoriId, $status, $loginId, $date, $bobotUpper, $id);
 
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
@@ -204,7 +209,7 @@ class KategoriController
                 $pelakuId = $data['data'][0]['pelaku_id'];
                 $pelaporId = $data['data'][0]['pelapor_id'];
 
-                $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh admin' : 'Aduan pelanggaran anda laporkan ditolak oleh admin', 'pelanggaran.php');
+                $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh admin' : 'Aduan pelanggaran anda laporkan ditolak oleh admin', 'list-pelanggaran.php');
                 if($status == 2) {
                 $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin' , 'sanksi.php');
                 } 
@@ -224,6 +229,34 @@ class KategoriController
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         if (!$stmt) {die(print_r(sqlsrv_errors(), true)); }
     }
+
+    public function getStatMahasiswa()
+    {
+        $mhsId = $_POST['mhsId'];
+
+        $sql = "SELECT kategori_bobot, COUNT(*) AS jumlah, SUM(kategori_bobot) AS total_bobot
+                FROM Pelanggaran.v_pelanggaran
+                WHERE pelaku_id = ?
+                GROUP BY kategori_bobot
+            ";
+
+        $params = array($mhsId);
+
+        $stmt = sqlsrv_query($this->conn, $sql, $params);
+        if(!$stmt) die(print_r(sqlsrv_errors(), true));
+
+        $data = fetchArray($stmt);
+        
+        $stat = [];
+
+        foreach ($data['data'] as $key => $value) {
+            if($value['kategori_bobot'] != ""){
+                $stat[$value['kategori_bobot']] = $value['jumlah'];
+            }
+        }
+        
+        return json_encode($stat);
+    }
 }
 
 $kategoriController = new KategoriController($conn);
@@ -236,4 +269,5 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'update') echo $kategoriController->update();
     if ($_POST['action'] == 'destroy') echo $kategoriController->destroy();
     if ($_POST['action'] == 'verifikasiAduan') echo $kategoriController->verifikasiAduan();
+    if ($_POST['action'] == 'getStatMahasiswa') echo $kategoriController->getStatMahasiswa();
 }
