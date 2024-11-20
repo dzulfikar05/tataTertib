@@ -18,7 +18,7 @@ class Notification
         session_start();
         $id = $_SESSION['user']['id'];
 
-        $sql = "SELECT * FROM $this->table WHERE recipient_id = ?";
+        $sql = "SELECT * FROM $this->table WHERE recipient_id = ? ORDER BY created_at DESC";
         $params = array($id);
 
         $stmt = sqlsrv_query($this->conn, $sql, $params);

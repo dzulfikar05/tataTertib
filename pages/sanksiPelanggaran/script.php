@@ -100,7 +100,7 @@
                     render: function(data, type, row) {
                         let html = `
                             <span >${data} </span><br>
-                            <span class="text-secondary fw-bold d-block fs-7 text-start">Bobot Poin : ${row.kategori_bobot + row.bobotUpper}</span>
+                            <span class="text-secondary fw-bold d-block fs-7 text-start">Tingkat : ${row.kategori_bobot - row.bobotUpper}</span>
                         `;
                         return html;
                     }

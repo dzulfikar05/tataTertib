@@ -10,7 +10,7 @@
     let action = '';
     let historyMhs = [];
 
-    let bobotUpper = false;
+    let bobotUpper = 0;
 
     $(() => {
         index();
@@ -42,20 +42,20 @@
             let selectedOption = e.params.data.element; 
             let bobot = $(selectedOption).data('bobot');
 
-            
             for (i = 0; i < listKategori.length; i++) {
                 if (listKategori[i]['id'] == id) {
                     $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
                     $('#bobot').val(listKategori[i]['bobot']);
                     $('#bobotKategori').val(listKategori[i]['bobot']);
                 }
-
-                if(historyMhs[bobot] > 3){
-                    bobotUpper = true;
-                }else{
-                    bobotUpper = false;
-                }
             }
+
+            if(historyMhs.stat[bobot] > 3){
+                bobotUpper = 1;
+            }else{
+                bobotUpper = 0;
+            }
+
         });
     }
 
@@ -131,14 +131,25 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        html = `
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex justify-content-start flex-column">
-                                    <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_dosen_nama} (dosen)</span>
+                        if(row.pelapor_role == 3){
+                            html = `
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
+                                        <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_dosen_nama} (dosen)</span>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        }else if(row.pelapor_role == 2){
+                            html = `
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_staff_nip}</span>
+                                        <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_staff_nama} (staff)</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
 
                         return html;
                     }
@@ -396,19 +407,21 @@
             url: '/tataTertib/system/aduan-pelanggaran.php',
             data: {
                 action: 'getStatMahasiswa',
-                mhsId : mhsUserId
+                mhsId : mhsUserId,
+                id: id
             },
             type: 'POST',
             success: (data) => {
                 data = JSON.parse(data);
 
                 var html = `<p>Riwayat Pelanggaran :</p>`;
-                $.each(data, (index, value) => {
-                    html += `<span> Pelanggaran dengan bobot ${index} poin : ${value} kali</span><br>`;
+                $.each(data.stat, (index, value) => {
+                    html += `<span> Pelanggaran dengan Tingkat ${index} : ${value} kali</span><br>`;
                 })
 
                 $('.history_mhs').html(html);
                 $('#modal_verifikasi').modal('show');
+                $('#keterangan_pelanggaran').html(data.data_keterangan);
 
                 historyMhs = data;
             },
@@ -419,7 +432,7 @@
     }
 
     onSaveVerifikasi = (status) => {
-        let messageAlert = bobotUpper ? "Data Aduan akan tersimpan dengan status disetujui pada database. Pelanggaran dilakukan melebihi 3x, sehingga bobot akan dinaikkan 1 poin." : "Data Aduan akan tersimpan dengan status disetujui pada database."; 
+        let messageAlert = bobotUpper==1 ? "Data Aduan akan tersimpan dengan status disetujui pada database. Pelanggaran dilakukan melebihi 3x, sehingga bobot akan dinaikkan 1 poin." : "Data Aduan akan tersimpan dengan status disetujui pada database."; 
 
         onConfirm(status == 2 ? messageAlert : "Data Aduan akan tersimpan dengan status ditolak pada database.", (result) => {
             if (result.isConfirmed) {

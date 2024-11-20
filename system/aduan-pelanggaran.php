@@ -94,11 +94,11 @@ class KategoriController
         $data = fetchArray($stmt);
 
         // get jurusan from mahasiswa
-        $sql2 = "SELECT jurusan_id FROM Users.v_mahasiswa WHERE user_id = ".$data['data'][0]['pelaku_id'];
+        $sql2 = "SELECT jurusan_id FROM Users.v_mahasiswa WHERE user_id = " . $data['data'][0]['pelaku_id'];
         $stmt2 = sqlsrv_query($this->conn, $sql2);
         $data2 = fetchArray($stmt2);
         $data['data'][0]['mahasiswa'] = $data2['data'][0];
-        
+
         return json_encode($data['data'][0] ?? []);
     }
 
@@ -111,7 +111,7 @@ class KategoriController
 
         foreach ($this->listForm as $form) {
             if ($_POST['action'] == 'store' && $form == 'id') continue;
-            if ($form =='tanggal') continue;
+            if ($form == 'tanggal') continue;
 
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
             array_push($params, $$form);
@@ -142,7 +142,7 @@ class KategoriController
 
         foreach ($this->listForm as $form) {
             if ($form == 'id') continue;
-            if ($form =='tanggal') continue;
+            if ($form == 'tanggal') continue;
             $$form = isset($_POST[$form]) ? $_POST[$form] : null;
             array_push($params, $$form);
         }
@@ -178,14 +178,16 @@ class KategoriController
 
     public function verifikasiAduan()
     {
-        $bobotUpper = $_POST['bobotUpper'] ? 1 : 0;
-
-        session_start();
         $id = $_POST['id'];
         $kategoriId = $_POST['kategori_id'];
         $mhsId = $_POST['mahasiswa_id'];
         $bobot = $_POST['bobot'];
         $status = $_POST['status'];
+
+        $bobotUpper = (int)$_POST['bobotUpper'] ? 1 : 0;
+        if($_POST['status'] == 4 ) $bobotUpper=0;
+
+        session_start();
 
         $sql3 = "SELECT pelaku_id, pelapor_id FROM $this->table WHERE id=$id";
         $data = fetchArray(sqlsrv_query($this->conn, $sql3));
@@ -193,8 +195,6 @@ class KategoriController
         $date = date('Y-m-d H:i:s');
         $loginId = $_SESSION['user']['id'];
 
-       
-        
 
         $sql = "UPDATE $this->table SET kategori_id=?, status=?, verify_by=?, verify_at=?, bobotUpper=? WHERE id = ?";
         $params = array($kategoriId, $status, $loginId, $date, $bobotUpper, $id);
@@ -210,52 +210,72 @@ class KategoriController
                 $pelaporId = $data['data'][0]['pelapor_id'];
 
                 $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh admin' : 'Aduan pelanggaran anda laporkan ditolak oleh admin', 'list-pelanggaran.php');
-                if($status == 2) {
-                $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin' , 'sanksi.php');
-                } 
+                if ($status == 2) {
+                    $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin', 'sanksi.php');
+
+                    if($bobot == 1 || $status == 2 && $bobotUpper == 1) {
+                        $sql = "UPDATE Users.mahasiswa SET status=0 WHERE id=$mhsId";
+                        $stmt = sqlsrv_query($this->conn, $sql);
+                        if(!$stmt) die(print_r(sqlsrv_errors(), true));
+                    }
+                }
+
+
+
+               
                 return 1;
-            }else{
+            } else {
                 die(print_r(sqlsrv_errors(), true));
                 return 0;
             }
-        } else {
-        }
+        } 
     }
 
     public function sendNotification($recipientId, $message, $directLink)
-    {   
+    {
         $params = array($recipientId, $message, $directLink, date('Y-m-d H:i:s'));
         $sql = "INSERT INTO Notification.notification (recipient_id, content, direct_link, created_at) VALUES (? , ?, ?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-        if (!$stmt) {die(print_r(sqlsrv_errors(), true)); }
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
 
     public function getStatMahasiswa()
     {
         $mhsId = $_POST['mhsId'];
 
-        $sql = "SELECT kategori_bobot, COUNT(*) AS jumlah, SUM(kategori_bobot) AS total_bobot
-                FROM Pelanggaran.v_pelanggaran
-                WHERE pelaku_id = ?
-                GROUP BY kategori_bobot
-            ";
+        $sql = "SELECT kategori_bobot, bobotUpper  
+            FROM Pelanggaran.v_pelanggaran
+            WHERE pelaku_id = ?
+        ";
 
         $params = array($mhsId);
 
         $stmt = sqlsrv_query($this->conn, $sql, $params);
-        if(!$stmt) die(print_r(sqlsrv_errors(), true));
+        if (!$stmt) die(print_r(sqlsrv_errors(), true));
 
         $data = fetchArray($stmt);
-        
         $stat = [];
 
-        foreach ($data['data'] as $key => $value) {
-            if($value['kategori_bobot'] != ""){
-                $stat[$value['kategori_bobot']] = $value['jumlah'];
+        foreach ($data['data'] as $i => $v) {
+            $upper = $v['bobotUpper'] ?? 0;
+            $totalBobot = $v['kategori_bobot'] - $upper;
+        
+            if ($totalBobot > 0) {
+                if (!isset($stat[$totalBobot])) {
+                    $stat[$totalBobot] = 0;
+                }
+                $stat[$totalBobot] += 1;
             }
         }
-        
-        return json_encode($stat);
+
+        $dataReturn = [
+            'stat' => $stat,
+            'data_keterangan' => json_decode($this->getById())->keterangan ?? ''
+        ];
+
+        return json_encode($dataReturn);
     }
 }
 

@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="col-3 mb-3">
-                                <label class=" mb-1">Bobot</label>
+                                <label class=" mb-1">Tingkat</label>
                                 <div class="form-group mb-2">
                                     <input type="number" id="kategori_bobot" class="form-control" disabled>
                                 </div>

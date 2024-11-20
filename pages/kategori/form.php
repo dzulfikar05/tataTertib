@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-md-3">
 
-                                <label class="required-label mb-1">Bobot</label>
+                                <label class="required-label mb-1">Tingkat</label>
                                 <div class="form-group mb-2">
                                     <div class="form-line">
                                         <input type="number" class="form-control" id="bobot" name="bobot" required />

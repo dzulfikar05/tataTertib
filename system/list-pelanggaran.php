@@ -50,6 +50,8 @@ class KategoriController
                 OR (terlapor_mahasiswa_nama LIKE '%$searchValue%')
                 OR (pelapor_dosen_nidn LIKE '%$searchValue%')
                 OR (pelapor_dosen_nama LIKE '%$searchValue%')
+                OR (pelapor_staff_nip LIKE '%$searchValue%')
+                OR (pelapor_staff_nama LIKE '%$searchValue%')
                 OR (keterangan LIKE '%$searchValue%')
             ";
         }
@@ -65,6 +67,7 @@ class KategoriController
         $data = fetchArray($stmt);
 
         $data['data'] = array_map(function ($item) {
+
             $id = $item['id'];
 
             $sql2 = "SELECT * FROM Upload.file_Upload WHERE model_id = ? AND model_name = ?";

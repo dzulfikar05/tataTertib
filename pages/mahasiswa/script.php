@@ -129,18 +129,18 @@
                         return data;
                     }
                 },
+                // {
+                //     targets: 6,
+                //     data: 'poin',
+                //     searchable: true,
+                //     orderable: true,
+                //     className: 'text-center',
+                //     render: function(data, type, row) {
+                //         return data;
+                //     }
+                // },
                 {
                     targets: 6,
-                    data: 'poin',
-                    searchable: true,
-                    orderable: true,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        return data;
-                    }
-                },
-                {
-                    targets: 7,
                     data: 'status',
                     searchable: true,
                     orderable: true,
@@ -156,7 +156,7 @@
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 7,
                     data: 'id',
                     searchable: true,
                     orderable: true,

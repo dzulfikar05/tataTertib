@@ -79,7 +79,7 @@
                                     <div class="row g-0 align-items-center">
                                         <div class="col-12">
                                             <div class="small mt-1">${v.content}</div>
-                                            <div class="text-muted small mt-1">${formatDate(v.created_at.date)}</div>
+                                            <div class="text-muted small mt-1">${v.created_at ? formatDate(v.created_at.date) : '-'}</div>
                                         </div>
                                     </div>
                                 </a>

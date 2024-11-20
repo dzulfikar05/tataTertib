@@ -19,7 +19,7 @@
                     <th width="40px">No</th>
                     <th>Nama</th>
                     <th>Deskripsi</th>
-                    <th width="120px" style="text-align: center;">Bobot</th>
+                    <th width="120px" style="text-align: center;">Tingkat</th>
                     <th width="120px" style="text-align: center;">Aksi</th>
                 </tr>
             </thead>

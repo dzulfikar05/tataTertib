@@ -59,7 +59,7 @@
                     <div class="col-12">
                         <label class="mb-1">Deskripsi Pelanggaran</label>
                         <div class="form-group mb-2">
-                            <textarea type="text" class="form-control textarea-keterangan" rows="5" id="keterangan" disabled placeholder="keterangan pelanggaran yang di lakukan"></textarea>
+                            <textarea type="text" class="form-control textarea-keterangan" rows="5" id="keterangan_pelanggaran" disabled placeholder="keterangan pelanggaran yang di lakukan"></textarea>
                         </div>
                     </div>
                     <div class="col-12 my-3">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label class="mb-1">Bobot</label>
+                            <label class="mb-1">Tingkat</label>
                             <div class="form-group mb-2">
                                 <input type="hidden" id="bobotKategori" name="bobot">
                                 <input type="hidden" id="mahasiswa_id" name="mahasiswa_id">

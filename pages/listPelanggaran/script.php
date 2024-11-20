@@ -101,14 +101,25 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        html = `
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex justify-content-start flex-column">
-                                    <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_dosen_nama} (dosen)</span>
+                        if(row.pelapor_role == 3){
+                            html = `
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
+                                        <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_dosen_nama} (dosen)</span>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        }else if(row.pelapor_role == 2){
+                            html = `
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex justify-content-start flex-column">
+                                        <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_staff_nip}</span>
+                                        <span class="text-muted fw-bold text-muted d-block fs-7 text-start">${row.pelapor_staff_nama} (staff)</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
 
                         return html;
                     }
@@ -132,7 +143,7 @@
                     render: function(data, type, row) {
                         let html = `
                             <span >${data} </span><br>
-                            <span class="text-secondary fw-bold d-block fs-7 text-start">Bobot Poin : ${row.kategori_bobot + row.bobotUpper} </span>
+                            <span class="text-secondary fw-bold d-block fs-7 text-start">Tingkat : ${row.kategori_bobot - row.bobotUpper} </span>
                         `;
                         return html;
                     }

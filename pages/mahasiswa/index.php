@@ -22,7 +22,7 @@
                     <th>Prodi</th>
                     <th>Kelas</th>
                     <th>Angkatan</th>
-                    <th>Poin</th>
+                    <!-- <th>Poin</th> -->
                     <th>Status</th>
                     <th width="120px">Aksi</th>
                 </tr>
