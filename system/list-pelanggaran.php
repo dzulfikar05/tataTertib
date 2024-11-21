@@ -253,15 +253,15 @@ class ListPelanggaran
     }
 }
 
-$listPelanggaran = new ListPelanggaran($conn);
+$ListPelanggaran = new ListPelanggaran($conn);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $listPelanggaran->getAll();
-    if ($_POST['action'] == 'index') echo $listPelanggaran->index();
-    if ($_POST['action'] == 'store') echo $listPelanggaran->store();
-    if ($_POST['action'] == 'getById') echo $listPelanggaran->getById();
-    if ($_POST['action'] == 'update') echo $listPelanggaran->update();
-    if ($_POST['action'] == 'destroy') echo $listPelanggaran->destroy();
-    if ($_POST['action'] == 'storeSanksi') echo $listPelanggaran->storeSanksi();
-    if ($_POST['action'] == 'approvalSanksi') echo $listPelanggaran->approvalSanksi();
+    if ($_POST['action'] == 'getAll') echo $ListPelanggaran->getAll();
+    if ($_POST['action'] == 'index') echo $ListPelanggaran->index();
+    if ($_POST['action'] == 'store') echo $ListPelanggaran->store();
+    if ($_POST['action'] == 'getById') echo $ListPelanggaran->getById();
+    if ($_POST['action'] == 'update') echo $ListPelanggaran->update();
+    if ($_POST['action'] == 'destroy') echo $ListPelanggaran->destroy();
+    if ($_POST['action'] == 'storeSanksi') echo $ListPelanggaran->storeSanksi();
+    if ($_POST['action'] == 'approvalSanksi') echo $ListPelanggaran->approvalSanksi();
 }
