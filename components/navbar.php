@@ -39,7 +39,7 @@
                     <i class="align-middle" data-feather="settings"></i>
                 </a>
                 <?php
-                    $ppUser = $_SESSION['user']['photo']['path'] ? "/tataTertib/". $_SESSION['user']['photo']['path'] : "/tataTertib/assets/img/noImage.jpg";
+                    $ppUser = $_SESSION['user']['photo']['path'] ? "/tataTertib/". $_SESSION['user']['photo']['path'] : "/tataTertib/assets/img/userNoImage.jpg";
                     $username = $_SESSION['user']['username'] ?? '-';
                 ?>
                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">

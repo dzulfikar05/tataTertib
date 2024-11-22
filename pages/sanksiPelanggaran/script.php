@@ -137,7 +137,8 @@
                         if(row.file_upload.length > 0 || row.status == 2){ dataBtn['color'] = 'btn-primary'; dataBtn['message'] = 'Lihat Tugas'; }
 
                         if(row.file_upload.length > 0 || row.status == 3){ dataBtn['color'] = 'btn-warning'; dataBtn['message'] = 'Lihat Tugas'; }
-                        if(row.file_upload.length > 0 || row.status == 4){ dataBtn['color'] = 'btn-success'; dataBtn['message'] = 'Revisi Tugas'; }
+
+                        if(row.file_upload.length > 0 || row.status == 4){ dataBtn['color'] = 'btn-success'; dataBtn['message'] = 'Selesai'; }
 
                         let html = `
                             <button class="btn ${dataBtn['color']} btn-sm" type="button" onclick="onUpload(${data})">

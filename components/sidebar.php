@@ -18,6 +18,8 @@
 
 
             <li class="sidebar-item 
+                <?= $_SESSION['user']['role'] != 1 ? 'd-none' : ''  ?>
+
                 <?= $_SESSION['menu_active'] == 'mahasiswa' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'staff' ? 'active' : ''  ?>
@@ -29,7 +31,7 @@
                     collapse<?= $_SESSION['menu_active'] == 'mahasiswa' || $_SESSION['menu_active'] == 'dosen' || $_SESSION['menu_active'] == 'staff' ? 'd' : ''  ?> 
                     
                     " data-bs-parent="#sidebar">
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?>"><a class='sidebar-link' href='dosen.php'>Dosen</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?> "><a class='sidebar-link' href='dosen.php'>Dosen</a></li>
                     <li class="sidebar-item <?= $_SESSION['menu_active'] == 'staff' ? 'active' : ''  ?>"><a class='sidebar-link' href='staff.php'>Staff</a></li>
                     <li class="sidebar-item <?= $_SESSION['menu_active'] == 'mahasiswa' ? 'active' : ''  ?>"><a class='sidebar-link' href='mahasiswa.php'>Mahasiswa</a></li>
                 </ul>
@@ -48,17 +50,29 @@
                     collapse<?= $_SESSION['menu_active'] == 'kategori' || $_SESSION['menu_active'] == 'aduan-pelanggaran' || $_SESSION['menu_active'] == 'list-pelanggaran' || $_SESSION['menu_active'] == 'sanksi-pelanggaran' ? 'd' : ''  ?> 
                     " data-bs-parent="#sidebar">
 
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>"><a class='sidebar-link' href='kategori.php'>Kategori</a></li>
-                   
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='aduan-pelanggaran.php'>Aduan Pelanggaran</a></li>
-                   
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'list-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='list-pelanggaran.php'>List Pelanggaran</a></li>
                     
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'sanksi-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='sanksi-pelanggaran.php'>Sanksi Pelanggaran</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'kategori' ? 'active' : ''  ?>  <?= $_SESSION['user']['role'] != 1 ? 'd-none' : ''  ?>"><a class='sidebar-link' href='kategori.php'>Kategori</a></li>
+
+                    <li class="sidebar-item 
+                    <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
+                    "><a class='sidebar-link' href='aduan-pelanggaran.php'>Aduan Pelanggaran</a></li>
+                   
+                    <li class="sidebar-item 
+                    <?= $_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
+                    <?= $_SESSION['menu_active'] == 'list-pelanggaran' ? 'active' : ''  ?>
+                    "><a class='sidebar-link' href='list-pelanggaran.php'>List Pelanggaran</a></li>
+                    
+                    <li class="sidebar-item 
+                    <?= $_SESSION['menu_active'] == 'sanksi-pelanggaran' ? 'active' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 3 ? 'd-none' : ''  ?>
+                    "><a class='sidebar-link' href='sanksi-pelanggaran.php'>Sanksi Pelanggaran</a></li>
                   
                 </ul>
             </li>
             <li class="sidebar-item 
+                <?= $_SESSION['user']['role'] == 4 ? 'd-none' : ''  ?>
+
                 <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'active' : ''  ?>
             ">
@@ -78,6 +92,9 @@
 
 
             <li class="sidebar-item 
+                <?= $_SESSION['user']['role'] != 1 ? 'd-none' : ''  ?>
+
+
                 <?= $_SESSION['menu_active'] == 'jurusan' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'prodi' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'kelas' ? 'active' : ''  ?>

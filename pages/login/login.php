@@ -1,7 +1,6 @@
 <script>
-	$(() => {
-		$('#btn-login').click(function() {
-			var form = $('#form-login').get(0);
+	onLogin = () => {
+		var form = $('#form-login').get(0);
 			var formData = new FormData(form);
 			formData.append('action', 'verify_login');
 			$.ajax({
@@ -11,9 +10,12 @@
 				processData: false,
 				contentType: false,
 				success: (data) => {
-					console.log(data);
-					if (data == 1) {
-						window.location.href = 'index.php';
+					
+					if (data) {
+						setTimeout(() => {
+							window.location.href = 'index.php';
+						}, 1000); // 1000ms = 1 detik
+
 					} else {
 						Swal.fire({
 							title: "Login Gagal!",
@@ -27,8 +29,7 @@
 					console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
 				}
 			});
-		});
-	})
+	}
 
 	logout = () => {
 		$.ajax({

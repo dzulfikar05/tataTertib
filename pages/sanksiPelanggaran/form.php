@@ -40,8 +40,8 @@
                             <textarea class="form-control " rows="5" id="komentar_revisi" disabled></textarea>
                         </div>
                         <div class="col-12 mb-3">
-                            <label class="mb-1 required-label">Upload Tugas </label>
-                            <input type="file" class="form-control" id="file" name="file">
+                            <label class="mb-1 required-label input-file-x">Upload Tugas </label>
+                            <input type="file" class="form-control input-file-x" id="file" name="file">
                             <div class="text-muted " id="uploaded_text">
                                 uploaded file :  <a href="" id="file_path" target="_blank"></a>
                             </div>

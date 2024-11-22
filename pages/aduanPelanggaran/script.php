@@ -170,9 +170,9 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-
+                        let role  = "<?= $_SESSION['user']['role']?>";
                         let html = `
-                            <button class="btn btn-warning btn-sm fs-5" type="button" onclick="onVerifikasi(${row.id},${row.terlapor_mahasiswa_id}, ${row.pelaku_id})" title="Menuggu Verifikasi">
+                            <button class="btn btn-warning btn-sm fs-5 ${role != 2 ? 'disabled' : ''}" type="button" onclick="onVerifikasi(${row.id},${row.terlapor_mahasiswa_id}, ${row.pelaku_id})" title="Menuggu Verifikasi">
                                 <i class="fa fa-clock" ></i>
                             </button>
                         `;

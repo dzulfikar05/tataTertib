@@ -39,7 +39,6 @@
                     $_SESSION['user']['photo'] = $photo['data'][0] ?? [];
 
 
-    
                     return 1;
                 } else {
                     return 0; 
