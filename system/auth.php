@@ -14,11 +14,11 @@
         public function verify_login() {
             $username = $_POST['username'];
             $password = $_POST['password'];
-    
+            
             $sql = sqlsrv_query($this->conn, "SELECT * FROM $this->table WHERE username = ?", array($username));
     
             $data = fetchArray($sql);
-    
+            
             if ($data['num_rows'] > 0) {
                 if (password_verify($password, $data['data'][0]['password'])) {
                     session_start();
@@ -28,6 +28,17 @@
                         'username' => $data['data'][0]['username'],
                         'role' => $data['data'][0]['role']
                     ];
+
+                    
+                    $sql2 = "SELECT * FROM Upload.file_Upload WHERE model_id = " . $data['data'][0]['id'] . " AND model_name = 'Users.users'";
+                    $stmt2 = sqlsrv_query($this->conn, $sql2);
+                    if(!$stmt2) die(print_r(sqlsrv_errors(), true));
+
+                    $photo = fetchArray($stmt2);
+
+                    $_SESSION['user']['photo'] = $photo['data'][0] ?? [];
+
+
     
                     return 1;
                 } else {

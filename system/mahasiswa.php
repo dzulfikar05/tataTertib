@@ -331,6 +331,17 @@ class Mahasiswa
             }
         }
     }
+
+    public function activationMhs()
+    {
+        $id = $_POST['id'];
+        $sql = "UPDATE $this->table SET status = ? WHERE id = ?";
+        $stmt = sqlsrv_query($this->conn, $sql, [1, $id]);
+
+        if (!$stmt) { die(print_r(sqlsrv_errors(), true)); }
+
+        return 1;
+    }
 }
 
 
@@ -345,4 +356,5 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getByJurusan') echo $mahasiswa->getByJurusan();
     if ($_POST['action'] == 'update') echo $mahasiswa->update();
     if ($_POST['action'] == 'destroy') echo $mahasiswa->destroy();
+    if ($_POST['action'] == 'activationMhs') echo $mahasiswa->activationMhs();
 }

@@ -212,7 +212,7 @@
                 saveData();
             } else {
                 $('#modal_form').modal('hide');
-                onAlert("Gagal !", "Data gagal tersimpan.", "error");
+                onAlert("Gagal !", "Data gagal tersimpan. Silahkan hubungi Administrator.", "error");
             }
         });
     }
@@ -388,7 +388,7 @@
                 });
             } else {
                 $('#modal_verifikasi').modal('hide');
-                onAlert("Gagal !", "Data gagal tersimpan.", "error");
+                onAlert("Gagal !", "Data gagal tersimpan. Silahkan hubungi Administrator.", "error");
             }
         });
     }

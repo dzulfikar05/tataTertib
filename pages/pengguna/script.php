@@ -156,7 +156,7 @@
                 $('#modal_form').modal('hide');
                 Swal.fire({
                     title: "Gagal !",
-                    text: "Data gagal tersimpan.",
+                    text: "Data gagal tersimpan. Silahkan hubungi Administrator.",
                     icon: "error",
                     confirmButtonColor: "#3b7ddd",
                 });

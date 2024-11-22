@@ -168,6 +168,16 @@
                                     <i class="fa fa-ellipsis-h"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-${data}">
+                                `;
+
+                            if(row.status == 0){
+                                html += `
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="onStatus(${data})"><i class="fa  fa-check"></i> Aktifkan Mahasiswa</a>
+                                </li>`;
+                            }
+
+                            html +=`
                                     <li>
                                         <a class="dropdown-item" href="#" onclick="onEdit(${data})"><i class="fa fa-edit"></i> Edit Data</a>
                                     </li>
@@ -247,13 +257,35 @@
         
     }
 
+    onStatus = (id) => {
+        onConfirm("Data akan tersimpan di database.", (result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/tataTertib/system/mahasiswa.php',
+                    data: {
+                        id: id,
+                        action : 'activationMhs'
+                    },
+                    type: 'POST',
+                    success: (data) => {
+                        index();
+                        onAlert("Sukses !", "Data Tersimpan :)", "success");
+                    }
+                })
+            } else {
+                onAlert("Gagal !", "Data gagal tersimpan. Silahkan hubungi Administrator.", "error");
+            }
+        });
+       
+    }
+
     save = () => {
         onConfirm("Data akan tersimpan di database.", (result) => {
             if (result.isConfirmed) {
                 saveData();
             } else {
                 $('#modal_form').modal('hide');
-                onAlert("Gagal !", "Data gagal tersimpan.", "error");
+                onAlert("Gagal !", "Data gagal tersimpan. Silahkan hubungi Administrator.", "error");
             }
         });
     }
