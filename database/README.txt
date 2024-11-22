@@ -6,3 +6,6 @@
  - Upload.sql
  - Notification.sql
  - Setting.sql
+
+ implement store spocedure ada di file CreateProcedure.sql
+ implement trigger ada di Trigger.sql
