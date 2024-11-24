@@ -46,11 +46,14 @@
                     <img src="<?= $ppUser?>" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark"><?= $username?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item profile-btn" onclick="onProfile()" href="#"><i class="align-middle me-1 " data-feather="user"></i> Profile</a>
+                    <div class="dropdown-divider profile-btn"></div>
                     <a class="dropdown-item" href="#" onclick="logout()"><i class="align-middle me-1" data-feather="log-out"></i>Log out</a>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
+<?php 
+    include 'profile.php';
+?>

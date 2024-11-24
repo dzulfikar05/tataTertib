@@ -38,6 +38,20 @@
 
                     $_SESSION['user']['photo'] = $photo['data'][0] ?? [];
 
+                    if($data['data'][0]['role'] == 2){
+                        $sql3 = "SELECT id FROM Users.staff WHERE user_id = " . $data['data'][0]['id'];
+                    }else if($data['data'][0]['role'] == 3){
+                        $sql3 = "SELECT id FROM Users.dosen WHERE user_id = " . $data['data'][0]['id'];
+                    }else if($data['data'][0]['role'] == 4){
+                        $sql3 = "SELECT id FROM Users.mahasiswa WHERE user_id = " . $data['data'][0]['id'];
+                    }
+
+                    $stmt3 = sqlsrv_query($this->conn, $sql3);
+                    if(!$stmt3) die(print_r(sqlsrv_errors(), true));
+
+                    $idUser = fetchArray($stmt3);
+                    $_SESSION['user']['id_userByRole'] = $idUser['data'][0]['id'];
+
 
                     return 1;
                 } else {
