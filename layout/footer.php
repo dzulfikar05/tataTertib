@@ -72,10 +72,15 @@
                         data = JSON.parse(data);
                         var html = ``;
                         $('.notif_count').html(data.num_rows);
-
+                        
+                        if(data.num_rows == 0) {
+                            $('.notif_count').addClass('d-none');
+                        }else{
+                            $('.notif_count').removeClass('d-none');
+                        }
                         $.each(data.data, (i, v) => {
                             html += `
-                                <a href="tataTertib/${v.direct_link}" onclick="readNotif(${v.id})" class="list-group-item">
+                                <a href="${v.direct_link}" onclick="readNotif(${v.id})" class="list-group-item">
                                     <div class="row g-0 align-items-center">
                                         <div class="col-12">
                                             <div class="small mt-1">${v.content}</div>
