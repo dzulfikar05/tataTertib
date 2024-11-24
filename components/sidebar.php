@@ -20,6 +20,7 @@
             <li class="sidebar-item 
                 <?= $_SESSION['user']['role'] != 1 ? 'd-none' : ''  ?>
 
+                <?= $_SESSION['menu_active'] == 'admin' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'mahasiswa' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'staff' ? 'active' : ''  ?>
@@ -28,12 +29,13 @@
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Pengguna</span>
                 </a>
                 <ul id="pengguna_sidebar" class="sidebar-dropdown list-unstyled 
-                    collapse<?= $_SESSION['menu_active'] == 'mahasiswa' || $_SESSION['menu_active'] == 'dosen' || $_SESSION['menu_active'] == 'staff' ? 'd' : ''  ?> 
+                    collapse<?= $_SESSION['menu_active'] == 'mahasiswa' || $_SESSION['menu_active'] == 'dosen' || $_SESSION['menu_active'] == 'staff' || $_SESSION['menu_active'] == 'admin' ? 'd' : ''  ?> 
                     
                     " data-bs-parent="#sidebar">
                     <li class="sidebar-item <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?> "><a class='sidebar-link' href='dosen.php'>Dosen</a></li>
                     <li class="sidebar-item <?= $_SESSION['menu_active'] == 'staff' ? 'active' : ''  ?>"><a class='sidebar-link' href='staff.php'>Staff</a></li>
                     <li class="sidebar-item <?= $_SESSION['menu_active'] == 'mahasiswa' ? 'active' : ''  ?>"><a class='sidebar-link' href='mahasiswa.php'>Mahasiswa</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'admin' ? 'active' : ''  ?>"><a class='sidebar-link' href='admin.php'>Admin</a></li>
                 </ul>
             </li>
 
