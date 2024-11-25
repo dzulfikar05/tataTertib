@@ -60,7 +60,7 @@ if (isset($_SESSION['user'])) {
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" required/>
 										</div>
 										<div class="d-grid gap-2 mt-3">
-											<button onclick="onLogin()" id="btn-login" class="btn btn-lg btn-primary">Sign in</button>
+											<button type="button" onclick="onLogin()" id="btn-login" class="btn btn-lg btn-primary">Sign in</button>
 										</div>
 									</form>
 								</div>
