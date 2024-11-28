@@ -23,7 +23,8 @@ if (isset($_SESSION['user'])) {
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-	<title>Sign In | AdminKit Demo</title>
+    <title>SiTatib | Sistem Tata Tertib </title>
+
 
 	<link href="assets/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -50,7 +51,7 @@ if (isset($_SESSION['user'])) {
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
-									<form id="form-login">
+									<form id="form-login" >
 										<div class="mb-3">
 											<label class="form-label">Username</label>
 											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username" required/>
@@ -60,7 +61,7 @@ if (isset($_SESSION['user'])) {
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" required/>
 										</div>
 										<div class="d-grid gap-2 mt-3">
-											<button type="button" onclick="onLogin()" id="btn-login" class="btn btn-lg btn-primary">Sign in</button>
+											<button type="submit" onclick="onLogin()" id="btn-login" class="btn btn-lg btn-primary">Sign in</button>
 										</div>
 									</form>
 								</div>

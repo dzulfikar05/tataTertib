@@ -38,6 +38,7 @@ CREATE TABLE [Notification].[notification] (
   [content] text NULL,
   [read_at] datetime  NULL,
   [created_at] datetime  NULL
+  [direct_link] text  NULL
 )
 GO
 

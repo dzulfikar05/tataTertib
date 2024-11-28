@@ -42,6 +42,10 @@ class AduanPelanggaran
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 AND status = 1";
 
+        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 1 && $_SESSION['user']['role'] != 2) {
+            $query .= "AND pelanggaran_pelaku_id = ".$_SESSION['user']['id'];
+        }
+
         if (!empty($searchValue)) {
             $query .= " AND (tanggal LIKE '%$searchValue%') 
                 OR (terlapor_mahasiswa_nim LIKE '%$searchValue%') 

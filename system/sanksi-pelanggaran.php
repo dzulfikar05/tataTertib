@@ -48,6 +48,7 @@ class Kategori
      */
     public function index()
     {
+        session_start();
 
         $columns = [
             'pelanggaran_tanggal',
@@ -64,6 +65,10 @@ class Kategori
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'pelanggaran_tanggal';
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 ";
+
+        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 1) {
+            $query .= "AND pelanggaran_pelaku_id = ".$_SESSION['user']['id'];
+        }
 
         if (!empty($searchValue)) {
             $query .= " AND (pelanggaran_tanggal LIKE '%$searchValue%') 
