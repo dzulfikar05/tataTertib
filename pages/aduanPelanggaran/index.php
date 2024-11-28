@@ -32,8 +32,5 @@
     </div>
 </div>
 
-
-
-
 <?php include 'form.php'; ?>
 <?php include 'script.php'; ?>

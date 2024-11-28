@@ -55,5 +55,5 @@
     </div>
 </nav>
 <?php 
-    include 'profile.php';
+    // include 'profile.php';
 ?>

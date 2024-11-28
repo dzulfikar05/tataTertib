@@ -1,5 +1,5 @@
-<script type="text/javascript">
-    const listForm = [
+<script>
+    let listForm = [
         'id',
         'pelapor_id',
         'pelaku_id',
@@ -207,6 +207,7 @@
             ],
         });
     };
+
 
     onAdd = () => {
         resetForm(listForm);
