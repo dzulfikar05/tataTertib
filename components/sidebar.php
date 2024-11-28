@@ -57,11 +57,11 @@
 
                     <li class="sidebar-item 
                     <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>
-                    <?= $_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
                     "><a class='sidebar-link' href='aduan-pelanggaran.php'>Aduan Pelanggaran</a></li>
                    
                     <li class="sidebar-item 
-                    <?= $_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
                     <?= $_SESSION['menu_active'] == 'list-pelanggaran' ? 'active' : ''  ?>
                     "><a class='sidebar-link' href='list-pelanggaran.php'>List Pelanggaran</a></li>
                     

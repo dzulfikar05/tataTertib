@@ -37,7 +37,7 @@ CREATE TABLE [Notification].[notification] (
   [recipient_id] int  NULL,
   [content] text NULL,
   [read_at] datetime  NULL,
-  [created_at] datetime  NULL
+  [created_at] datetime  NULL,
   [direct_link] text  NULL
 )
 GO
