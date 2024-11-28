@@ -66,7 +66,7 @@ class Kategori
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 ";
 
-        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 1) {
+        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 4) {
             $query .= "AND pelanggaran_pelaku_id = ".$_SESSION['user']['id'];
         }
 
@@ -105,7 +105,7 @@ class Kategori
             $item['file_upload'] = $data2['data'][0] ?? [];
 
             return $item;
-        }, $data['data']);
+        }, $data['data'] ?? []);
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
