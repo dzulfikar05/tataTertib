@@ -35,6 +35,10 @@
             processing: true,
             serverSide: true,
             ordering: true,
+            lengthMenu: [5, 10, 25, 50, 100],
+        language: {
+            lengthMenu: "Show _MENU_ items per page"
+        },
             ajax: {
                 url: '/tataTertib/system/kelas.php',
                 type: 'POST',

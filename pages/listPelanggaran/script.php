@@ -38,6 +38,10 @@
             processing: true,
             serverSide: true,
             ordering: true,
+            lengthMenu: [5, 10, 25, 50, 100],
+        language: {
+            lengthMenu: "Show _MENU_ items per page"
+        },
             ajax: {
                 url: '/tataTertib/system/list-pelanggaran.php',
                 type: 'POST',

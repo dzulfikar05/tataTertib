@@ -1,5 +1,5 @@
 <?php
-$serverName = "DESKTOP-I0JL8UH\DBMS1"; 
+$serverName = "DESKTOP-66SSB2P\DBMS"; 
 
 $connectionInfo = array( "Database"=>"tatatertib");
 // $connectionInfo = array( "Database"=>"tataTertibNew");
