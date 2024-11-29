@@ -180,10 +180,18 @@
                 $('#verifikator_id').val(data.pelanggaran_verify_by);
                 $('#komentar').val(data.komentar);
 
-                if(data.deadline_date && data.deadline_time){
-                    const deadlineDateTime = `${data.deadline_date}T${data.deadline_time}`;
-                    // Hitung waktu relatif dengan moment.js
-                    $('#terlambat').text('Overdue ' + moment(deadlineDateTime).fromNow(data.updated_at));
+
+                if (data.deadline_date && data.deadline_time) {
+                    const deadlineDateTime = moment(`${data.deadline_date}T${data.deadline_time}`);
+                    const now = moment(); // Waktu sekarang
+
+                    if (deadlineDateTime.isAfter(now)) {
+                        // Jika deadline di masa depan
+                        $('#terlambat').text('Deadline  ' + deadlineDateTime.fromNow()).addClass('text-muted');
+                    } else {
+                        $('#terlambat').text('Overdue ' + deadlineDateTime.fromNow()).removeClass('text-muted');
+                        // Jika deadline telah lewat
+                    }
                 }
 
                 

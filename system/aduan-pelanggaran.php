@@ -36,9 +36,11 @@ class AduanPelanggaran
         ];
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
-        $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
+        $orderColumnIndex = isset($_POST['order'][0]['column']) ? intval($_POST['order'][0]['column']) : 0;
         $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'tanggal';
+        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
+        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 AND status = 1";
 
@@ -60,20 +62,20 @@ class AduanPelanggaran
             ";
         }
 
-        $query .= " ORDER BY $orderColumn $orderDirection";
+        // Hitung total data yang difilter
+        $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
+        $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
+        $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
 
+        $query .= " ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
         $stmt = sqlsrv_query($this->conn, $query);
-
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-
+        if (!$stmt) {die(print_r(sqlsrv_errors(), true));}
         $data = fetchArray($stmt);
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
-            "recordsTotal" => $data['num_rows'] ?? 0,
-            "recordsFiltered" => $data['num_rows'] ?? 0,
+            "recordsTotal" => countData($this->table, "AND status = 1") ?? 0,
+            "recordsFiltered" => $filteredData ?? 0,
             "data" => $data['data'] ?? null
         ];
 
@@ -129,10 +131,13 @@ class AduanPelanggaran
 
         array_push($form, 'status');
         array_push($params, 1);
+        
+        array_push($form, 'pelapor_role');
+        array_push($params, $_SESSION['user']['role']);
 
         $columns = implode(", ", $form);
 
-        $sql = "INSERT INTO $this->table ($columns) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO $this->table ($columns) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
@@ -217,9 +222,9 @@ class AduanPelanggaran
                 $pelakuId = $data['data'][0]['pelaku_id'];
                 $pelaporId = $data['data'][0]['pelapor_id'];
 
-                $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh admin' : 'Aduan pelanggaran anda laporkan ditolak oleh admin', 'list-pelanggaran.php');
+                $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh staff' : 'Aduan pelanggaran anda laporkan ditolak oleh staff', 'laporan-aduan-pelanggaran.php');
                 if ($status == 2) {
-                    $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin', 'sanksi.php');
+                    $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin', 'sanksi-pelanggaran.php');
 
                     if($bobot == 1 || $status == 2 && $bobotUpper == 1) {
                         $sql = "UPDATE Users.mahasiswa SET status=0 WHERE id=$mhsId";
@@ -266,7 +271,7 @@ class AduanPelanggaran
         $data = fetchArray($stmt);
         $stat = [];
 
-        foreach ($data['data'] as $i => $v) {
+        foreach ($data['data'] ?? [] as $i => $v) {
             $upper = $v['bobotUpper'] ?? 0;
             $totalBobot = $v['kategori_bobot'] - $upper;
         

@@ -19,37 +19,37 @@
                         <div class="row mb-1">
                             <span class="mb-1">Tenggat Waktu</span>
                             <div class="col-md-6">
-                                <input type="date" class="form-control" id="deadline_date" disabled>
+                                <input type="date" class="form-control" id="v_deadline_date" disabled>
                             </div>
                             <div class="col-md-4">
-                                <input type="time" class="form-control" id="deadline_time" disabled>
+                                <input type="time" class="form-control" id="v_deadline_time" disabled>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
-                            <span id="terlambat" class="text-danger"></span>
+                            <span id="v_terlambat" class="text-danger"></span>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="mb-1">Tugas</label>
-                            <input type="text" class="form-control " id="tugas" disabled/>
+                            <input type="text" class="form-control " id="v_tugas" disabled/>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="mb-1">Keterangan</label>
-                            <textarea class="form-control " rows="5" id="keterangan" disabled></textarea>
+                            <textarea class="form-control " rows="5" id="v_keterangan" disabled></textarea>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="mb-1">Komentar </label>
-                            <textarea class="form-control " rows="5" id="komentar" disabled></textarea>
+                            <textarea class="form-control " rows="5" id="v_komentar" disabled></textarea>
                         </div>
                         <div class="col-12 mb-3">
                             
                             <div class="text-muted fs-5">
-                                uploaded file :  <a href="" id="file_path" target="_blank"></a>
+                                uploaded file :  <a href="" id="v_file_path" target="_blank"></a>
                             </div>
                            
                         </div>
                         <div class="col-12 mb-3">
                             <label class="mb-1">Komentar Revisi</label>
-                            <textarea class="form-control " rows="5" id="komentar_revisi" name="komentar_revisi" placeholder="jika tidak ada revisi tidak perlu di isi"></textarea>
+                            <textarea class="form-control " rows="5" id="v_komentar_revisi" name="komentar_revisi" placeholder="jika tidak ada revisi tidak perlu di isi"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer footer-form">

@@ -2,7 +2,7 @@
 session_start();
 $_SESSION['menu_active'] = 'list-pelanggaran';
 
-if ( $_SESSION['user']['role'] == 4) {
+if ( $_SESSION['user']['role'] == 4 || $_SESSION['user']['role'] == 3) {
     header("location:/tataTertib");
 }
 

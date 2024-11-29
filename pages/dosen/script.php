@@ -238,7 +238,9 @@
                     index();
 
                     onAlert("Sukses !", "Data Tersimpan :)", "success");
-                } else {
+                }else if(data == 2){
+                    onAlert("Gagal !", "Data Username telah digunakan", "warning");
+                }else {
                     onAlert("Gagal !", "Data Gagal Tersimpan :( . Silahkan Hubungi Administrator.", "warning");
                 }
             },

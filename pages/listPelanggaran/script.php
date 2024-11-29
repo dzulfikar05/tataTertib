@@ -11,15 +11,15 @@
 
     $(() => {
         index();
-        
+
     });
 
     changeJurusan = () => {
-        getMahasiswa();   
+        getMahasiswa();
     }
 
     changeKategori = () => {
-        let id = $('#kategori_id').val();   
+        let id = $('#kategori_id').val();
         for (i = 0; i < listKategori.length; i++) {
             if (listKategori[i]['id'] == id) {
                 $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
@@ -39,9 +39,9 @@
             serverSide: true,
             ordering: true,
             lengthMenu: [5, 10, 25, 50, 100],
-        language: {
-            lengthMenu: "Show _MENU_ items per page"
-        },
+            language: {
+                lengthMenu: "Show _MENU_ items per page"
+            },
             ajax: {
                 url: '/tataTertib/system/list-pelanggaran.php',
                 type: 'POST',
@@ -75,7 +75,7 @@
                         });
 
                         const formattedDate = formatter.format(dateObject);
-                        
+
                         return formattedDate;
                     }
                 },
@@ -105,7 +105,7 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        if(row.pelapor_role == 3){
+                        if (row.pelapor_role == 3) {
                             html = `
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex justify-content-start flex-column">
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                             `;
-                        }else if(row.pelapor_role == 2){
+                        } else if (row.pelapor_role == 2) {
                             html = `
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex justify-content-start flex-column">
@@ -166,13 +166,13 @@
                             year: 'numeric',
                             hour: '2-digit',
                             minute: '2-digit',
-                           
-                            hour12: false 
+
+                            hour12: false
                         });
 
                         var formattedDate = formatter1.format(dateObj);
-                        
-                        var html =`
+
+                        var html = `
                             <div class="d-flex align-items-center">
                                 <div class="d-flex justify-content-start flex-column">
                                     <span class="text-dark fw-bolder fs-6 text-start">${row.verifikator_staff_nama} <span class="text-muted fw-medium text-muted ">(staff)</span></span>
@@ -221,11 +221,21 @@
                     className: 'text-center',
                     render: function(data, type, row) {
                         var btnColor = 1;
-                        if(data == 1){ btnColor = 'btn-secondary'; }
-                        if(data == 2){ btnColor = 'btn-primary'; }
-                        if(data == 3){ btnColor = 'btn-warning'; }
-                        if(data == 4){ btnColor = 'btn-success disabled'; }
-                        if(data == null){ btnColor = 'disabled'; }
+                        if (data == 1) {
+                            btnColor = 'btn-secondary';
+                        }
+                        if (data == 2) {
+                            btnColor = 'btn-primary';
+                        }
+                        if (data == 3) {
+                            btnColor = 'btn-warning';
+                        }
+                        if (data == 4) {
+                            btnColor = 'btn-success disabled';
+                        }
+                        if (data == null) {
+                            btnColor = 'disabled';
+                        }
 
                         let html = `
                             <button class="btn ${btnColor} btn-sm" type="button" onclick="onVerifikasiSanksi(${row.sanksi_id})">
@@ -252,34 +262,41 @@
             type: 'POST',
             success: (data) => {
                 var data = JSON.parse(data);
-                
+
                 $('#id_sanksi').val(data.id);
                 $('#id_mhs').val(data.pelanggaran_pelaku_id);
                 $('#id_pelanggaran').val(data.pelanggaran_id);
                 $('#status').val(data.status);
-                $('#tugas').val(data.tugas);
-                $('#keterangan').val(data.keterangan);
-                $('#deadline_date').val(data.deadline_date);
-                $('#deadline_time').val(data.deadline_time);
-                $('#verifikator_id').val(data.pelanggaran_verify_by);
-                $('#komentar').val(data.komentar);
+                $('#v_tugas').val(data.tugas);
+                $('#v_keterangan').val(data.keterangan);
+                $('#v_deadline_date').val(data.deadline_date);
+                $('#v_deadline_time').val(data.deadline_time);
+                $('#v_verifikator_id').val(data.pelanggaran_verify_by);
+                $('#v_komentar').val(data.komentar);
 
-                if(data.deadline_date && data.deadline_time){
-                    const deadlineDateTime = `${data.deadline_date}T${data.deadline_time}`;
-                    // Hitung waktu relatif dengan moment.js
-                    $('#terlambat').text('Overdue ' + moment(deadlineDateTime).fromNow(data.updated_at));
+                if (data.deadline_date && data.deadline_time) {
+                    const deadlineDateTime = moment(`${data.deadline_date}T${data.deadline_time}`);
+                    const now = moment(); // Waktu sekarang
+
+                    if (deadlineDateTime.isAfter(now)) {
+                        // Jika deadline di masa depan
+                        $('#v_terlambat').text('Deadline  ' + deadlineDateTime.fromNow()).addClass('text-muted');
+                    } else {
+                        $('#v_terlambat').text('Overdue ' + deadlineDateTime.fromNow()).removeClass('text-muted');
+                        // Jika deadline telah lewat
+                    }
                 }
-                
+
                 if (data.file_upload.id) {
-                    $('#file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
-                    $('#file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
-                }else{
-                    $('#terlambat').text("");
+                    $('#v_file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
+                    $('#v_file_path').attr('href', data.file_upload.path).html(data.file_upload.file_name);
+                } else {
+                    $('#v_terlambat').text("");
                 }
 
-                if(data.status == 4){
+                if (data.status == 4) {
                     $('.footer-form').addClass('d-none');
-                }else{
+                } else {
                     $('.footer-form').removeClass('d-none');
                 }
             },
@@ -302,13 +319,13 @@
             type: 'POST',
             success: (data) => {
                 var data = JSON.parse(data);
-
+                console.log(data[0]);
                 if (data[0] && data[0].id) {
                     $('#id').val(data[0].id);
-                    $('#keterangan').val(data[0].keterangan); 
-                    $('#tugas').val(data[0].tugas); 
-                    $('#deadline_date').val(data[0].deadline_date); 
-                    $('#deadline_time').val(data[0].deadline_time); 
+                    $('#keterangan').val(data[0].keterangan);
+                    $('#tugas').val(data[0].tugas);
+                    $('#deadline_date').val(data[0].deadline_date);
+                    $('#deadline_time').val(data[0].deadline_time);
                 }
                 $('#pelanggaran_id').val(data.pelanggaran.id);
                 $('#mhs_id').val(data.pelanggaran.pelaku_id);
@@ -320,15 +337,15 @@
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
             }
         })
-        
-        $('#modal_form').modal('show');
-    }    
 
-  
+        $('#modal_form').modal('show');
+    }
+
+
     onReset = () => {
-        $('#id').val(''); 
-        $('#keterangan').val(''); 
-        $('#tugas').val(''); 
+        $('#id').val('');
+        $('#keterangan').val('');
+        $('#tugas').val('');
         $('#pelanggaran_id').val('');
         $('#mhs_id').val('');
         $('#pelanggaran_keterangan').html('');
@@ -354,7 +371,7 @@
                     success: (data) => {
                         if (data == 1) {
                             $('#modal_verifikasi').modal('hide');
-                            
+
                             $('#keterangan_revisi').html('');
                             index();
 
@@ -423,7 +440,7 @@
                 onAlert("Gagal !", "Data Aman, tidak terhapus :)", "error");
             }
         });
-        
+
     }
 
     destroyData = (id) => {
@@ -511,7 +528,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['user_id'] + '">' +data[i]['nim'] + ' - ' + data[i]['nama'] + ' || ' + data[i]['prodi_nama'] + ' - ' + data[i]['kelas_nama'] +'</option>';
+                    html += '<option value="' + data[i]['user_id'] + '">' + data[i]['nim'] + ' - ' + data[i]['nama'] + ' || ' + data[i]['prodi_nama'] + ' - ' + data[i]['kelas_nama'] + '</option>';
                 }
 
                 $('#pelaku_id').html(html);
@@ -521,8 +538,4 @@
             }
         })
     }
-
- 
-
-    
 </script>

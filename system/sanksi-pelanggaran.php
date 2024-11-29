@@ -175,7 +175,7 @@ class Kategori
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
-        $this->sendNotification($_POST['verifikator_id'], 'Saatnya untuk melakukan verifikasi tugas pelanggaran', 'list-pelanggaran');
+        $this->sendNotification($_POST['verifikator_id'], 'Saatnya untuk melakukan verifikasi tugas pelanggaran', 'list-pelanggaran.php');
 
         return 1;
     }

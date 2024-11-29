@@ -32,14 +32,14 @@
     });
 
     changeJurusan = () => {
-        getMahasiswa();   
+        getMahasiswa();
     }
 
     changeKategori = () => {
-        $('#kategori_id').on('select2:select', function (e) {
-            let id = $('#kategori_id').val();   
-        
-            let selectedOption = e.params.data.element; 
+        $('#kategori_id').on('select2:select', function(e) {
+            let id = $('#kategori_id').val();
+
+            let selectedOption = e.params.data.element;
             let bobot = $(selectedOption).data('bobot');
 
             for (i = 0; i < listKategori.length; i++) {
@@ -50,9 +50,9 @@
                 }
             }
 
-            if(historyMhs.stat[bobot] > 3){
+            if (historyMhs.stat[bobot] > 3) {
                 bobotUpper = 1;
-            }else{
+            } else {
                 bobotUpper = 0;
             }
 
@@ -69,10 +69,9 @@
             serverSide: true,
             ordering: true,
             lengthMenu: [5, 10, 25, 50, 100],
-        language: {
-            lengthMenu: "Show _MENU_ items per page"
-        },
-            
+            language: {
+                lengthMenu: "Show _MENU_ items per page"
+            },
             ajax: {
                 url: '/tataTertib/system/aduan-pelanggaran.php',
                 type: 'POST',
@@ -106,7 +105,7 @@
                         });
 
                         const formattedDate = formatter.format(dateObject);
-                        
+
                         return formattedDate;
                     }
                 },
@@ -135,8 +134,10 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        if(row.pelapor_role == 3){
-                            html = `
+
+                        var htmlPelapor = "";
+                        if (row.pelapor_role == 3) {
+                            htmlPelapor += `
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex justify-content-start flex-column">
                                         <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_dosen_nidn}</span>
@@ -144,8 +145,8 @@
                                     </div>
                                 </div>
                             `;
-                        }else if(row.pelapor_role == 2){
-                            html = `
+                        } else if (row.pelapor_role == 2) {
+                            htmlPelapor += `
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex justify-content-start flex-column">
                                         <span class="text-dark fw-bolder fs-6 text-start">${row.pelapor_staff_nip}</span>
@@ -155,7 +156,7 @@
                             `;
                         }
 
-                        return html;
+                        return htmlPelapor;
                     }
                 },
                 {
@@ -175,7 +176,7 @@
                     orderable: true,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        let role  = "<?= $_SESSION['user']['role']?>";
+                        let role = "<?= $_SESSION['user']['role'] ?>";
                         let html = `
                             <button class="btn btn-warning btn-sm fs-5 ${role != 2 ? 'disabled' : ''}" type="button" onclick="onVerifikasi(${row.id},${row.terlapor_mahasiswa_id}, ${row.pelaku_id})" title="Menuggu Verifikasi">
                                 <i class="fa fa-clock" ></i>
@@ -232,12 +233,12 @@
                 var data = JSON.parse(data);
                 action = 'update';
 
-                $('#jurusan_id').val(data.mahasiswa.jurusan_id).trigger('change');            
+                $('#jurusan_id').val(data.mahasiswa.jurusan_id).trigger('change');
 
 
                 setTimeout(() => {
                     for (i = 0; i < listForm.length; i++) {
-                        $('#' + listForm[i]).val(data[listForm[i]]).trigger('change');            
+                        $('#' + listForm[i]).val(data[listForm[i]]).trigger('change');
                     }
                     $('#modal_form').modal('show');
                 }, 800);
@@ -249,8 +250,8 @@
         })
 
         $('#modal_form').modal('show');
-        
-    }    
+
+    }
 
     onReset = () => {
         resetForm(listForm);
@@ -304,7 +305,7 @@
                 onAlert("Gagal !", "Data Aman, tidak terhapus :)", "error");
             }
         });
-        
+
     }
 
     destroyData = (id) => {
@@ -392,7 +393,7 @@
                 var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i]['user_id'] + '">' +data[i]['nim'] + ' - ' + data[i]['nama'] + ' || ' + data[i]['prodi_nama'] + ' - ' + data[i]['kelas_nama'] +'</option>';
+                    html += '<option value="' + data[i]['user_id'] + '">' + data[i]['nim'] + ' - ' + data[i]['nama'] + ' || ' + data[i]['prodi_nama'] + ' - ' + data[i]['kelas_nama'] + '</option>';
                 }
 
                 $('#pelaku_id').html(html);
@@ -412,7 +413,7 @@
             url: '/tataTertib/system/aduan-pelanggaran.php',
             data: {
                 action: 'getStatMahasiswa',
-                mhsId : mhsUserId,
+                mhsId: mhsUserId,
                 id: id
             },
             type: 'POST',
@@ -437,7 +438,7 @@
     }
 
     onSaveVerifikasi = (status) => {
-        let messageAlert = bobotUpper==1 ? "Data Aduan akan tersimpan dengan status disetujui pada database. Pelanggaran dilakukan melebihi 3x, sehingga bobot akan dinaikkan 1 poin." : "Data Aduan akan tersimpan dengan status disetujui pada database."; 
+        let messageAlert = bobotUpper == 1 ? "Data Aduan akan tersimpan dengan status disetujui pada database. Pelanggaran dilakukan melebihi 3x, sehingga bobot akan dinaikkan 1 poin." : "Data Aduan akan tersimpan dengan status disetujui pada database.";
 
         onConfirm(status == 2 ? messageAlert : "Data Aduan akan tersimpan dengan status ditolak pada database.", (result) => {
             if (result.isConfirmed) {
@@ -471,6 +472,4 @@
             }
         });
     }
-
-    
 </script>

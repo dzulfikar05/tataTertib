@@ -43,6 +43,8 @@ class Mahasiswa
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
         $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nim';
+        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
+        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
 
         $query = "SELECT * FROM $this->tableView WHERE role = 4 AND 1=1";
 
@@ -50,17 +52,17 @@ class Mahasiswa
             $query .= " AND (nim LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR prodi_nama LIKE '%$searchValue%' OR kelas_nama LIKE '%$searchValue%' OR status LIKE '%$searchValue%' OR poin LIKE '%$searchValue%' OR angkatan LIKE '%$searchValue%')";
         }
 
-        $query .= " ORDER BY $orderColumn $orderDirection";
+         // Hitung total data yang difilter
+        $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
+        $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
+        $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
 
+        $query .= " ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
         $stmt = sqlsrv_query($this->conn, $query);
-
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-
+        if (!$stmt) {die(print_r(sqlsrv_errors(), true));}
         $data = fetchArray($stmt);
 
-        foreach ($data['data'] as $key => $v) {
+        foreach ($data['data'] ?? []as $key => $v) {
             $userId = $v['user_id'];
             $photo = getImageUpload($userId, 'Users.users');
             $data['data'][$key]['photo'] = $photo['data'][0] ?? [];
@@ -68,8 +70,8 @@ class Mahasiswa
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
-            "recordsTotal" => $data['num_rows'],
-            "recordsFiltered" => $data['num_rows'],
+            "recordsTotal" => countData($this->table) ?? 0,
+            "recordsFiltered" => $filteredData ?? 0,
             "data" => $data['data']
         ];
 

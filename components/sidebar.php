@@ -62,6 +62,7 @@
                    
                     <li class="sidebar-item 
                     <?= $_SESSION['user']['role'] == 4? 'd-none' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 3? 'd-none' : ''  ?>
                     <?= $_SESSION['menu_active'] == 'list-pelanggaran' ? 'active' : ''  ?>
                     "><a class='sidebar-link' href='list-pelanggaran.php'>List Pelanggaran</a></li>
                     

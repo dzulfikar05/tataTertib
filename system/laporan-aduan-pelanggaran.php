@@ -32,7 +32,7 @@ class LaporanAduanPelanggaran
         $orderColumn = $columns[$orderColumnIndex] ?? 'tanggal';
 
         // Base query
-        $query = "SELECT * FROM $this->tableView WHERE (status = 3 OR status = 4)";
+        $query = "SELECT * FROM $this->tableView WHERE (status = 3 OR status = 4 OR status = 2)";
 
         // Add search filter
         if (!empty($searchValue)) {

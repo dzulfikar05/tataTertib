@@ -31,3 +31,14 @@ function getImageUpload($modelId, $modelName){
 function dd($data) {
     print_r('<pre>>'); print_r($data); print_r('</pre>');exit;
 }
+
+function countData($table, $appendWhere = "") {
+    global $conn;
+
+    $totalQuery = "SELECT COUNT(*) as total FROM $table WHERE 1=1 $appendWhere";
+    $totalResult = sqlsrv_query($conn, $totalQuery);
+    if (!$totalResult) {die(print_r(sqlsrv_errors(), true));}
+    $totalData = sqlsrv_fetch_array($totalResult, SQLSRV_FETCH_ASSOC)['total'];
+
+    return $totalData;
+}

@@ -122,7 +122,7 @@
                     render: function(data, type, row) {
 
                         let html = ``;
-                        if (row.status == 3) {
+                        if (row.status != 4) {
 
                             html = `
                                 <button class="btn btn-success btn-sm fs-5" type="button" data-bs-toggle="tooltip"  title="Disetujui">

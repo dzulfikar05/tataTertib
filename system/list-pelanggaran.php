@@ -82,7 +82,7 @@ class ListPelanggaran
             $item['file_upload'] = $data2['data'][0] ?? [];
 
             return $item;
-        }, $data['data']);
+        }, $data['data'] ?? []);
 
 
         $response = [
@@ -210,7 +210,7 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
             
-            $this->sendNotification($pelakuId, 'Admin telah memberi tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi.php');
+            $this->sendNotification($pelakuId, 'Admin telah memberi tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
 
             return 1;
         } else{
@@ -219,7 +219,7 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
 
-            $this->sendNotification($pelakuId, 'Admin telah mengubah tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi.php');
+            $this->sendNotification($pelakuId, 'Admin telah mengubah tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
 
             return 1;
         }
@@ -239,7 +239,7 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
         }
 
-        $this->sendNotification($_POST['id_mhs'],  $_POST['status'] == 4 ? 'Admin telah menyetujui tugas pelanggaran' : 'Tugas anda perlu dilakukan revisi', 'list-pelanggaran');
+        $this->sendNotification($_POST['id_mhs'],  $_POST['status'] == 4 ? 'Admin telah menyetujui tugas pelanggaran' : 'Tugas anda perlu dilakukan revisi', 'list-pelanggaran.php');
 
         return 1; 
     }
