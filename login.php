@@ -60,7 +60,7 @@ if (isset($_SESSION['user'])) {
 									<img src="assets/img/logoPolinema.png" alt="logo" width="100" class="" style="position: absolute; top: -55px; left: ">
 								</div>
 								<div class=" text-center" style="margin-top: 50px;">
-									<p class="fw-bold  mt-5 mb-3" style="font-size: 44px;font-weight: 800;">SiTatib</p>
+									<p class="fw-bold text-dark mt-5 mb-3" style="font-size: 44px;font-weight: 800;">SiTatib</p>
 								</div>
 								<div class="m-sm-3">
 									<form id="form-login" onsubmit="return onLogin(event)">
@@ -83,7 +83,10 @@ if (isset($_SESSION['user'])) {
 											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" required/>
 										</div> -->
 										<div class="d-grid gap-2 mt-3">
-											<button type="submit" onclick="onLogin()" id="btn-login" class="btn btn-lg btn-primary">LOGIN</button>
+											<button type="submit" onclick="onLogin()" id="btn-login" class="btn btn-lg text-white" style="background: rgb(17,87,190);
+background: linear-gradient(146deg, rgba(17,87,190,1) 0%, rgba(22,30,61,1) 35%, rgba(22,31,64,1) 62%, rgba(17,87,190,1) 100%);
+
+">LOGIN</button>
 										</div>
 									</form>
 								</div>
