@@ -51,7 +51,7 @@ if (isset($_SESSION['user'])) {
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
-									<form id="form-login" >
+									<form id="form-login" onsubmit="return onLogin(event)">
 										<div class="mb-3">
 											<label class="form-label">Username</label>
 											<input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username" required/>
