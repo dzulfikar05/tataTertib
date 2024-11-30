@@ -1,5 +1,6 @@
-<nav id="sidebar" class="sidebar js-sidebar">
-    <div class="sidebar-content js-simplebar">
+<nav id="sidebar" class="sidebar js-sidebar" >
+    <div class="sidebar-content js-simplebar" style="background: rgb(22,30,61) !important;
+background: linear-gradient(156deg, rgba(22,30,61,1) 43%, rgba(0,26,112,1) 100%) !important;">
         <a class="sidebar-brand" href="index.php">
             <span class="align-middle"><?= $_SESSION['app']['name'] ?? 'SiTatib' ?> </span>
         </a>
@@ -10,7 +11,7 @@
             </li>
 
             <li class="sidebar-item <?= $_SESSION['menu_active'] == 'dashboard' ? 'active' : ''  ?>">
-                <a class="sidebar-link" href="index.php">
+                <a class="sidebar-link" href="index.php" style="background-color: #161e3d !important;">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
@@ -25,7 +26,7 @@
                 <?= $_SESSION['menu_active'] == 'dosen' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'staff' ? 'active' : ''  ?>
             ">
-                <a href="#pengguna_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <a href="#pengguna_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed" style="background-color: #161e3d !important;">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Pengguna</span>
                 </a>
                 <ul id="pengguna_sidebar" class="sidebar-dropdown list-unstyled 
@@ -44,8 +45,8 @@
                 <?= $_SESSION['menu_active'] == 'aduan-pelanggaran' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'list-pelanggaran' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'sanksi-pelanggaran' ? 'active' : ''  ?>
-            ">
-                <a href="#pelanggaran_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+            " >
+                <a href="#pelanggaran_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed" style="background-color: #161e3d !important;">
                     <i class="align-middle" data-feather="alert-octagon"></i> <span class="align-middle">Pelanggaran</span>
                 </a>
                 <ul id="pelanggaran_sidebar" class="sidebar-dropdown list-unstyled 
@@ -79,7 +80,7 @@
                 <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'active' : ''  ?>
             ">
-                <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed" style="background-color: #161e3d !important;">
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Laporan</span>
                 </a>
                 <ul id="laporan_sidebar" class="sidebar-dropdown list-unstyled 
@@ -102,7 +103,7 @@
                 <?= $_SESSION['menu_active'] == 'prodi' ? 'active' : ''  ?>
                 <?= $_SESSION['menu_active'] == 'kelas' ? 'active' : ''  ?>
             ">
-                <a href="#master_data_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <a href="#master_data_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed" style="background-color: #161e3d !important;">
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">Master Data</span>
                 </a>
                 <ul id="master_data_sidebar" class="sidebar-dropdown list-unstyled 
