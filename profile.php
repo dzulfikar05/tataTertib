@@ -25,6 +25,6 @@
     });
 
     onProfile = () => {
-        onEdit('<?= $idUserByRole?>');
+        pOnEdit('<?= $idUserByRole?>');
     }
 </script>
