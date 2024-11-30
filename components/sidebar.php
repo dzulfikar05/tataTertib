@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar js-sidebar" >
     <div class="sidebar-content js-simplebar" style="background: rgb(22,30,61) !important;
-background: linear-gradient(156deg, rgba(22,30,61,1) 43%, rgba(0,26,112,1) 100%) !important;">
+background: linear-gradient(146deg, rgba(22,30,61,1) 57%, rgba(32,61,111,1) 79%, rgba(17,87,190,1) 100%) !important;">
         <a class="sidebar-brand" href="index.php">
             <span class="align-middle"><?= $_SESSION['app']['name'] ?? 'SiTatib' ?> </span>
         </a>
