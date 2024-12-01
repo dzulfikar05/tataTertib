@@ -82,7 +82,7 @@ class LaporanPelanggaran
             $item['file_upload'] = $data2['data'][0] ?? [];
 
             return $item;
-        }, $data['data']);
+        }, $data['data'] ?? []);
 
 
         $response = [

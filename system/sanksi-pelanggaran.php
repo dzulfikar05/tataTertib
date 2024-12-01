@@ -157,7 +157,7 @@ class Kategori
             $item['file_upload'] = $data2['data'][0] ?? [];
 
             return $item;
-        }, $data['data']);
+        }, $data['data'] ?? []);
 
         return json_encode($data['data'][0] ?? []);
     }
@@ -183,8 +183,10 @@ class Kategori
 
     public function sendNotification($recipientId, $message, $directLink)
     {
-        $params = array($recipientId, $message, $directLink, date('Y-m-d H:i:s'));
-        $sql = "INSERT INTO Notification.notification (recipient_id, content, direct_link, created_at) VALUES (? , ?, ?, ?)";
+        session_start();
+        $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
+        $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
+
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));

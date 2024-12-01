@@ -210,7 +210,7 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
             
-            $this->sendNotification($pelakuId, 'Admin telah memberi tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
+            $this->sendNotification($pelakuId, 'Staff telah memberi tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
 
             return 1;
         } else{
@@ -219,7 +219,7 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if(!$stmt) { die(print_r(sqlsrv_errors(), true)); return 0;}
 
-            $this->sendNotification($pelakuId, 'Admin telah mengubah tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
+            $this->sendNotification($pelakuId, 'Staff telah mengubah tugas terkait sanksi pelanggaran yang melibatkan anda' , 'sanksi-pelanggaran.php');
 
             return 1;
         }
@@ -239,15 +239,17 @@ class ListPelanggaran
             $stmt = sqlsrv_query($this->conn, $sql, $params);
         }
 
-        $this->sendNotification($_POST['id_mhs'],  $_POST['status'] == 4 ? 'Admin telah menyetujui tugas pelanggaran' : 'Tugas anda perlu dilakukan revisi', 'list-pelanggaran.php');
+        $this->sendNotification($_POST['id_mhs'],  $_POST['status'] == 4 ? 'Staff telah menyetujui tugas pelanggaran' : 'Tugas anda perlu dilakukan revisi', 'list-pelanggaran.php');
 
         return 1; 
     }
 
     public function sendNotification($recipientId, $message, $directLink)
     {   
-        $params = array($recipientId, $message, $directLink, date('Y-m-d H:i:s'));
-        $sql = "INSERT INTO Notification.notification (recipient_id, content, direct_link, created_at) VALUES (? , ?, ?, ?)";
+        session_start();
+        $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
+        $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
+
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         if (!$stmt) {die(print_r(sqlsrv_errors(), true)); }
     }
