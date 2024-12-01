@@ -204,7 +204,13 @@
                     $('#uploaded_text').addClass('d-none');
                 }
 
-                if(data.status == 4){$('.footer-form').addClass('d-none');}else{$('.footer-form').removeClass('d-none');}
+                if(data.status == 4){
+                    $('.footer-form').addClass('d-none');  
+                    $('.input-file-x').addClass('d-none');  
+                }else{
+                    $('.footer-form').removeClass('d-none');
+                    $('.input-file-x').removeClass('d-none');  
+                }
                 if(data.status == 3){$('.komentar_revisi').removeClass('d-none');}else{$('.komentar_revisi').addClass('d-none');}
 
             },
