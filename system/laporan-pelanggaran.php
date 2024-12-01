@@ -94,7 +94,6 @@ class LaporanPelanggaran
 
         return json_encode($response);
     }
-
 }
 
 $laporanPelanggaran = new LaporanPelanggaran($conn);
