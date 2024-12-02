@@ -1,5 +1,11 @@
 <script>
+	$("#form-login").on("submit", function(event) {
+			event.preventDefault(); 
+			onLogin();
+	});
+	
 	onLogin = () => {
+		
 		var form = $('#form-login').get(0);
 			var formData = new FormData(form);
 			formData.append('action', 'verify_login');
@@ -12,10 +18,7 @@
 				success: (data) => {
 					
 					if (data) {
-						setTimeout(() => {
-							window.location.href = 'index.php';
-						}, 1000); // 1000ms = 1 detik
-
+						window.location.href = 'index.php';
 					} else {
 						Swal.fire({
 							title: "Login Gagal!",

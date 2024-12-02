@@ -3,6 +3,7 @@
         'id',
         'nama',
         'keterangan',
+        'tingkat',
         'bobot',
     ];
 
@@ -12,6 +13,16 @@
         index();
 
     });
+
+    let listBobot = [5,4,3,2,1];
+
+    $('#tingkat').change(()=> {
+        if($('#tingkat').val() > 5 || $('#tingkat').val() < 1) {
+            onAlert("Perhatian", "Range tingkatan adalah 1 - 5", "warning");
+        }else{
+            $('#bobot').val(listBobot[$('#tingkat').val() - 1]);
+        }
+    })
 
     index = () => {
         if ($.fn.DataTable.isDataTable('#table')) {
@@ -65,7 +76,7 @@
                 },
                 {
                     targets: 3,
-                    data: 'bobot',
+                    data: 'tingkat',
                     searchable: true,
                     orderable: true,
                     className: 'text-center',
@@ -75,6 +86,16 @@
                 },
                 {
                     targets: 4,
+                    data: 'bobot',
+                    searchable: true,
+                    orderable: true,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 5,
                     data: 'id',
                     searchable: true,
                     orderable: true,

@@ -2,8 +2,8 @@
 session_start();
 
 if (isset($_SESSION['user'])) {
-    // header("location:pages/login/login.html");
-    header("location:/tataTertib");
+	// header("location:pages/login/login.html");
+	header("location:/tataTertib");
 }
 ?>
 
@@ -23,26 +23,30 @@ if (isset($_SESSION['user'])) {
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-    <title>SiTatib | Sistem Tata Tertib </title>
+	<title>SiTatib | Sistem Tata Tertib </title>
 
 
 	<link href="assets/css/app.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" 
-	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+		rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
 
 
 	<script src="assets/js/jquery.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
 		body {
 			font-family: 'Poppins', sans-serif;
-			background-color: #000; /* Fallback jika gambar tidak dimuat */
+			background-color: #000;
+			/* Fallback jika gambar tidak dimuat */
 			background-image: url('assets/img/bg-login.png');
-			background-size: cover; /* Memastikan gambar mencakup seluruh area */
-			background-repeat: no-repeat; /* Tidak mengulangi gambar */
-			background-position: center; /* Pusatkan gambar */
+			background-size: cover;
+			/* Memastikan gambar mencakup seluruh area */
+			background-repeat: no-repeat;
+			/* Tidak mengulangi gambar */
+			background-position: center;
+			/* Pusatkan gambar */
 		}
 	</style>
 </head>
@@ -63,16 +67,16 @@ if (isset($_SESSION['user'])) {
 									<p class="fw-bold text-dark mt-5 mb-3" style="font-size: 44px;font-weight: 800;">SiTatib</p>
 								</div>
 								<div class="m-sm-3">
-									<form id="form-login" onsubmit="return onLogin(event)">
-										
+									<form id="form-login">
+
 										<div class="input-group mb-3 mt-5">
 											<span class="input-group-text" id="basic-addon1"><i data-feather="user"></i></span>
-											<input type="text" class="form-control" name="username"  placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+											<input type="text" class="form-control" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
 										</div>
 
 										<div class="input-group mb-5">
 											<span class="input-group-text" id="basic-addon1"><i data-feather="lock"></i></span>
-											<input type="password" class="form-control" name="password"  placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+											<input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
 										</div>
 
 
@@ -92,19 +96,18 @@ background: linear-gradient(146deg, rgba(17,87,190,1) 0%, rgba(22,30,61,1) 35%, 
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
 
-    <?php include 'pages/login/login.php'; ?>
-    
+	<?php include 'pages/login/login.php'; ?>
+
 	<script src="assets/js/app.js"></script>
 	<script>
-
-		<?php include 'helper/helper.js';?>
+		<?php include 'helper/helper.js'; ?>
 	</script>
 </body>
 

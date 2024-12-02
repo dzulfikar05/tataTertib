@@ -12,6 +12,9 @@
 
     let bobotUpper = 0;
 
+    let listBobot = [5,4,3,2,1];
+
+
     $(() => {
         index();
 
@@ -45,7 +48,8 @@
             for (i = 0; i < listKategori.length; i++) {
                 if (listKategori[i]['id'] == id) {
                     $('#deskripsi_kategori').html(listKategori[i]['keterangan']);
-                    $('#bobot').val(listKategori[i]['bobot']);
+                    $('#tingkat').val(listKategori[i]['tingkat']);
+                    // $('#bobot').val(listKategori[i]['bobot']);
                     $('#bobotKategori').val(listKategori[i]['bobot']);
                 }
             }
@@ -422,7 +426,7 @@
 
                 var html = `<p>Riwayat Pelanggaran :</p>`;
                 $.each(data.stat, (index, value) => {
-                    html += `<span> Pelanggaran dengan Tingkat ${index} : ${value} kali</span><br>`;
+                    html += `<span> Pelanggaran dengan Tingkat ${listBobot[index-1]} : ${value} kali</span><br>`;
                 })
 
                 $('.history_mhs').html(html);

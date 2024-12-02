@@ -6,6 +6,7 @@
         'keterangan',
     ];
     let listKategori;
+    let listBobot = [5,4,3,2,1];
 
     let action = '';
 
@@ -147,7 +148,8 @@
                     render: function(data, type, row) {
                         let html = `
                             <span >${data} </span><br>
-                            <span class="text-secondary fw-bold d-block fs-7 text-start">Tingkat : ${row.kategori_bobot - row.bobotUpper} </span>
+                            <span class="text-secondary fw-bold d-block fs-7 text-start">Tingkat : ${listBobot[row.kategori_bobot - row.bobotUpper-1]} </span>
+
                         `;
                         return html;
                     }

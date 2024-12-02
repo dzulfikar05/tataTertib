@@ -85,8 +85,12 @@
                             <div class="form-group mb-2">
                                 <input type="hidden" id="bobotKategori" name="bobot">
                                 <input type="hidden" id="mahasiswa_id" name="mahasiswa_id">
-                                <input type="number" disabled class="form-control" id="bobot"/>
+                                <input type="number" disabled class="form-control" id="tingkat"/>
                             </div>
+                            <!-- <label class="mb-1">Bobot Poin</label>
+                            <div class="form-group mb-2">
+                                <input type="number" disabled class="form-control" id="bobot"/>
+                            </div> -->
                         </div>
                     </div>
                 </form>

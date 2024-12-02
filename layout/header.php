@@ -41,7 +41,9 @@ if (!$_SESSION['user']) {
     <!-- <link href="assets/plugins/select2/select2.min.css" rel="stylesheet"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
     <script src="assets/js/jquery.js"></script>
     
     <link href="assets/css/app.css" rel="stylesheet">

@@ -8,7 +8,8 @@ class Kategori
         'id',
         'nama',
         'keterangan',
-        'bobot'
+        'tingkat',
+        'bobot',
     ];
 
     private $conn;
@@ -26,6 +27,7 @@ class Kategori
         $columns = [
             'nama',
             'keterangan',
+            'tingkat',
             'bobot',
         ];
 
@@ -41,6 +43,7 @@ class Kategori
         if (!empty($searchValue)) {
             $query .= " AND (nama LIKE '%$searchValue%') 
                 OR (keterangan LIKE '%$searchValue%') 
+                OR (tingkat LIKE '%$searchValue%') 
                 OR (bobot LIKE '%$searchValue%')";
         }
 
@@ -98,7 +101,7 @@ class Kategori
             array_push($params, $$form);
         }
 
-        $sql = "INSERT INTO $this->table (nama, keterangan, bobot) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO $this->table (nama, keterangan, tingkat, bobot) VALUES (?, ?, ?, ?)";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {
@@ -123,7 +126,7 @@ class Kategori
         $id = $_POST['id'];
         array_push($params, $id);
 
-        $sql = "UPDATE $this->table SET nama=?, keterangan=?, bobot=? WHERE id = ?";
+        $sql = "UPDATE $this->table SET nama=?, keterangan=?, tingkat=?, bobot=? WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, $params);
 
         if ($stmt) {

@@ -11,7 +11,7 @@
                         <input type="hidden" id="id" name="id">
 
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <label class="required-label mb-1">Nama</label>
                                 <div class="form-group mb-2">
                                     <div class="form-line">
@@ -19,12 +19,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
 
                                 <label class="required-label mb-1">Tingkat</label>
                                 <div class="form-group mb-2">
                                     <div class="form-line">
-                                        <input type="number" class="form-control" id="bobot" name="bobot" required />
+                                        <input type="number" class="form-control" id="tingkat" name="tingkat" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 ">
+
+                                <label class="required-label mb-1">Bobot</label>
+                                <div class="form-group mb-2">
+                                    <div class="form-line">
+                                        <input type="number" readonly class="form-control" id="bobot" name="bobot" required />
                                     </div>
                                 </div>
                             </div>
