@@ -10,7 +10,38 @@
     .stat-success {
         background-color: #C8E6C9;
     }
+
+    #pdf-controls {
+        margin: 10px 0;
+        gap: 5px;
+    }
+
+    #pdf-controls .btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    #page-number {
+        width: 60px;
+        text-align: center;
+    }
+
+    .scrollable-container {
+        width: 100%;
+        height: 40vh;
+        /* Adjust as needed for the desired height */
+        overflow-x: auto;
+        /* Enable horizontal scrolling */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        border: 1px solid #ddd;
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+
 </style>
+
 <h1 class="h3 mb-3"> Dashboard</h1>
 <div class="container-fluid mt-4">
     <div class="row">
@@ -30,7 +61,25 @@
                     <div class="card-body">
                         <h5 class="card-title">Buku Panduan</h5>
                         <div id="bukuPanduan">
-                            <div class="bg-light p-3 text-center rounded">Tidak ada data</div>
+
+                            <div id="pdf-controls" class="p-2 d-flex align-items-center bg-secondary text-white">
+                                <button id="first-page" class="btn btn-secondary text-white">⏮</button>
+                                <button id="prev-page" class="btn btn-secondary text-white">◀</button>
+                                <span>Page</span>
+                                <input id="page-number" type="number" value="1" min="1" class="form-control w-auto">
+                                <span id="total-pages">of 0</span>
+                                <button id="next-page" class="btn btn-secondary text-white">▶</button>
+                                <button id="last-page" class="btn btn-secondary text-white">⏭</button>
+                                <button id="zoom-in" class="btn btn-secondary text-white fw-light"><i class="fa fa-search-plus fw-light"></i></button>
+                                <button id="zoom-out" class="btn btn-secondary text-white"><i class="fa fa-search-minus fw-light"></i></button>
+                                <button id="download-pdf" class="btn btn-secondary ">💾 Download</button>
+                            </div>
+                            <div id="pdf-container" class="scrollable-container">
+                                <canvas id="pdf-render"></canvas>
+                            </div>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -106,9 +155,10 @@
         getCountStatMhs();
         getLatestTask();
         getKategori();
+        setBukuPedoman();
     })
 
-    let listBobot = [5,4,3,2,1];
+    let listBobot = [5, 4, 3, 2, 1];
 
     getCountStatMhs = () => {
         $.ajax({
@@ -211,5 +261,112 @@
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
             }
         })
+    }
+
+    setBukuPedoman = () => {
+        // URL to the PDF file
+        const url = "assets/D4_Sistem_Informasi_Bisnis_-_Pedoman_Akademik_2022-2023.pdf"; // Replace with the path to your PDF file
+
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.0,
+            canvas = document.getElementById('pdf-render'),
+            ctx = canvas.getContext('2d');
+
+        // Load PDF
+        pdfjsLib.getDocument(url).promise.then(pdf => {
+            pdfDoc = pdf;
+            document.getElementById('total-pages').textContent = `of ${pdf.numPages}`;
+            renderPage(pageNum);
+        });
+
+        // Render halaman
+        function renderPage(num) {
+            pageRendering = true;
+
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({
+                    scale
+                });
+
+                // Adjust canvas size based on viewport
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport,
+                };
+                const renderTask = page.render(renderContext);
+
+                renderTask.promise.then(() => {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+            document.getElementById('page-number').value = num;
+        }
+
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            if (scale < 2.0) { // Set a max zoom level
+                scale += 0.1;
+                renderPage(pageNum); // Re-render with the updated scale
+            }
+        });
+
+        // Zoom Out button handler
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            if (scale > 0.5) { // Set a min zoom level
+                scale -= 0.1;
+                renderPage(pageNum); // Re-render with the updated scale
+            }
+        });
+
+
+        // Tombol navigasi
+        document.getElementById('first-page').addEventListener('click', () => {
+            if (pageNum !== 1) {
+                pageNum = 1;
+                renderPage(pageNum);
+            }
+        });
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (pageNum > 1) {
+                pageNum--;
+                renderPage(pageNum);
+            }
+        });
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (pageNum < pdfDoc.numPages) {
+                pageNum++;
+                renderPage(pageNum);
+            }
+        });
+        document.getElementById('last-page').addEventListener('click', () => {
+            if (pageNum !== pdfDoc.numPages) {
+                pageNum = pdfDoc.numPages;
+                renderPage(pageNum);
+            }
+        });
+        document.getElementById('page-number').addEventListener('change', (e) => {
+            const newPage = parseInt(e.target.value);
+            if (newPage > 0 && newPage <= pdfDoc.numPages) {
+                pageNum = newPage;
+                renderPage(pageNum);
+            }
+        });
+
+        document.getElementById('download-pdf').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'document.pdf';
+            link.click();
+        });
+
     }
 </script>

@@ -26,6 +26,8 @@
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/id.js"></script>
         <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
+
 
         <script src="helper/helper.js"></script>
         <?php include 'helper/helper.php';?>

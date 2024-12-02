@@ -33,7 +33,8 @@ CREATE TABLE [Pelanggaran].[kategori] (
   [id] int  IDENTITY(1,1) NOT NULL,
   [nama] varchar(200) NULL,
   [keterangan] text NULL,
-  [bobot] int  NULL
+  [tingkat] int  NULL
+  [bobot] int  NULLp
 )
 GO
 
@@ -47,10 +48,10 @@ GO
 SET IDENTITY_INSERT [Pelanggaran].[kategori] ON
 GO
 
-INSERT INTO [Pelanggaran].[kategori] ([id], [nama], [keterangan], [bobot]) VALUES (N'3', N'Merokok', N'Merokok di luar area kawasan merokok', N'3')
+INSERT INTO [Pelanggaran].[kategori] ([id], [nama], [keterangan], [tingkat], [bobot]) VALUES (N'3', N'Merokok', N'Merokok di luar area kawasan merokok', N'3', N'3')
 GO
 
-INSERT INTO [Pelanggaran].[kategori] ([id], [nama], [keterangan], [bobot]) VALUES (N'4', N'Tindakan Kriminal', N'terlibat dalam tindakan kriminal dan dinyatakan berslaha oleh pengadilan', N'1')
+INSERT INTO [Pelanggaran].[kategori] ([id], [nama], [keterangan], [bobot]) VALUES (N'4', N'Tindakan Kriminal', N'terlibat dalam tindakan kriminal dan dinyatakan berslaha oleh pengadilan', N'5,' N'1')
 GO
 
 SET IDENTITY_INSERT [Pelanggaran].[kategori] OFF
@@ -84,41 +85,41 @@ ALTER TABLE [Pelanggaran].[pelanggaran] SET (LOCK_ESCALATION = TABLE)
 GO
 
 
--- ----------------------------
--- Records of pelanggaran
--- ----------------------------
-SET IDENTITY_INSERT [Pelanggaran].[pelanggaran] ON
-GO
+-- -- ----------------------------
+-- -- Records of pelanggaran
+-- -- ----------------------------
+-- SET IDENTITY_INSERT [Pelanggaran].[pelanggaran] ON
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'1', N'2024-11-15', N'3', N'2', N'34', N'mencuri pak', N'37', N'2024-11-16 08:37:34.000', N'3', N'1', NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'1', N'2024-11-15', N'3', N'2', N'34', N'mencuri pak', N'37', N'2024-11-16 08:37:34.000', N'3', N'1', NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'2', N'2024-11-15', N'3', N'2', N'34', N'nyolongggg nyolong', N'37', N'2024-11-16 08:37:26.000', N'3', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'2', N'2024-11-15', N'3', N'2', N'34', N'nyolongggg nyolong', N'37', N'2024-11-16 08:37:26.000', N'3', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'5', N'2024-11-15', N'3', N'2', N'34', N'testes tes', N'37', N'2024-11-16 08:37:17.000', N'2', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'5', N'2024-11-15', N'3', N'2', N'34', N'testes tes', N'37', N'2024-11-16 08:37:17.000', N'2', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'6', N'2024-11-15', N'3', N'2', N'34', N'cek', N'37', NULL, N'4', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'6', N'2024-11-15', N'3', N'2', N'34', N'cek', N'37', NULL, N'4', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'7', N'2024-11-16', N'4', N'2', N'34', N'gwendeng', N'37', N'2024-11-16 01:37:03.000', N'2', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'7', N'2024-11-16', N'4', N'2', N'34', N'gwendeng', N'37', N'2024-11-16 01:37:03.000', N'2', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'8', N'2024-11-19', N'3', N'2', N'34', N'hhhhh', N'37', N'2024-11-19 13:45:20.000', N'3', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'8', N'2024-11-19', N'3', N'2', N'34', N'hhhhh', N'37', N'2024-11-19 13:45:20.000', N'3', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'9', N'2024-11-20', N'3', N'2', N'34', N'cek', N'37', N'2024-11-20 15:03:25.000', N'2', NULL, N'1', N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'9', N'2024-11-20', N'3', N'2', N'34', N'cek', N'37', N'2024-11-20 15:03:25.000', N'2', NULL, N'1', N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'10', N'2024-11-20', N'3', N'2', N'34', N'MEROKOK', N'37', N'2024-11-20 13:09:54.000', N'3', NULL, NULL, N'3')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'10', N'2024-11-20', N'3', N'2', N'34', N'MEROKOK', N'37', N'2024-11-20 13:09:54.000', N'3', NULL, NULL, N'3')
+-- GO
 
-INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'11', N'2024-11-20', NULL, N'2', N'37', N'asdsd', NULL, N'2024-11-20 20:40:31.000', N'1', NULL, NULL, N'2')
-GO
+-- INSERT INTO [Pelanggaran].[pelanggaran] ([id], [tanggal], [kategori_id], [pelaku_id], [pelapor_id], [keterangan], [verify_by], [verify_at], [status], [created_by], [bobotUpper], [pelapor_role]) VALUES (N'11', N'2024-11-20', NULL, N'2', N'37', N'asdsd', NULL, N'2024-11-20 20:40:31.000', N'1', NULL, NULL, N'2')
+-- GO
 
-SET IDENTITY_INSERT [Pelanggaran].[pelanggaran] OFF
-GO
+-- SET IDENTITY_INSERT [Pelanggaran].[pelanggaran] OFF
+-- GO
 
 
 -- ----------------------------
@@ -147,29 +148,29 @@ ALTER TABLE [Pelanggaran].[sanksi] SET (LOCK_ESCALATION = TABLE)
 GO
 
 
--- ----------------------------
--- Records of sanksi
--- ----------------------------
-SET IDENTITY_INSERT [Pelanggaran].[sanksi] ON
-GO
+-- -- ----------------------------
+-- -- Records of sanksi
+-- -- ----------------------------
+-- SET IDENTITY_INSERT [Pelanggaran].[sanksi] ON
+-- GO
 
-INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'1', N'1', N'menyapu halaman', N'keteranganw23', NULL, N'4', N'komentar  gess', N'2024-11-18 00:05:59.177', N'2024-11-17', N'18:43:00.0000000', N'')
-GO
+-- INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'1', N'1', N'menyapu halaman', N'keteranganw23', NULL, N'4', N'komentar  gess', N'2024-11-18 00:05:59.177', N'2024-11-17', N'18:43:00.0000000', N'')
+-- GO
 
-INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'3', N'2', N'nyaponi lorong', N'lorong 1', NULL, N'4', N'', N'2024-11-19 13:51:28.313', NULL, NULL, N'')
-GO
+-- INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'3', N'2', N'nyaponi lorong', N'lorong 1', NULL, N'4', N'', N'2024-11-19 13:51:28.313', NULL, NULL, N'')
+-- GO
 
-INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'5', N'8', N'ggggg', N'wewe', NULL, N'4', N'sudha', N'2024-11-19 21:22:47.040', N'2024-11-19', N'21:21:00.0000000', N'')
-GO
+-- INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'5', N'8', N'ggggg', N'wewe', NULL, N'4', N'sudha', N'2024-11-19 21:22:47.040', N'2024-11-19', N'21:21:00.0000000', N'')
+-- GO
 
-INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'6', N'10', N'Membuat surat penyataan', N'dibubuhi materai, ttd mhs, DPA', NULL, N'4', N'', N'2024-11-20 13:19:04.927', N'2024-11-21', N'13:10:00.0000000', N'')
-GO
+-- INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'6', N'10', N'Membuat surat penyataan', N'dibubuhi materai, ttd mhs, DPA', NULL, N'4', N'', N'2024-11-20 13:19:04.927', N'2024-11-21', N'13:10:00.0000000', N'')
+-- GO
 
-INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'7', N'9', N'melakukan aksi', N'keterangan', NULL, N'1', NULL, NULL, N'2024-11-20', N'15:10:00.0000000', NULL)
-GO
+-- INSERT INTO [Pelanggaran].[sanksi] ([id], [pelanggaran_id], [tugas], [keterangan], [verify_by], [status], [komentar], [updated_at], [deadline_date], [deadline_time], [komentar_revisi]) VALUES (N'7', N'9', N'melakukan aksi', N'keterangan', NULL, N'1', NULL, NULL, N'2024-11-20', N'15:10:00.0000000', NULL)
+-- GO
 
-SET IDENTITY_INSERT [Pelanggaran].[sanksi] OFF
-GO
+-- SET IDENTITY_INSERT [Pelanggaran].[sanksi] OFF
+-- GO
 
 
 -- ----------------------------
