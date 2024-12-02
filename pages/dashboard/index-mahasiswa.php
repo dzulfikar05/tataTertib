@@ -23,7 +23,7 @@
     }
 
     #page-number {
-        width: 60px;
+        width: 90px;
         text-align: center;
     }
 
@@ -66,7 +66,7 @@
                                 <button id="first-page" class="btn btn-secondary text-white">⏮</button>
                                 <button id="prev-page" class="btn btn-secondary text-white">◀</button>
                                 <span>Page</span>
-                                <input id="page-number" type="number" value="1" min="1" class="form-control w-auto">
+                                <input id="page-number" type="number" value="1" min="1" class="form-control ">
                                 <span id="total-pages">of 0</span>
                                 <button id="next-page" class="btn btn-secondary text-white">▶</button>
                                 <button id="last-page" class="btn btn-secondary text-white">⏭</button>
