@@ -108,7 +108,7 @@ class Mahasiswa
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         $data = fetchArray($stmt);
        
-        return json_encode($data['data']);
+        return json_encode($data['data'] ?? []);
     }
 
 
