@@ -40,7 +40,9 @@ class LaporanPelanggaran
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
         $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'tanggal';
+        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nim';
+        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
+        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 AND status = 3";
 
@@ -56,7 +58,13 @@ class LaporanPelanggaran
             ";
         }
 
-        $query .= " ORDER BY $orderColumn $orderDirection";
+        // Hitung total data yang difilter
+        $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
+        $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
+        $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
+
+        $query .= " ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
+
 
         $stmt = sqlsrv_query($this->conn, $query);
 
@@ -87,8 +95,8 @@ class LaporanPelanggaran
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
-            "recordsTotal" => $data['num_rows'] ?? 0,
-            "recordsFiltered" => $data['num_rows'] ?? 0,
+            "recordsTotal" => countData($this->table, "AND status = 3") ?? 0,
+            "recordsFiltered" => $filteredData ?? 0,
             "data" => $data['data'] ?? null
         ];
 
