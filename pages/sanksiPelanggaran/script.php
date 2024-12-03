@@ -139,7 +139,7 @@
                     render: function(data, type, row) {
                         var dataBtn = [];
                         dataBtn['message'] = 'Buat Tugas';
-
+                        dataBtn['color'] = 'btn-secondary'; 
 
                         if(row.file_upload.length == 0){ dataBtn['color'] = 'btn-secondary'; dataBtn['message'] = 'Buat Tugas'; }
 
