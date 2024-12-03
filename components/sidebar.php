@@ -69,6 +69,7 @@ background: linear-gradient(146deg, rgba(22,30,61,1) 57%, rgba(32,61,111,1) 79%,
                     
                     <li class="sidebar-item 
                     <?= $_SESSION['menu_active'] == 'sanksi-pelanggaran' ? 'active' : ''  ?>
+                    <?= $_SESSION['user']['role'] == 2 ? 'd-none' : ''  ?>
                     <?= $_SESSION['user']['role'] == 3 ? 'd-none' : ''  ?>
                     "><a class='sidebar-link' href='sanksi-pelanggaran.php'>Sanksi Pelanggaran</a></li>
                   

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $_SESSION['menu_active'] = 'sanksi-pelanggaran';
-if ($_SESSION['user']['role'] == 3) {
+if ($_SESSION['user']['role'] == 3 || $_SESSION['user']['role'] == 2) {
     header("location:/tataTertib");
 }
 
