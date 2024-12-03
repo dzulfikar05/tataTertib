@@ -138,6 +138,9 @@
                     className: 'text-center',
                     render: function(data, type, row) {
                         var dataBtn = [];
+                        dataBtn['message'] = 'Buat Tugas';
+
+
                         if(row.file_upload.length == 0){ dataBtn['color'] = 'btn-secondary'; dataBtn['message'] = 'Buat Tugas'; }
 
                         if(row.file_upload.length > 0 || row.status == 2){ dataBtn['color'] = 'btn-primary'; dataBtn['message'] = 'Lihat Tugas'; }
