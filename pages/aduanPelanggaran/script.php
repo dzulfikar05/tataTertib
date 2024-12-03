@@ -394,13 +394,15 @@
             success: (data) => {
                 data = JSON.parse(data);
 
-                var html = '<option value="" class="drop-pilih" >-- PILIH --</option>';
+                var html = '<option value="" class="drop-pilih" selected >-- PILIH --</option>';
 
                 for (i = 0; i < data.length; i++) {
                     html += '<option value="' + data[i]['user_id'] + '">' + data[i]['nim'] + ' - ' + data[i]['nama'] + ' || ' + data[i]['prodi_nama'] + ' - ' + data[i]['kelas_nama'] + '</option>';
                 }
 
-                $('#pelaku_id').html(html);
+                $('#pelaku_id').html(html).trigger('change');
+
+
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
