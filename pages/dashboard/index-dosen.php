@@ -7,10 +7,11 @@
         background-color: #edd3d6;
     }
 </style>
+
 <h1 class="h3 mb-3"> Dashboard</h1>
-<div class="container-fluid mt-4">
+<<div class="container-fluid mt-4">
     <div class="row">
-        <!-- Left Column -->
+        <!-- Kiri: Statistik -->
         <div class="col-lg-6">
             <div class="row">
                 <!-- Mahasiswa Card -->
@@ -100,14 +101,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-        <!-- Right Column -->
+        <!-- Kanan: Info Aduan -->
         <div class="col-lg-6">
-            <!-- Pelanggaran Terbanyak -->
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Info Aduan</h5>
-                    <table class="table table-hover bg-light">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -118,7 +120,7 @@
                         </thead>
                         <tbody id="list-pelanggaran">
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data</td>
+                                <td colspan="4" class="text-center">Tidak ada data</td>
                             </tr>
                         </tbody>
                     </table>
@@ -174,9 +176,8 @@
                     html += '<tr>';
                     html += '<td>' + (i + 1) + '</td>';
                     html += '<td>' + data[i]['nama'] + '</td>';
-                    html += '<td> <b>' + data[i]['jurusan_nama'] + '</b> <br> ' + data[i]['prodi_nama'] + '</td>';
+                    html += '<td> <b>' + data[i]['jurusan_nama'] + '</b> <br> ';
                     html += '<td>' + data[i]['angkatan'] + '</td>';
-                    html += '<td><b>' + data[i]['poin'] + '</b></td>';
                     html += '</tr>';
                 }
 
