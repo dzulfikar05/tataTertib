@@ -115,6 +115,7 @@
                                 <th>No</th>
                                 <th>Mahasiswa</th>
                                 <th>Laporan</th>
+                                <th>Tanggal</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -128,76 +129,40 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<script>
-    $(() => {
-        moment.locale('id');
+    <script>
+        $(() => {
+            moment.locale('id');
 
-        getCount();
-        getListMhs();
-        getListAduan();
-        getListPelanggaran();
-    });
-
-    let listBobot = [5,4,3,2,1];
-
-    getCount = () => {
-        $.ajax({
-            url: "system/dashboard.php",
-            method: "POST",
-            data: {
-                action: "getCount"
-            },
-            success: (data) => {
-                data = JSON.parse(data);
-                $(".count-mahasiswa").text(data.countMahasiswa);
-                $(".count-dosen").text(data.countDosen);
-                $(".count-aduan").text(data.countAduan);
-                $(".count-pelanggaran").text(data.countPelanggaran);
-            }
-        });
-    }
-
-    getListMhs = () => {
-        $("#list-pelanggaran").html("");
-
-        $.ajax({
-            url: "system/dashboard.php",
-            method: "POST",
-            data: {
-                action: "getListMhs"
-            },
-            success: (data) => {
-                data = JSON.parse(data);
-                var html = '';
-
-                for (i = 0; i < data.length; i++) {
-                    html += '<tr>';
-                    html += '<td>' + (i + 1) + '</td>';
-                    html += '<td>' + data[i]['nama'] + '</td>';
-                    html += '<td> <b>' + data[i]['jurusan_nama'] + '</b> <br> ';
-                    html += '<td>' + data[i]['angkatan'] + '</td>';
-                    html += '</tr>';
-                }
-
-                if (data.length == 0) {
-                    html += `
-                        <tr>
-                            <td colspan="5">
-                                <div class="d-flex justify-content-center">
-                                    Tidak ada data
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                }
-                $("#list-pelanggaran").html(html);
-
-            }
+            getCount();
+            getListMhs();
+            getListAduan();
+            getListPelanggaran();
         });
 
-        getListAduan = () => {
+        let listBobot = [5, 4, 3, 2, 1];
+
+        getCount = () => {
+            $.ajax({
+                url: "system/dashboard.php",
+                method: "POST",
+                data: {
+                    action: "getCount"
+                },
+                success: (data) => {
+                    data = JSON.parse(data);
+                    $(".count-mahasiswa").text(data.countMahasiswa);
+                    $(".count-dosen").text(data.countDosen);
+                    $(".count-aduan").text(data.countAduan);
+                    $(".count-pelanggaran").text(data.countPelanggaran);
+                }
+            });
+        }
+
+        getListMhs = () => {
+            $("#list-pelanggaran").html("");
+
             $.ajax({
                 url: "system/dashboard.php",
                 method: "POST",
@@ -208,87 +173,148 @@
                     data = JSON.parse(data);
                     var html = '';
 
-                    for (i = 0; i < data.length; i++) {
+                    for (let i = 0; i < data.length; i++) {
+                        html += '<tr>';
+                        html += '<td>' + (i + 1) + '</td>';
+                        html += '<td> <b>' + data[i]['terlapor_mahasiswa_nim'] + '</b><br>' + data[i]['terlapor_mahasiswa_nama'] + '</td>';
+                        html += '<td> <b>' + data[i]['keterangan'] + '</b> </td>';
+                        html += '<td><span class="mt-2 text-secondary "> ' +
+                                moment(data[i]['tanggal']['date']).format('DD MMM YYYY') +
+                                '</span></td>';
 
-
-                        html += '<div class="bg-light mb-3 rounded">';
-                        html += '<div class="p-3">';
-                        html += '<span class="mt-2 text-secondary fw-bold">' + data[i]['terlapor_mahasiswa_nama'] + ' - NIM. ' + data[i]['terlapor_mahasiswa_nim'] + '</span><br>';
-                        html += '<span class="mt-2 text-secondary "> <i class="fa fa-clock"></i> ' +
-                            moment(data[i]['tanggal']['date']).format('DD MMMM YYYY') +
-                            '</span><br>';
-                        html += '<span class="text-secondary">' + data[i]['keterangan'] ?? +'</span>';
-                        html += '</div>';
-                        html += '</div>';
+                        // Sesuaikan kondisi status
+                        if (data[i]['status'] == 1) {
+                            html += `<td>
+                                <span class="badge text-bg-warning text-dark">Menunggu</span>
+                            </td>`;
+                        } else if (data[i]['status'] == 2) {
+                            html += `<td>
+                                <span class="badge text-bg-primary text-white">Proses Sanksi</span>
+                            </td>`;
+                        } else if (data[i]['status'] == 3) {
+                            html += `<td>
+                                <span class="badge text-bg-success text-white">Selesai</span>
+                            </td>`;
+                        } else if (data[i]['status'] == 4) {
+                            html += `<td>
+                                <span class="badge text-bg-danger text-white">Ditolak</span>
+                            </td>`;
+                        } else {
+                            html += `<td>
+                                <span class="badge text-bg-secondary text-white">Status Tidak Diketahui</span>
+                            </td>`;
+                        }
+                        html += '</tr>';
                     }
 
                     if (data.length == 0) {
                         html += `
+                        <tr>
+                            <td colspan="5">
+                                <div class="d-flex justify-content-center">
+                                    Tidak ada data
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    }
+                    $("#list-pelanggaran").html(html);
+
+                }
+            });
+
+            getListAduan = () => {
+                $.ajax({
+                    url: "system/dashboard.php",
+                    method: "POST",
+                    data: {
+                        action: "getListAduan"
+                    },
+                    success: (data) => {
+                        data = JSON.parse(data);
+                        var html = '';
+
+                        for (i = 0; i < data.length; i++) {
+
+
+                            html += '<div class="bg-light mb-3 rounded">';
+                            html += '<div class="p-3">';
+                            html += '<span class="mt-2 text-secondary fw-bold">' + data[i]['terlapor_mahasiswa_nama'] + ' - NIM. ' + data[i]['terlapor_mahasiswa_nim'] + '</span><br>';
+                            html += '<span class="mt-2 text-secondary "> <i class="fa fa-clock"></i> ' +
+                                moment(data[i]['tanggal']['date']).format('DD MMMM YYYY') +
+                                '</span><br>';
+                            html += '<span class="text-secondary">' + data[i]['keterangan'] ?? +'</span>';
+                            html += '</div>';
+                            html += '</div>';
+                        }
+
+                        if (data.length == 0) {
+                            html += `
                                 <div class="bg-light mb-3 rounded">
                                     <div class="p-3 d-flex justify-content-center ">
                                         <span class=" text-secondary fw-bold">Tidak ada data</span>
                                     </div>
                                 </div>
                         `;
-                    }
-
-                    $("#listAduan").html(html);
-                }
-            });
-        }
-
-        getListPelanggaran = () => {
-            $.ajax({
-                url: "system/dashboard.php",
-                method: "POST",
-                data: {
-                    action: "getListPelanggaran"
-                },
-                success: (data) => {
-                    data = JSON.parse(data);
-
-                    var html = '';
-
-                    for (i = 0; i < data.length; i++) {
-                        var status = "";
-                        if (data[i]['status'] == 2) {
-                            status = '<span class="badge text-bg-warning text-white ms-3">Proses</span>';
-                        }
-                        if (data[i]['status'] == 3) {
-                            status = '<span class="badge text-bg-success text-white ms-3">Selesai</span>';
                         }
 
-                        html += '<div class="bg-light mb-3 rounded">';
-                        html += '<div class="p-3">';
-                        html += '<span class="mt-2 text-secondary fw-bold">' + data[i]['terlapor_mahasiswa_nama'] + ' - NIM. ' + data[i]['terlapor_mahasiswa_nim'] + '</span><br>';
-                        html += '<span class="mt-2 text-secondary "> <i class="fa fa-clock"></i> ' +
-                            moment(data[i]['tanggal']['date']).format('DD MMMM YYYY') +
-                            '</span><br>';
-                        html += '<span class="text-secondary">' + data[i]['kategori_nama'] +
-                            ' <span class="fw-bold text-danger"> Tingkat ' + listBobot[data[i]['kategori_bobot']-data[i]['bobotUpper']-1] + '</span>'
-
-                            +
-                            status +
-
-                            '</span>';
-                        html += '</div>';
-                        html += '</div>';
+                        $("#listAduan").html(html);
                     }
+                });
+            }
 
-                    if (data.length == 0) {
-                        html += `
+            getListPelanggaran = () => {
+                $.ajax({
+                    url: "system/dashboard.php",
+                    method: "POST",
+                    data: {
+                        action: "getListPelanggaran"
+                    },
+                    success: (data) => {
+                        data = JSON.parse(data);
+
+                        var html = '';
+
+                        for (i = 0; i < data.length; i++) {
+                            var status = "";
+                            if (data[i]['status'] == 2) {
+                                status = '<span class="badge text-bg-warning text-white ms-3">Proses</span>';
+                            }
+                            if (data[i]['status'] == 3) {
+                                status = '<span class="badge text-bg-success text-white ms-3">Selesai</span>';
+                            }
+
+                            html += '<div class="bg-light mb-3 rounded">';
+                            html += '<div class="p-3">';
+                            html += '<span class="mt-2 text-secondary fw-bold">' + data[i]['terlapor_mahasiswa_nama'] + ' - NIM. ' + data[i]['terlapor_mahasiswa_nim'] + '</span><br>';
+                            html += '<span class="mt-2 text-secondary "> <i class="fa fa-clock"></i> ' +
+                                moment(data[i]['tanggal']['date']).format('DD MMMM YYYY') +
+                                '</span><br>';
+                            html += '<span class="text-secondary">' + data[i]['kategori_nama'] +
+                                ' <span class="fw-bold text-danger"> Tingkat ' + listBobot[data[i]['kategori_bobot'] - data[i]['bobotUpper'] - 1] + '</span>'
+
+                                +
+                                status +
+
+                                '</span>';
+                            html += '</div>';
+                            html += '</div>';
+                        }
+
+                        if (data.length == 0) {
+                            html += `
                                 <div class="bg-light mb-3 rounded">
                                     <div class="p-3 d-flex justify-content-center ">
                                         <span class=" text-secondary fw-bold">Tidak ada data</span>
                                     </div>
                                 </div>
                         `;
+                        }
+
+                        $("#listPelanggaran").html(html);
+
                     }
-
-                    $("#listPelanggaran").html(html);
-
-                }
-            });
+                });
+            }
         }
-    }
-</script>
+    </script>

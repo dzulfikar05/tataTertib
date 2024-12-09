@@ -46,7 +46,15 @@ class Dashboard
 
     public function getListAduan()
     {
-        $sql = "SELECT TOP 5 * FROM Pelanggaran.v_pelanggaran WHERE status = 1 ORDER BY tanggal DESC";
+        session_start();
+        
+        $sql = "SELECT TOP 5 * FROM Pelanggaran.v_pelanggaran WHERE status = 1 ";
+
+        if($_SESSION['user']['role'] == 3){
+            $sql .= "AND pelapor_id = " . $_SESSION['user']['id'];
+        }
+
+        $sql .= "ORDER BY tanggal DESC";
 
         $stmt = sqlsrv_query($this->conn, $sql);
         if (!$stmt) {
