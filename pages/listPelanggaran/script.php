@@ -207,9 +207,9 @@
                     className: 'text-center',
                     render: function(data, type, row) {
                         var btnColor = row.tugas == null ? 'btn-secondary' : 'btn-success';
-                        var disabled = isAdmin ? 'disabled' : '';
+                        var disabled = (isAdmin == 1) ? 'disabled' : '';
                         let html = `
-                            <button class="btn ${btnColor} btn-sm disabled" type="button" onclick="onSanksi(${data}, ${row.pelaku_id})">
+                            <button class="btn ${btnColor} btn-sm ${disabled}" type="button" onclick="onSanksi(${data}, ${row.pelaku_id})">
                                 <i class="fa fa-edit"></i>
                                 Buat Sanksi    
                             </button>
@@ -237,7 +237,7 @@
                         if (data == 4) {
                             btnColor = 'btn-success disabled';
                         }
-                        if (data == null || isAdmin) {
+                        if (data == null || isAdmin == 1) {
                             btnColor = 'disabled';
                         }
 
