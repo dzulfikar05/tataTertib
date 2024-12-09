@@ -48,7 +48,7 @@ class Staff
         $query = "SELECT * FROM $this->tableView WHERE 1=1";
 
         if (!empty($searchValue)) {
-            $query .= " AND (nip LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR prodi_nama LIKE '%$searchValue%' OR status LIKE '%$searchValue%' OR jk LIKE '%$searchValue%' OR no_hp LIKE '%$searchValue%')";
+            $query .= " AND (nip LIKE '%$searchValue%' OR nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%' OR prodi_nama LIKE '%$searchValue%' OR jk LIKE '%$searchValue%' OR no_hp LIKE '%$searchValue%')";
         }
 
         // Hitung total data yang difilter

@@ -72,7 +72,7 @@ class Mahasiswa
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
             "recordsTotal" => countData($this->table) ?? 0,
             "recordsFiltered" => $filteredData ?? 0,
-            "data" => $data['data']
+            "data" => $data['data'] ?? []
         ];
 
         return json_encode($response);
