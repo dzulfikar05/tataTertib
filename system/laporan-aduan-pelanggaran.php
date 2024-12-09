@@ -14,7 +14,6 @@ class LaporanAduanPelanggaran
         $this->table = 'Pelanggaran.pelanggaran';
         $this->tableView = 'Pelanggaran.v_pelanggaran';
     }
-
     public function index()
     {
         $columns = [
@@ -23,20 +22,26 @@ class LaporanAduanPelanggaran
             'terlapor_mahasiswa_nama',
             'pelapor_dosen_nidn',
             'pelapor_dosen_nama',
+            'pelapor_staff_nip',
+            'pelapor_staff_nama',
             'keterangan',
         ];
 
-        $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
-        $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
-        $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nim';
-        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
-        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
+        $searchValue = $_POST['search']['value'] ?? '';
+        $orderColumnIndex = $_POST['order'][0]['column'] ?? 0;
+        $orderDirection = $_POST['order'][0]['dir'] ?? 'asc';
+        $start = intval($_POST['start'] ?? 0);
+        $length = intval($_POST['length'] ?? 10);
 
-        // Base query
+        // Validasi order column
+        $orderColumn = $columns[$orderColumnIndex] ?? 'tanggal';
+        $orderDirection = strtoupper($orderDirection) === 'DESC' ? 'DESC' : 'ASC';
+
+        // Query dasar
         $query = "SELECT * FROM $this->tableView WHERE (status = 3 OR status = 4 OR status = 2)";
+        $params = [];
 
-        // Add search filter
+        // Filter pencarian
         if (!empty($searchValue)) {
             $query .= " AND (
             tanggal LIKE ? 
@@ -44,35 +49,41 @@ class LaporanAduanPelanggaran
             OR terlapor_mahasiswa_nama LIKE ?
             OR pelapor_dosen_nidn LIKE ?
             OR pelapor_dosen_nama LIKE ?
+            OR pelapor_staff_nip LIKE ?
+            OR pelapor_staff_nama LIKE ?
             OR keterangan LIKE ?
         )";
-            $params = array_fill(0, 6, "%$searchValue%");
-        } else {
-            $params = [];
+            $searchParam = '%' . $searchValue . '%';
+            $params = array_fill(0, 8, $searchParam);
         }
 
-       // Hitung total data yang difilter
-       $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
-       $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
-       $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
+        // Hitung total data yang difilter
+        $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
+        $filteredStmt = sqlsrv_query($this->conn, $filteredQuery, $params);
+        if (!$filteredStmt) {
+            die(json_encode(["error" => sqlsrv_errors()]));
+        }
+        $filteredData = sqlsrv_fetch_array($filteredStmt, SQLSRV_FETCH_ASSOC)['filtered'] ?? 0;
 
-       $query .= " ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
+        // Tambahkan pagination dan sorting
+        $query .= " ORDER BY $orderColumn $orderDirection OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        array_push($params, $start, $length);
 
-
-        // Execute query
+        // Eksekusi query utama
         $stmt = sqlsrv_query($this->conn, $query, $params);
-
         if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
+            die(json_encode(["error" => sqlsrv_errors()]));
         }
 
+        // Ambil data
         $data = fetchArray($stmt);
 
+        // Respons JSON
         $response = [
-            "draw" => $_POST['draw'] ?? 0,
-            "recordsTotal" => countData($this->table, "AND status = 3 OR status = 4 OR status = 2") ?? 0,
-            "recordsFiltered" => $filteredData ?? 0,
-            "data" => $data['data'] ?? null
+            "draw" => intval($_POST['draw'] ?? 0),
+            "recordsTotal" => countData($this->table, "AND (status = 3 OR status = 4 OR status = 2)") ?? 0,
+            "recordsFiltered" => $filteredData,
+            "data" => $data['data'] ?? []
         ];
 
         return json_encode($response);

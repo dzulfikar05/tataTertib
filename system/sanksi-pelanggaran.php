@@ -61,13 +61,15 @@ class Kategori
 
         $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
         $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
-        $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
+        $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'DESC';
         $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'pelanggaran_tanggal';
+        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
+        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 ";
 
-        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 4 && $_SESSION['user']['role'] != 1) {
-            $query .= "AND pelanggaran_pelaku_id = ".$_SESSION['user']['id'];
+        if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 4 && $_SESSION['user']['role'] != 1) {
+            $query .= "AND pelanggaran_pelaku_id = " . $_SESSION['user']['id'];
         }
 
         if (!empty($searchValue)) {
@@ -80,7 +82,13 @@ class Kategori
             ";
         }
 
-        $query .= " ORDER BY $orderColumn $orderDirection";
+        // Hitung total data yang difilter
+        $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
+        $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
+        $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
+
+        $query .= "ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
+
 
         $stmt = sqlsrv_query($this->conn, $query);
 
@@ -109,9 +117,9 @@ class Kategori
 
         $response = [
             "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
-            "recordsTotal" => $data['num_rows'] ?? 0,
-            "recordsFiltered" => $data['num_rows'] ?? 0,
-            "data" => $data['data'] ?? null
+            "recordsTotal" => countData($this->table) ?? 0,
+            "recordsFiltered" => $filteredData ?? 0,
+            "data" => $data['data'] ?? []
         ];
 
         return json_encode($response);
@@ -171,7 +179,7 @@ class Kategori
 
         $sql = "UPDATE $this->table SET komentar = ?, status = 2 WHERE id = ?";
         $stmt = sqlsrv_query($this->conn, $sql, [$_POST['komentar'], $modelId]);
-        
+
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
@@ -226,7 +234,9 @@ class Kategori
 
                 $file_path = isset($fileInput) && $fileInput['error'] == 0 ? $path . $new_file_name : null;
                 $stmt = sqlsrv_query($this->conn, "DELETE FROM $this->tableUpload WHERE model_id = ? AND model_name = ?", array($modelId, 'Pelanggaran.sanksi'));
-                if (!$stmt) {die(print_r(sqlsrv_errors(), true));}
+                if (!$stmt) {
+                    die(print_r(sqlsrv_errors(), true));
+                }
 
                 $params = [
                     $modelId,

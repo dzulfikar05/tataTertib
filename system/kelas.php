@@ -23,41 +23,61 @@ class Prodi
 
     public function index()
     {
-
         $columns = ['nama', 'prodi_id', 'prodi_nama', 'jurusan_id', 'jurusan_nama'];
 
-        $searchValue = isset($_POST['search']['value']) ? $_POST['search']['value'] : '';
-        $orderColumnIndex = isset($_POST['order'][0]['column']) ? $_POST['order'][0]['column'] : 0;
-        $orderDirection = isset($_POST['order'][0]['dir']) ? $_POST['order'][0]['dir'] : 'asc';
-        $orderColumn = isset($columns[$orderColumnIndex]) ? $columns[$orderColumnIndex] : 'nim';
-        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
-        $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
+        $searchValue = $_POST['search']['value'] ?? '';
+        $orderColumnIndex = $_POST['order'][0]['column'] ?? 0;
+        $orderDirection = $_POST['order'][0]['dir'] ?? 'asc';
+        $start = intval($_POST['start'] ?? 0);
+        $length = intval($_POST['length'] ?? 10);
 
+        // Validasi kolom dan arah pengurutan
+        $orderColumn = $columns[$orderColumnIndex] ?? 'nama';
+        $orderDirection = strtoupper($orderDirection) === 'DESC' ? 'DESC' : 'ASC';
+
+        // Base query
         $query = "SELECT * FROM $this->tableView WHERE 1=1";
 
+        // Filter pencarian
+        $params = [];
         if (!empty($searchValue)) {
-            $query .= " AND (nama LIKE '%$searchValue%' OR prodi_nama LIKE '%$searchValue%' OR jurusan_nama LIKE '%$searchValue%)";
+            $query .= " AND (nama LIKE ? OR prodi_nama LIKE ? OR jurusan_nama LIKE ?)";
+            $searchValue = "%$searchValue%";
+            $params = [$searchValue, $searchValue, $searchValue];
         }
 
         // Hitung total data yang difilter
         $filteredQuery = "SELECT COUNT(*) as filtered FROM ($query) as temp";
-        $filteredResult = sqlsrv_query($this->conn, $filteredQuery);
-        $filteredData = sqlsrv_fetch_array($filteredResult, SQLSRV_FETCH_ASSOC)['filtered'];
+        $filteredStmt = sqlsrv_query($this->conn, $filteredQuery, $params);
+        if (!$filteredStmt) {
+            die(json_encode(["error" => sqlsrv_errors()]));
+        }
+        $filteredData = sqlsrv_fetch_array($filteredStmt, SQLSRV_FETCH_ASSOC)['filtered'] ?? 0;
 
-        $query .= " ORDER BY $orderColumn $orderDirection OFFSET $start ROWS FETCH NEXT $length ROWS ONLY";
-        $stmt = sqlsrv_query($this->conn, $query);
-        if (!$stmt) {die(print_r(sqlsrv_errors(), true));}
+        // Tambahkan pagination dan sorting
+        $query .= " ORDER BY $orderColumn $orderDirection OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        $params = array_merge($params, [$start, $length]);
+
+        // Eksekusi query
+        $stmt = sqlsrv_query($this->conn, $query, $params);
+        if (!$stmt) {
+            die(json_encode(["error" => sqlsrv_errors()]));
+        }
+
+        // Ambil data
         $data = fetchArray($stmt);
 
+        // Respons JSON
         $response = [
-            "draw" => isset($_POST['draw']) ? intval($_POST['draw']) : 0,
+            "draw" => intval($_POST['draw'] ?? 0),
             "recordsTotal" => countData($this->table) ?? 0,
-            "recordsFiltered" => $filteredData ?? 0,
-            "data" => $data['data'] ?? null
+            "recordsFiltered" => $filteredData,
+            "data" => $data['data'] ?? []
         ];
 
         return json_encode($response);
     }
+
 
     public function getAll()
     {
