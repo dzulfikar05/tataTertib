@@ -25,7 +25,9 @@
             lengthMenu: [5, 10, 25, 50, 100],
         language: {
             lengthMenu: "Menampilkan  _MENU_  data per halaman",
-            info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data"
+            info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+            search : "Cari Data : ",
+            search: "Cari data:"
         },
             ajax: {
                 url: '/tataTertib/system/pengguna.php',
