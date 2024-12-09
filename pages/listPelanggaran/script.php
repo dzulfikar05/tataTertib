@@ -7,7 +7,7 @@
     ];
     let listKategori;
     let listBobot = [5,4,3,2,1];
-    let isAdmin = <?= $_SESSION['user']['role'] == 1? true : false ?>;
+    let isAdmin = <?= $_SESSION['user']['role'] ?>;
 
     let action = '';
 

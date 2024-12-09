@@ -7,7 +7,7 @@
     ];
     let listKategori;
 
-    let isAdmin = <?= $_SESSION['user']['role'] == 1? true : false ?>;
+    let isAdmin = <?= $_SESSION['user']['role'] ?>;
 
     let action = '';
     let historyMhs = [];
@@ -21,6 +21,9 @@
         index();
 
         $('.jurusan_id-select2').select2({
+            dropdownParent: $('#modal_form')
+        });
+        $('.prodi_id-select2').select2({
             dropdownParent: $('#modal_form')
         });
 
@@ -37,6 +40,11 @@
     });
 
     changeJurusan = () => {
+        $('#prodi_id').val("").trigger('change');
+        getProdi($('#jurusan_id').val());
+    }
+
+    changeProdi = () => {
         getMahasiswa();
     }
 
@@ -222,14 +230,14 @@
 
 
     onAdd = () => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
         resetForm(listForm);
         $('#modal_form').modal('show');
         action = 'store';
     }
 
     onEdit = (id) => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
 
         $.ajax({
             url: '/tataTertib/system/aduan-pelanggaran.php',
@@ -267,7 +275,7 @@
     }
 
     onSave = () => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
 
         onConfirm("Data akan tersimpan di database.", (result) => {
             if (result.isConfirmed) {
@@ -280,7 +288,7 @@
     }
 
     saveData = () => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
 
         const form = $('#form_aduan-pelanggaran').get(0);
         let formData = new FormData(form);
@@ -311,7 +319,7 @@
     }
 
     onDestroy = (id) => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
 
         onConfirm("Data akan terhapus dari database.", (result) => {
             if (result.isConfirmed) {
@@ -324,7 +332,7 @@
     }
 
     destroyData = (id) => {
-        if(isAdmin) return;
+        if(isAdmin == 1) return;
 
         $.ajax({
             url: '/tataTertib/system/aduan-pelanggaran.php',
@@ -345,6 +353,31 @@
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
             }
         });
+    }
+
+    getProdi = (id) => {
+        $.ajax({
+            url: '/tataTertib/system/prodi.php',
+            data: {
+                action: 'getByJurusan',
+                id: id
+            },
+            type: 'POST',
+            success: (data) => {
+                data = JSON.parse(data);
+                
+                var html = '<option value="" class="drop-pilih" selected>-- PILIH --</option>';
+
+                for (i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i]['id'] + '">'  + data[i]['nama'] + '</option>';
+                }
+
+                $('#prodi_id').html(html);
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
+            }
+        })
     }
 
     getJurusan = () => {
@@ -396,12 +429,12 @@
     }
 
     getMahasiswa = () => {
-        let jurusanId = $('#jurusan_id').val();
+        let prodiId = $('#prodi_id').val();
         $.ajax({
             url: '/tataTertib/system/mahasiswa.php',
             data: {
-                id: jurusanId,
-                action: 'getByJurusan'
+                id: prodiId,
+                action: 'getByProdi'
             },
             type: 'POST',
             success: (data) => {

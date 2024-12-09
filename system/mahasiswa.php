@@ -110,6 +110,18 @@ class Mahasiswa
        
         return json_encode($data['data'] ?? []);
     }
+   
+    public function getByProdi()
+    {
+
+        $id = $_POST['id'];
+        $sql = "SELECT * FROM $this->tableView WHERE prodi_id = ?";
+        $params = array($id);
+        $stmt = sqlsrv_query($this->conn, $sql, $params);
+        $data = fetchArray($stmt);
+       
+        return json_encode($data['data'] ?? []);
+    }
 
 
     public function storeUser()
@@ -356,6 +368,7 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'store') echo $mahasiswa->store();
     if ($_POST['action'] == 'getById') echo $mahasiswa->getById();
     if ($_POST['action'] == 'getByJurusan') echo $mahasiswa->getByJurusan();
+    if ($_POST['action'] == 'getByProdi') echo $mahasiswa->getByProdi();
     if ($_POST['action'] == 'update') echo $mahasiswa->update();
     if ($_POST['action'] == 'destroy') echo $mahasiswa->destroy();
     if ($_POST['action'] == 'activationMhs') echo $mahasiswa->activationMhs();
