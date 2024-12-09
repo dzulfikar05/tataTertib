@@ -22,6 +22,14 @@
                             </div>
                         </div>
                         <div class="col-12">
+                            <label class="required-label mb-1">Prodi</label>
+                            <div class="form-group mb-2">
+                                <select class="form-control prodi_id-select2" style="width: 100%;" id="prodi_id" onchange="changeProdi()">
+                                    <option value="">-- PILIH --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <label class="required-label mb-1">Mahasiswa</label>
                             <div class="form-group mb-2">
                                 <select class="form-control pelaku_id-select2" style="width: 100%;" id="pelaku_id" name="pelaku_id">

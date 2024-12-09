@@ -40,7 +40,7 @@ if (isset($_SESSION['user'])) {
 			font-family: 'Poppins', sans-serif;
 			background-color: #000;
 			/* Fallback jika gambar tidak dimuat */
-			background-image: url('assets/img/bg-login.png');
+			background-image: url('assets/img/bg-login1.png');
 			background-size: cover;
 			/* Memastikan gambar mencakup seluruh area */
 			background-repeat: no-repeat;

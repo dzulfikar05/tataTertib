@@ -66,7 +66,7 @@ class Kategori
 
         $query = "SELECT * FROM $this->tableView WHERE 1=1 ";
 
-        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 4) {
+        if(isset($_SESSION['user']['role']) && $_SESSION['user']['role'] != 4 && $_SESSION['user']['role'] != 1) {
             $query .= "AND pelanggaran_pelaku_id = ".$_SESSION['user']['id'];
         }
 
