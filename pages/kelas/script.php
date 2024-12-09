@@ -37,7 +37,7 @@
             ordering: true,
             lengthMenu: [5, 10, 25, 50, 100],
         language: {
-            lengthMenu: "Show _MENU_ items per page"
+            lengthMenu: "Menampilkan  _MENU_  data per halaman"
         },
             ajax: {
                 url: '/tataTertib/system/kelas.php',

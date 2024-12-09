@@ -33,8 +33,8 @@ CREATE TABLE [Pelanggaran].[kategori] (
   [id] int  IDENTITY(1,1) NOT NULL,
   [nama] varchar(200) NULL,
   [keterangan] text NULL,
-  [tingkat] int  NULL
-  [bobot] int  NULLp
+  [tingkat] int  NULL,
+  [bobot] int  NULL
 )
 GO
 
