@@ -154,7 +154,7 @@
                         if(row.file_upload.length > 0 || row.status == 4){ dataBtn['color'] = 'btn-success'; dataBtn['message'] = 'Selesai'; }
 
                         var disabled = '';
-                        if(isAdmin){
+                        if(isAdmin == 1){
                             disabled = 'disabled';
                         }else{
                             disabled = '';
