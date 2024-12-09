@@ -7,6 +7,8 @@
     ];
     let listKategori;
 
+    let isAdmin = <?= $_SESSION['user']['role'] == 1? true : false ?>;
+
     let action = '';
     let historyMhs = [];
 
@@ -220,12 +222,15 @@
 
 
     onAdd = () => {
+        if(isAdmin) return;
         resetForm(listForm);
         $('#modal_form').modal('show');
         action = 'store';
     }
 
     onEdit = (id) => {
+        if(isAdmin) return;
+
         $.ajax({
             url: '/tataTertib/system/aduan-pelanggaran.php',
             data: {
@@ -262,6 +267,8 @@
     }
 
     onSave = () => {
+        if(isAdmin) return;
+
         onConfirm("Data akan tersimpan di database.", (result) => {
             if (result.isConfirmed) {
                 saveData();
@@ -273,6 +280,8 @@
     }
 
     saveData = () => {
+        if(isAdmin) return;
+
         const form = $('#form_aduan-pelanggaran').get(0);
         let formData = new FormData(form);
         formData.append('action', action);
@@ -302,6 +311,8 @@
     }
 
     onDestroy = (id) => {
+        if(isAdmin) return;
+
         onConfirm("Data akan terhapus dari database.", (result) => {
             if (result.isConfirmed) {
                 destroyData(id);
@@ -313,6 +324,8 @@
     }
 
     destroyData = (id) => {
+        if(isAdmin) return;
+
         $.ajax({
             url: '/tataTertib/system/aduan-pelanggaran.php',
             data: {

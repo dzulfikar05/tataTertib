@@ -4,7 +4,8 @@
             <i class="fa fa-tasks text-primary me-4 fs-3" style="position: absolute; top:90px"></i>
             <span style="font-size: 14px; font-weight:600; margin-top: 2px" class="ms-5">Data Aduan Pelanggaran</span>
         </div>
-        <div class="col-md-9 d-flex justify-content-end">
+        
+        <div class="col-md-9 d-flex justify-content-end <?= $_SESSION['user']['role'] == 1? ' d-none ' : '' ?>">
             <button class="btn btn-primary btn-sm text-white" onclick="onAdd()"><i class="fa fa-calculator"></i> &nbsp;Tambah Data</button>
 
         </div>

@@ -7,6 +7,7 @@
     ];
     let listKategori;
     let listBobot = [5,4,3,2,1];
+    let isAdmin = <?= $_SESSION['user']['role'] == 1? true : false ?>;
 
     let action = '';
 
@@ -206,8 +207,9 @@
                     className: 'text-center',
                     render: function(data, type, row) {
                         var btnColor = row.tugas == null ? 'btn-secondary' : 'btn-success';
+                        var disabled = isAdmin ? 'disabled' : '';
                         let html = `
-                            <button class="btn ${btnColor} btn-sm" type="button" onclick="onSanksi(${data}, ${row.pelaku_id})">
+                            <button class="btn ${btnColor} btn-sm disabled" type="button" onclick="onSanksi(${data}, ${row.pelaku_id})">
                                 <i class="fa fa-edit"></i>
                                 Buat Sanksi    
                             </button>
@@ -235,7 +237,7 @@
                         if (data == 4) {
                             btnColor = 'btn-success disabled';
                         }
-                        if (data == null) {
+                        if (data == null || isAdmin) {
                             btnColor = 'disabled';
                         }
 

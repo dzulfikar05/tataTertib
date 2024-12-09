@@ -18,7 +18,7 @@
 <script>
     $(() => {
         if('<?= $role?>' == 1) {
-            // $('.profile-btn').addClass('d-none');
+            $('.profile-btn').addClass('d-none');
         }else {
             $('.profile-btn').removeClass('d-none');
         }

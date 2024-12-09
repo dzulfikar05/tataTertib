@@ -9,6 +9,8 @@
 
     let action = '';
     let listBobot = [5,4,3,2,1];
+    let isAdmin = <?= $_SESSION['user']['role'] == 1? true : false ?>;
+
 
     $(() => {
         index();
@@ -149,8 +151,15 @@
 
                         if(row.file_upload.length > 0 || row.status == 4){ dataBtn['color'] = 'btn-success'; dataBtn['message'] = 'Selesai'; }
 
+                        var disabled = '';
+                        if(isAdmin){
+                            disabled = 'disabled';
+                        }else{
+                            disabled = '';
+                        }
+
                         let html = `
-                            <button class="btn ${dataBtn['color']} btn-sm" type="button" onclick="onUpload(${data})">
+                            <button class="btn ${dataBtn['color']} btn-sm ${disabled}" type="button" onclick="onUpload(${data})">
                                 <i class="fa fa-edit"></i>
                                 ${dataBtn['message']}    
                             </button>
