@@ -42,7 +42,7 @@
                             <label class="mb-1 required-label input-file-x">Upload Tugas </label>
                             <input type="file" class="form-control input-file-x" id="file" name="file">
                             <div class="text-muted " id="uploaded_text">
-                                uploaded file :  <a href="" id="file_path" target="_blank"></a>
+                                Unggah File :  <a href="" id="file_path" target="_blank"></a>
                             </div>
                            
                         </div>

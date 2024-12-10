@@ -72,7 +72,7 @@
                                 <button id="last-page" class="btn btn-secondary text-white">⏭</button>
                                 <button id="zoom-in" class="btn btn-secondary text-white fw-light"><i class="fa fa-search-plus fw-light"></i></button>
                                 <button id="zoom-out" class="btn btn-secondary text-white"><i class="fa fa-search-minus fw-light"></i></button>
-                                <button id="download-pdf" class="btn btn-secondary ">💾 Download</button>
+                                <button id="download-pdf" class="btn btn-secondary ">💾 Unduh</button>
                             </div>
                             <div id="pdf-container" class="scrollable-container">
                                 <canvas id="pdf-render"></canvas>

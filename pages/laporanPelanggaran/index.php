@@ -82,7 +82,7 @@
 
                         <div class="col-12 mb-3">
                             <a href="#" target="_blank"  id="file_path" class="btn btn-primary">
-                                Download File Sanksi
+                                Unduh Berkas Sanksi
                             </a>
                         </div>
                       
