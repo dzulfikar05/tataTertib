@@ -30,7 +30,6 @@
 
 
         <script src="helper/helper.js"></script>
-        <?php include 'helper/helper.php';?>
        
         
         <script>

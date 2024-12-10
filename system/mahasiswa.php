@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Mahasiswa
@@ -27,7 +28,7 @@ class Mahasiswa
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Users.mahasiswa';
         $this->tableUser = 'Users.users';
         $this->tableView = 'Users.v_mahasiswa';
@@ -360,8 +361,8 @@ class Mahasiswa
 
 
 
-
-$mahasiswa = new Mahasiswa($conn);
+$connection = new Connection();
+$mahasiswa = new Mahasiswa($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'index') echo $mahasiswa->index();

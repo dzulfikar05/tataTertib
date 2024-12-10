@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+
+use App\Connection;
 include '../helper/helper.php';
 
 class Staff
@@ -26,7 +27,7 @@ class Staff
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Users.staff';
         $this->tableUser = 'Users.users';
         $this->tableView = 'Users.v_staff';
@@ -321,8 +322,8 @@ class Staff
 
 
 
-
-$staff = new Staff($conn);
+$connection = new Connection();
+$staff = new Staff($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'index') echo $staff->index();

@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class LaporanPelanggaran
@@ -19,7 +20,7 @@ class LaporanPelanggaran
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Pelanggaran.pelanggaran';
         $this->tableView = 'Pelanggaran.v_pelanggaran';
         $this->tableSanksi = 'Pelanggaran.sanksi';
@@ -104,7 +105,8 @@ class LaporanPelanggaran
     }
 }
 
-$laporanPelanggaran = new LaporanPelanggaran($conn);
+$connection = new Connection();
+$laporanPelanggaran = new LaporanPelanggaran($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'index') echo $laporanPelanggaran->index();

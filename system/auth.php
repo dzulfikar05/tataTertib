@@ -1,5 +1,5 @@
 <?php
-    include '../connection.php'; 
+    use App\Connection;
 	include '../helper/helper.php';
 
     class Auth {
@@ -7,7 +7,7 @@
         private $table;
     
         public function __construct($conn) {
-            $this->conn = $conn;
+            $this->conn = $conn->getConnection();
             $this->table = 'Users.users';
         }
 
@@ -84,7 +84,8 @@
 
     }
     
-    $auth = new Auth($conn);
+    $connection = new Connection();
+    $auth = new Auth($connection);
 
     if (isset($_POST['action'])) {
         if ($_POST['action'] == 'verify_login') echo $auth->verify_login();

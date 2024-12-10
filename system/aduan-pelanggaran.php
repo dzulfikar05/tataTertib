@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class AduanPelanggaran
@@ -18,7 +19,7 @@ class AduanPelanggaran
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Pelanggaran.pelanggaran';
         $this->tableView = 'Pelanggaran.v_pelanggaran';
     }
@@ -292,7 +293,8 @@ class AduanPelanggaran
     }
 }
 
-$aduanPelanggaran = new AduanPelanggaran($conn);
+$connection = new Connection();
+$aduanPelanggaran = new AduanPelanggaran($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getAll') echo $aduanPelanggaran->getAll();
