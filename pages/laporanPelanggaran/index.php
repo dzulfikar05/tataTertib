@@ -39,12 +39,11 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Form  
-                    Tugas Sanksi</h5>
+            <h5 class="modal-title">Form Tugas Sanksi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body mx-3">
-                <form id="form_approval-sanksi">  
+                <form id="form_approval-sanksi"> 
 
                     <div class="row">
                         <input type="hidden" id="id_sanksi" name="id_sanksi">

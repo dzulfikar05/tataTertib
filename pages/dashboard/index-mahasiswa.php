@@ -59,7 +59,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Buku Panduan</h5>
+                        <h5 class="card-title">Buku Pedoman Akademik</h5>
                         <div id="bukuPanduan">
 
                             <div id="pdf-controls" class="p-2 d-flex align-items-center bg-secondary text-white">
