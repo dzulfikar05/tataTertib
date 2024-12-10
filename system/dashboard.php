@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Dashboard
@@ -7,7 +8,8 @@ class Dashboard
     private $conn;
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
+
     }
 
     public function getCount()
@@ -113,7 +115,8 @@ class Dashboard
     }
 }
 
-$dashboard = new Dashboard($conn);
+$connection = new Connection();
+$dashboard = new Dashboard($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getCount') echo $dashboard->getCount();

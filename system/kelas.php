@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Prodi
@@ -16,7 +17,7 @@ class Prodi
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Akademik.kelas';
         $this->tableView = 'Akademik.v_kelas';
     }
@@ -180,7 +181,8 @@ class Prodi
     }
 }
 
-$prodi = new Prodi($conn);
+$connection = new Connection();
+$prodi = new Prodi($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'index') echo $prodi->index();

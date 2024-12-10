@@ -1,5 +1,9 @@
 <?php
-include '../connection.php';
+require_once '../connection.php';
+use App\Connection;
+
+$connection = new Connection();
+$conn = $connection->getConnection();
 
 date_default_timezone_set('Asia/Jakarta');
 
@@ -16,6 +20,7 @@ function fetchArray($dataBefore) {
 }
 
 function getImageUpload($modelId, $modelName){
+
     global $conn;
 
     $sql2 = "SELECT * FROM Upload.file_Upload WHERE model_id = ? AND model_name = ?";

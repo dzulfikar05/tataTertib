@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Notification
@@ -9,7 +10,7 @@ class Notification
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Notification.notification';
     }
 
@@ -41,7 +42,8 @@ class Notification
     }
 }
 
-$notification = new Notification($conn);
+$connection = new Connection();
+$notification = new Notification($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getNotificationByUser') echo $notification->getNotificationByUser();

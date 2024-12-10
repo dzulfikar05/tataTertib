@@ -1,5 +1,5 @@
 <?php
-include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Kategori
@@ -21,7 +21,7 @@ class Kategori
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Pelanggaran.sanksi';
         $this->tableView = 'Pelanggaran.v_sanksi';
         $this->tableViewPelanggaran = 'Pelanggaran.v_pelanggaran';
@@ -284,7 +284,8 @@ class Kategori
     }
 }
 
-$kategori = new Kategori($conn);
+$connection = new Connection();
+$kategori = new Kategori($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getAll') echo $kategori->getAll();

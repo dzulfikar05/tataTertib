@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// include '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Jurusan
@@ -15,7 +16,7 @@ class Jurusan
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Users.users';
     }
 
@@ -145,7 +146,8 @@ class Jurusan
     }
 }
 
-$jurusan = new Jurusan($conn);
+$connection = new Connection();
+$jurusan = new Jurusan($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'getAll') echo $jurusan->getAll();

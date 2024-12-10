@@ -1,5 +1,6 @@
 <?php
-include '../connection.php';
+// require_once '../connection.php';
+use App\Connection;
 include '../helper/helper.php';
 
 class Dosen
@@ -26,7 +27,7 @@ class Dosen
 
     public function __construct($conn)
     {
-        $this->conn = $conn;
+        $this->conn = $conn->getConnection();
         $this->table = 'Users.dosen';
         $this->tableUser = 'Users.users';
         $this->tableView = 'Users.v_dosen';
@@ -339,9 +340,8 @@ class Dosen
 }
 
 
-
-
-$dosen = new Dosen($conn);
+$connection = new Connection();
+$dosen = new Dosen($connection);
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'index') echo $dosen->index();
