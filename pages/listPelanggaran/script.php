@@ -42,7 +42,9 @@
             ordering: true,
             lengthMenu: [5, 10, 25, 50, 100],
             language: {
-                lengthMenu: "Menampilkan  _MENU_  data per halaman"
+                lengthMenu: "Menampilkan  _MENU_  data per halaman",
+                info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
+                search : "Cari Data : "
             },
             ajax: {
                 url: '/tataTertib/system/list-pelanggaran.php',
