@@ -9,7 +9,7 @@
 </style>
 
 <h1 class="h3 mb-3"> Dashboard</h1>
-<<div class="container-fluid mt-4">
+<div class="container-fluid mt-4">
     <div class="row">
         <!-- Kiri: Statistik -->
         <div class="col-lg-6">
