@@ -65,9 +65,9 @@
                             <div id="pdf-controls" class="p-2 d-flex align-items-center bg-secondary text-white">
                                 <button id="first-page" class="btn btn-secondary text-white">⏮</button>
                                 <button id="prev-page" class="btn btn-secondary text-white">◀</button>
-                                <span>Page</span>
+                                <span>Halaman</span>
                                 <input id="page-number" type="number" value="1" min="1" class="form-control ">
-                                <span id="total-pages">of 0</span>
+                                <span id="total-pages">dari 0</span>
                                 <button id="next-page" class="btn btn-secondary text-white">▶</button>
                                 <button id="last-page" class="btn btn-secondary text-white">⏭</button>
                                 <button id="zoom-in" class="btn btn-secondary text-white fw-light"><i class="fa fa-search-plus fw-light"></i></button>
@@ -278,7 +278,7 @@
         // Load PDF
         pdfjsLib.getDocument(url).promise.then(pdf => {
             pdfDoc = pdf;
-            document.getElementById('total-pages').textContent = `of ${pdf.numPages}`;
+            document.getElementById('total-pages').textContent = `dari ${pdf.numPages}`;
             renderPage(pageNum);
         });
 
