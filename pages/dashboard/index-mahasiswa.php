@@ -88,6 +88,7 @@
         <div class="col-lg-6">
             <div class="row">
                 <div class="col-md-6">
+                    <a href="sanksi-pelanggaran.php">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -107,11 +108,11 @@
                             <span class="mt-1 fw-bold count-pelanggaran" style="font-size: 48px;">0</span>
                         </div>
                     </div>
-
-
+                    </a>
                 </div>
                 <!-- Pelanggaran Card -->
                 <div class="col-md-6">
+                    <a href="sanksi-pelanggaran.php">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -134,8 +135,10 @@
                             <span class="mt-1 fw-bold count-tugas-selesai" style="font-size: 48px;">0</span>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-12">
+                    <a href="sanksi-pelanggaran.php">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Tugas Terbaru</h5>

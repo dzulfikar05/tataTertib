@@ -59,6 +59,7 @@
                 </div>
                 <!-- Aduan Card -->
                 <div class="col-md-6">
+                    <a href="aduan-pelanggaran.php">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -78,9 +79,11 @@
                             <span class="mt-1 fw-bold count-aduan" style="font-size: 48px;">0</span>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <!-- Pelanggaran Card -->
                 <div class="col-md-6">
+                    <a href="laporan-pelanggaran.php">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -100,12 +103,15 @@
                             <span class="mt-1 fw-bold count-pelanggaran" style="font-size: 48px;">0</span>
                         </div>
                     </div>
+                    </a>
+
                 </div>
             </div>
         </div>
 
         <!-- Kanan: Info Aduan -->
         <div class="col-lg-6">
+        <a href="aduan-pelanggaran.php">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Info Aduan</h5>
@@ -127,6 +133,7 @@
                     </table>
                 </div>
             </div>
+        </a>
         </div>
     </div>
     </div>
