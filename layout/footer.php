@@ -33,7 +33,11 @@
        
         
         <script>
+            var loginRoleId = '<?php echo $_SESSION['user']['role']; ?>';
             $(() => {
+                if(loginRoleId == 4) {
+                    checkDeadline('<?php echo $_SESSION['user']['id']; ?>');
+                }
                 getNotificationByUser();
             })
 
@@ -56,6 +60,20 @@
                     url: '/tataTertib/system/notification.php',
                     data : {
                         action : 'readNotification',
+                        id : id
+                    }, 
+                    type: 'POST',
+                    success: (data) => {
+                        
+                    }
+                })
+            }
+
+            checkDeadline = (id) => {
+                $.ajax({
+                    url: '/tataTertib/system/notification.php',
+                    data : {
+                        action : 'checkDeadline',
                         id : id
                     }, 
                     type: 'POST',
