@@ -82,15 +82,15 @@ background: linear-gradient(146deg, rgba(22,30,61,1) 57%, rgba(32,61,111,1) 79%,
                 <?= $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'active' : ''  ?>
             ">
                 <a href="#laporan_sidebar" data-bs-toggle="collapse" class="sidebar-link collapsed" style="background-color: #161e3d !important;">
-                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Laporan</span>
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Riwayat</span>
                 </a>
                 <ul id="laporan_sidebar" class="sidebar-dropdown list-unstyled 
                     collapse<?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' || $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'd' : ''  ?> 
                     " data-bs-parent="#sidebar">
 
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporan-aduan-pelanggaran.php'>Laporan Aduan Pelanggaran</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporan-aduan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporan-aduan-pelanggaran.php'>Riwayat Aduan Pelanggaran</a></li>
 
-                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporan-pelanggaran.php'>Laporan Pelanggaran</a></li>
+                    <li class="sidebar-item <?= $_SESSION['menu_active'] == 'laporan-pelanggaran' ? 'active' : ''  ?>"><a class='sidebar-link' href='laporan-pelanggaran.php'>Riwayat Pelanggaran</a></li>
                   
                 </ul>
             </li>
