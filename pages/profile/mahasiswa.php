@@ -126,8 +126,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="resetForm()">Reset</button>
-                <button type="button" class="btn btn-primary btn-sm" onclick="pSave()">Save</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="resetForm()">Ulang</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="pSave()">Simpan</button>
             </div>
         </div>
     </div>

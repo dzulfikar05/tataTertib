@@ -43,7 +43,7 @@
                         <div class="col-12 mb-3">
                             
                             <div class="text-muted fs-5">
-                                uploaded file :  <a href="" id="v_file_path" target="_blank"></a>
+                                Unggah berkas :  <a href="" id="v_file_path" target="_blank"></a>
                             </div>
                            
                         </div>
@@ -118,8 +118,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="onReset()">Reset</button>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="onSave()">Save</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="onReset()">Ulang</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="onSave()">Simpan</button>
                     </div>
                 </form>
             </div>

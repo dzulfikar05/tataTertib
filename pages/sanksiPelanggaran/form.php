@@ -2,8 +2,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Form  
-                    Tugas Sanksi</h5>
+                <h5 class="modal-title">Form Tugas Sanksi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body mx-3">
@@ -43,7 +42,7 @@
                             <label class="mb-1 required-label input-file-x">Upload Tugas </label>
                             <input type="file" class="form-control input-file-x" id="file" name="file">
                             <div class="text-muted " id="uploaded_text">
-                                uploaded file :  <a href="" id="file_path" target="_blank"></a>
+                                Unggah File :  <a href="" id="file_path" target="_blank"></a>
                             </div>
                            
                         </div>
@@ -53,8 +52,8 @@
                         </div>
                     </div>
                     <div class="modal-footer footer-form">
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="onReset()">Reset</button>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="onSave()">Save</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="onReset()">Ulang</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="onSave()">Simpan</button>
                     </div>
                 </form>
             </div>

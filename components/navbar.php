@@ -15,7 +15,7 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
                     <div class="dropdown-menu-header">
                     <span class=" notif_count" >0</span>
-                     New Notifications
+                     Notifikasi Baru
                     </div>
                     <div class="list-group list-notification">
                         <a href="#" class="list-group-item">
@@ -46,9 +46,9 @@
                     <img src="<?= $ppUser?>" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark"><?= $username?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item profile-btn" onclick="onProfile()" href="#"><i class="align-middle me-1 " data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item profile-btn" onclick="onProfile()" href="#"><i class="align-middle me-1 " data-feather="user"></i> Profil</a>
                     <div class="dropdown-divider profile-btn"></div>
-                    <a class="dropdown-item" href="#" onclick="logout()"><i class="align-middle me-1" data-feather="log-out"></i>Log out</a>
+                    <a class="dropdown-item" href="#" onclick="logout()"><i class="align-middle me-1" data-feather="log-out"></i>Keluar</a>
                 </div>
             </li>
         </ul>
