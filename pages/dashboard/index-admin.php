@@ -15,7 +15,7 @@
             <div class="row">
                 <!-- Mahasiswa Card -->
                 <div class="col-md-6">
-                    <a href="mahasiswa.php">
+                    <a href="mahasiswa.php" style="text-decoration: none;">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -39,7 +39,7 @@
                 </div>
                 <!-- Dosen Card -->
                 <div class="col-md-6">
-                    <a href="dosen.php">
+                    <a href="dosen.php" style="text-decoration: none;">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -62,7 +62,7 @@
                 </div>
                 <!-- Aduan Card -->
                 <div class="col-md-6">
-                    <a href="aduan-pelanggaran.php">
+                    <a href="aduan-pelanggaran.php" style="text-decoration: none;">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -86,7 +86,7 @@
                 </div>
                 <!-- Pelanggaran Card -->
                 <div class="col-md-6">
-                    <a href="laporan-pelanggaran.php">
+                    <a href="laporan-pelanggaran.php" style="text-decoration: none;">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -111,7 +111,7 @@
 
                 <!-- Aduan Terbaru -->
                 <div class="col-12">
-                    <a href="aduan-pelanggaran.php">
+                    <a href="aduan-pelanggaran.php" style="text-decoration: none;">
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">Aduan Terbaru</h5>
@@ -128,7 +128,7 @@
         <div class="col-lg-6">
             <!-- Pelanggaran Terbanyak -->
             <div class="card mb-4">
-                <a href="laporan-pelanggaran.php">
+                <a href="laporan-pelanggaran.php" style="text-decoration: none;">
                 <div class="card-body">
                     <h5 class="card-title">Pelanggaran Terbanyak</h5>
                     <table class="table table-hover bg-light">
@@ -153,7 +153,7 @@
 
             <!-- Pelanggaran Terbaru -->
             <div class="card">
-                <a href="laporan-aduan-pelanggaran.php">
+                <a href="laporan-aduan-pelanggaran.php" style="text-decoration: none;">
                 <div class="card-body">
                     <h5 class="card-title">Pelanggaran Terbaru</h5>
                     <div id="listPelanggaran">
