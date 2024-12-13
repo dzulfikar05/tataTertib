@@ -227,7 +227,7 @@ class AduanPelanggaran
                 if ($status == 2) {
                     $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin', 'sanksi-pelanggaran.php');
 
-                    if($bobot == 1 || $status == 2 && $bobotUpper == 1) {
+                    if($bobot == 5 || $status == 2 && $bobotUpper == 1) {
                         $sql = "UPDATE Users.mahasiswa SET status=0 WHERE id=$mhsId";
                         $stmt = sqlsrv_query($this->conn, $sql);
                         if(!$stmt) die(print_r(sqlsrv_errors(), true));
