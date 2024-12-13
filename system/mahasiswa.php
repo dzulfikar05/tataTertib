@@ -116,7 +116,7 @@ class Mahasiswa
     {
 
         $id = $_POST['id'];
-        $sql = "SELECT * FROM $this->tableView WHERE prodi_id = ?";
+        $sql = "SELECT * FROM $this->tableView WHERE prodi_id = ? AND status = 1";
         $params = array($id);
         $stmt = sqlsrv_query($this->conn, $sql, $params);
         $data = fetchArray($stmt);
