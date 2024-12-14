@@ -3,7 +3,7 @@
 use App\Connection;
 include '../helper/helper.php';
 
-class AduanPelanggaran
+class AduanPelanggaran extends Notification
 {
     private $listForm = [
         // 'id',
@@ -245,15 +245,15 @@ class AduanPelanggaran
         } 
     }
 
-    public function sendNotification($recipientId, $message, $directLink)
-    {
-        $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
-        $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
-        $stmt = sqlsrv_query($this->conn, $sql, $params);
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-    }
+    // public function sendNotification($recipientId, $message, $directLink)
+    // {
+    //     $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
+    //     $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
+    //     $stmt = sqlsrv_query($this->conn, $sql, $params);
+    //     if (!$stmt) {
+    //         die(print_r(sqlsrv_errors(), true));
+    //     }
+    // }
 
     public function getStatMahasiswa()
     {

@@ -2,7 +2,7 @@
 use App\Connection;
 include '../helper/helper.php';
 
-class Kategori
+class SanksiPelanggaran extends Notification
 {
     private $listForm = [
         // 'id',
@@ -189,17 +189,17 @@ class Kategori
     }
 
 
-    public function sendNotification($recipientId, $message, $directLink)
-    {
-        session_start();
-        $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
-        $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
+    // public function sendNotification($recipientId, $message, $directLink)
+    // {
+    //     session_start();
+    //     $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
+    //     $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
 
-        $stmt = sqlsrv_query($this->conn, $sql, $params);
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-    }
+    //     $stmt = sqlsrv_query($this->conn, $sql, $params);
+    //     if (!$stmt) {
+    //         die(print_r(sqlsrv_errors(), true));
+    //     }
+    // }
 
     public function uploadFile($modelId, $fileInput, $path)
     {
@@ -285,13 +285,12 @@ class Kategori
 }
 
 $connection = new Connection();
-$kategori = new Kategori($connection);
+$sanksiPelanggaran = new SanksiPelanggaran($connection);
 
 if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'getAll') echo $kategori->getAll();
-    if ($_POST['action'] == 'index') echo $kategori->index();
-    if ($_POST['action'] == 'getById') echo $kategori->getById();
-    if ($_POST['action'] == 'uploadSanksi') echo $kategori->uploadSanksi();
-    if ($_POST['action'] == 'destroy') echo $kategori->destroy();
-    if ($_POST['action'] == 'getByPelanggaran') echo $kategori->getByPelanggaran();
+    if ($_POST['action'] == 'getAll') echo $sanksiPelanggaran->getAll();
+    if ($_POST['action'] == 'index') echo $sanksiPelanggaran->index();
+    if ($_POST['action'] == 'getById') echo $sanksiPelanggaran->getById();
+    if ($_POST['action'] == 'uploadSanksi') echo $sanksiPelanggaran->uploadSanksi();
+    if ($_POST['action'] == 'getByPelanggaran') echo $sanksiPelanggaran->getByPelanggaran();
 }
