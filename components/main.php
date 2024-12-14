@@ -1,4 +1,2 @@
 
-            
-            <?php include 'components/content.php';?>
-            
+<?php include 'components/content.php'; ?>

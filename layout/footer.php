@@ -41,6 +41,12 @@
                 getNotificationByUser();
             })
 
+            closeBtn = () => {
+                $('.alert-space').fadeOut(800, function() {
+                    $(this).html('');
+                });
+            }
+
             formatDate = (dateString) => {
                 const options = {
                     year: 'numeric',
@@ -77,8 +83,21 @@
                         id : id
                     }, 
                     type: 'POST',
-                    success: (data) => {
-                        
+                    success: (res) => {
+                        res = JSON.parse(res);
+                        if(res.alert){
+                            console.log("ada")
+                            
+                            var html = $(`
+                                <div class="alert alert-${res.alert.color} d-flex align-items-center">
+                                    <span class="fs-1 fa fa-${res.alert.icon}"></span>
+                                    <span class="fs-3 alert-message">${res.alert.message}</span>
+                                    <a onclick="closeBtn()" style="text-decoration: none; color: #a94442" class=" fs-3 alert-close-btn" id="closeBtn">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>`);
+                            $('.alert-space').html(html);
+                        }
                     }
                 })
             }

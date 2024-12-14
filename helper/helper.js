@@ -1,5 +1,7 @@
 $(()=> {
     $('.required-label').append('<span class="text-danger">*</span>'); 
+
+   
 });
 
 resetForm = (listId = []) => {

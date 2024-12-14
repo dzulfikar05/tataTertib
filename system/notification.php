@@ -48,16 +48,30 @@ class Notification
     public function checkDeadline()
     {
         session_start();
+        $id = $_POST['id'];
+        $return = [];
 
         $lastCheckTime = isset($_SESSION['last_deadline_check']) ? $_SESSION['last_deadline_check'] : null; 
-
+        
         if ($lastCheckTime === null || (strtotime(date('Y-m-d H:i:s')) - strtotime($lastCheckTime)) >= 86400) { 
             $_SESSION['last_deadline_check'] = date('Y-m-d H:i:s');
+
+            $sql1 = "SELECT tanggal FROM Pelanggaran.v_pelanggaran WHERE pelaku_id = ? AND tugas IS NULL AND status = 2";
+            $stmt1 = sqlsrv_query($this->conn, $sql1, [$id]);
+            $getCount = fetchArray($stmt1)['num_rows'] ?? 0;
+        
+            if($getCount > 0){
+                $return['alert'] = [
+                    'message' => "Anda Telah Melakukan Pelanggaran !",
+                    'icon' => "warning",
+                    'color' => "danger"
+                ];
+            }
+
         }else{
             return 1;
         }
 
-        $id = $_POST['id'];
         $date = date('Y-m-d');
         $time = date('H:i');
 
@@ -69,6 +83,8 @@ class Notification
         
         $data = fetchArray($stmt)['data'] ?? [];
         
+
+
         foreach ($data as $key => $value) {
             $dateTimeDL = $value['deadline_date'] . ' ' . $value['deadline_time'];
             $dateTimeNow = $date . ' ' . $time;
@@ -79,7 +95,13 @@ class Notification
             }
         }
 
-        if($stmt)return 1;
+        if($stmt){
+            if(isset($return['alert'])){
+                return json_encode($return);
+            }else{
+                return 1;
+            }
+        }
     }
 
     public function sendNotification($recipientId, $message, $directLink)
