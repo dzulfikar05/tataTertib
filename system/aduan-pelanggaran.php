@@ -225,7 +225,7 @@ class AduanPelanggaran
 
                 $this->sendNotification($pelaporId, $status == 2 ? 'Aduan pelanggaran yang anda laporkan anda telah diverifikasi oleh staff' : 'Aduan pelanggaran anda laporkan ditolak oleh staff', 'laporan-aduan-pelanggaran.php');
                 if ($status == 2) {
-                    $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi admin', 'sanksi-pelanggaran.php');
+                    $this->sendNotification($pelakuId, 'Aduan pelanggaran yang melibatkan anda telah diverifikasi staff', 'sanksi-pelanggaran.php');
 
                     if($bobot == 5 || $status == 2 && $bobotUpper == 1) {
                         $sql = "UPDATE Users.mahasiswa SET status=0 WHERE id=$mhsId";
