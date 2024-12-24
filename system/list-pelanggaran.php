@@ -3,7 +3,7 @@
 use App\Connection;
 include '../helper/helper.php';
 
-class ListPelanggaran extends Notification
+class ListPelanggaran
 {
     private $listForm = [
         // 'id',
@@ -24,6 +24,16 @@ class ListPelanggaran extends Notification
         $this->table = 'Pelanggaran.pelanggaran';
         $this->tableView = 'Pelanggaran.v_pelanggaran';
         $this->tableSanksi = 'Pelanggaran.sanksi';
+    }
+
+    public function sendNotification($recipientId, $message, $directLink)
+    {
+        $params = array($_SESSION['user']['id'], $recipientId, $message, $directLink, date('Y-m-d H:i:s'));
+        $sql = "INSERT INTO Notification.notification (sender_id, recipient_id, content, direct_link, created_at) VALUES (?, ? , ?, ?, ?)";
+        $stmt = sqlsrv_query($this->conn, $sql, $params);
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
 
     public function index()
