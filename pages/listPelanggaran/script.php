@@ -325,7 +325,6 @@
             type: 'POST',
             success: (data) => {
                 var data = JSON.parse(data);
-                console.log(data[0]);
                 if (data[0] && data[0].id) {
                     $('#id').val(data[0].id);
                     $('#keterangan').val(data[0].keterangan);
@@ -333,11 +332,12 @@
                     $('#deadline_date').val(data[0].deadline_date);
                     $('#deadline_time').val(data[0].deadline_time);
                 }
+                console.log(data);
                 $('#pelanggaran_id').val(data.pelanggaran.id);
                 $('#mhs_id').val(data.pelanggaran.pelaku_id);
                 $('#pelanggaran_keterangan').html(data.pelanggaran.keterangan);
                 $('#pelanggaran_kategori_nama').val(data.pelanggaran.kategori_nama);
-                $('#kategori_bobot').val(data.pelanggaran.kategori_bobot + data.pelanggaran.bobotUpper);
+                $('#kategori_bobot').val(listBobot[(data.pelanggaran.kategori_bobot + data.pelanggaran.bobotUpper)-1]);
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error('AJAX error: ' + textStatus + ' : ' + errorThrown);
