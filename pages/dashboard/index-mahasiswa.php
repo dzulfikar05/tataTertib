@@ -57,33 +57,15 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Buku Pedoman Akademik</h5>
-                        <div id="bukuPanduan">
-
-                            <div id="pdf-controls" class="p-2 d-flex align-items-center bg-secondary text-white">
-                                <button id="first-page" class="btn btn-secondary text-white">⏮</button>
-                                <button id="prev-page" class="btn btn-secondary text-white">◀</button>
-                                <span>Halaman</span>
-                                <input id="page-number" type="number" value="1" min="1" class="form-control ">
-                                <span id="total-pages">dari 0</span>
-                                <button id="next-page" class="btn btn-secondary text-white">▶</button>
-                                <button id="last-page" class="btn btn-secondary text-white">⏭</button>
-                                <button id="zoom-in" class="btn btn-secondary text-white fw-light"><i class="fa fa-search-plus fw-light"></i></button>
-                                <button id="zoom-out" class="btn btn-secondary text-white"><i class="fa fa-search-minus fw-light"></i></button>
-                                <button id="download-pdf" class="btn btn-secondary ">💾 Unduh</button>
-                            </div>
-                            <div id="pdf-container" class="scrollable-container">
-                                <canvas id="pdf-render"></canvas>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Buku Pedoman Akademik</h5>
+            <div id="bukuPanduan">
+                <a href="https://drive.google.com/file/d/1aOg_byHGRdyVmfJQjqACRok2fxQ5j80m/view?usp=drive_link" class="btn btn-primary" target="_blank">Buka PDF</a>
             </div>
+        </div>
+    </div>
+</div>
         </div>
         <div class="col-lg-6">
             <div class="row">
